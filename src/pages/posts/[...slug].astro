@@ -7,11 +7,11 @@ import { SITE } from "@config";
 import Posts from "@/layouts/Posts.astro";
 
 export interface Props {
-    post: CollectionEntry<"blog">;
+    post: CollectionEntry<"post">;
 }
 
 export async function getStaticPaths() {
-    const posts = await getCollection("blog", ({ data }) => !data.draft);
+    const posts = await getCollection("post", ({ data }) => !data.draft);
     const postResult = posts.map((post) => ({
         params: { slug: post.slug },
         props: { post }
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { post } = Astro.props;
 
-const posts = await getCollection("blog");
+const posts = await getCollection("post");
 const sortedPosts = getSortedPosts(posts);
 
 const totalPages = getPageNumbers(sortedPosts.length);
@@ -49,7 +49,7 @@ const paginatedPosts = sortedPosts.slice(startPost, lastPost);
             posts={paginatedPosts}
             pageNum={currentPage}
             totalPages={totalPages.length}
-            title="Blogs"
+            title="Posts"
         />
     )
 }

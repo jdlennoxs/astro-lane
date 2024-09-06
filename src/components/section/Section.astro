@@ -1,0 +1,8 @@
+---
+const { class: className } = Astro.props;
+---
+
+
+<section class={`h-screen ${className && className}`}>
+    <slot />
+</section>

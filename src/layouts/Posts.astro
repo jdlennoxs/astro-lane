@@ -9,7 +9,7 @@ import { CollectionEntry } from "astro:content";
 export interface Props {
     pageNum: number;
     totalPages: number;
-    posts: CollectionEntry<"blog">[];
+    posts: CollectionEntry<"post">[];
     title: string;
 }
 
@@ -45,9 +45,9 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
                 breadcrumbList.map((breadcrumb, index) =>
                     index + 1 === breadcrumbList.length ? (
                         <h2 class="font-medium text-h4 text-neutral-500 my-4 leading-8 tracking-tighter">
-                            {breadcrumbList[0] === "blog" && "Blogs"}
+                            {breadcrumbList[0] === "post" && "Posts"}
                             <span class="ml-2 opacity-70 text-xl">
-                                {breadcrumbList[0] === "blog" &&
+                                {breadcrumbList[0] === "post" &&
                                     `(Page ${breadcrumbList[0 + 1] || 1})`}
                             </span>
                         </h2>
@@ -62,7 +62,7 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
                     posts.map((post) => (
                         <li class="flex flex-col gap-1">
                             <a
-                                href={`/blog/${post.slug}`}
+                                href={`/post/${post.slug}`}
                                 class="block w-full card-clip p-8 no-underline sm:flex-row sm:gap-8 bg-neutral-50 rounded-[40px] transition-all duration-300"
                             >
                                 <span class="grid flex-1 gap-1">

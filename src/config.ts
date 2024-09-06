@@ -4,13 +4,13 @@ import type { Site, SocialMediaObjects } from "./types";
 
 export const SITE: Site = {
     siteUrl: "https:/www.astro-lane.avenuelabs.co/", // Always put "/" at the end of the URL
-    author: "Christian Luntok | Avenue Labs",
+    author: "Jack Scott",
     desc: "A personal portfolio landing template for developers and designers. Made by Avenue Labs.",
-    title: "Astro Lane | Avenue Labs",
+    title: "jdlennoxs",
     ogImage: "images/astro-lane.png",
     keywords:
         "Personal portfolio, landing page, page template, developer portfoliom designer portfolio",
-    postPerPage: 3
+    postPerPage: 5
 };
 
 // The site uses iconify - you can find icons on https://iconify.design/.
@@ -19,43 +19,22 @@ export const SOCIALS: SocialMediaObjects = [
     {
         name: "Github",
         href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "ph:github-logo-duotone",
+        icon: "tabler:brand-github",
         title: `Follow ${SITE.author} on Github`,
         active: true
     },
     {
-        name: "Facebook",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "ph:facebook-logo-duotone",
-        title: `Follow ${SITE.title} on Facebook`,
-        active: false
-    },
-    {
         name: "Instagram",
         href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "ph:instagram-logo-duotone",
+        icon: "tabler:brand-instagram",
         title: `Follow ${SITE.author} on Instagram`,
         active: true
     },
     {
         name: "LinkedIn",
         href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "ph:linkedin-logo-duotone",
+        icon: "tabler:brand-linkedin",
         title: `Follow ${SITE.title} on LinkedIn`,
-        active: true
-    },
-    {
-        name: "Mail",
-        href: "mailto:yourmail@gmail.com",
-        title: `Send an email to ${SITE.title}`,
-        icon: "",
-        active: false
-    },
-    {
-        name: "Twitter",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "ph:twitter-logo-duotone",
-        title: `Follow ${SITE.author} on Twitter`,
         active: true
     },
     {
@@ -64,33 +43,12 @@ export const SOCIALS: SocialMediaObjects = [
         icon: "",
         title: `${SITE.title} on YouTube`,
         active: false
-    },
-    {
-        name: "WhatsApp",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "",
-        title: `${SITE.title} on WhatsApp`,
-        active: false
-    },
-    {
-        name: "Snapchat",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "",
-        title: `${SITE.title} on Snapchat`,
-        active: false
-    },
-    {
-        name: "CodePen",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "",
-        title: `${SITE.title} on CodePen`,
-        active: false
-    },
-    {
-        name: "Discord",
-        href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "",
-        title: `${SITE.title} on Discord`,
-        active: false
     }
+    // {
+    //     name: "Discord",
+    //     href: "https://github.com/christian-luntok/astro-lane/",
+    //     icon: "",
+    //     title: `${SITE.title} on Discord`,
+    //     active: false
+    // }
 ];

@@ -6,6 +6,7 @@ import SectionContainer from "@/components/SectionContainer.astro";
 import SEO from "@/components/seo/SEO.astro";
 import { Icon } from "astro-icon";
 import { SOCIALS } from "@config";
+import Header from "@/components/header/Header.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -30,25 +31,22 @@ const {
             url={url}
             image={image}
         />
+          <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet" />
+    <link href="prism-material-dark.css" rel="stylesheet" />
     </head>
-    <body>
+    <body class="bg-white">
+        <Header />
         <main class={className}>
             <slot />
         </main>
 
         <SectionContainer class="mt-32">
-            <footer class="py-40 bg-neutral-50">
-                <div class="wrap-sm mx-auto px-8 grid gap-16">
+            <footer class="m-4 grid gap-3">
+                <div class="p-8 grid rounded-xl bg-[#fff6fe] text-[#5162ff]">
                     <h2
                         class="font-medium text-4xl md:text-6xl lg:text-7xl leading-10 lg:leading-[70px] tracking-tight lg:tracking-tighter"
                     >
-                        Let&apos;s make{" "}
-                        <span
-                            class="text-neutral-500 inline font-bold underline-offset-4 underline"
-                        >
-                            great work
-                        </span>{" "}
-                        together.
+                       jdlennoxs
                     </h2>
                     <p
                         class="text-neutral-500 font-medium text-3xl md:text-5xl lg:text-4xl leading-10 tracking-tight lg:tracking-tighter"
@@ -86,16 +84,19 @@ const {
                             }
                         </div>
                     </div>
-                    <span
+                    
+                </div>
+                <span
                         class="text-neutral-500 text-md flex flex-wrap gap-4 md:gap-0 md:justify-between"
                     >
-                        <span>Copyright © {currentYear} 🚀 Astro Lane</span>
+                        <span>Copyright © {currentYear} 🚀 Jack Scott</span>
                         <a class="" href="https://www.avenuelabs.co/">
                             Made by Avenue Labs - Christian Luntok
                         </a>
                     </span>
-                </div>
             </footer>
         </SectionContainer>
     </body>
 </html>
+<!-- fff6fe -->
+<!-- E0FFE9 -->
