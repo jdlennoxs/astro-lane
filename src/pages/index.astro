@@ -30,17 +30,19 @@ const sortedPosts = posts
     title="jdlennoxs"
     description="Astro Lane is a customizable blog theme that offers minimal styling, making it easy for you to tailor it to your needs. It's a personal portfolio landing template for developers and designers. Made by Avenue Labs"
 >
-        
-<SectionContainer class="hero--container h-[65vh] relative m-4 rounded-lg overflow-hidden cursor-wait">
+ <div class="col-span-1"></div>
+            <div class="col-span-3">              
+<SectionContainer class="hero--container h-[35vh] relative m-4 rounded-lg overflow-hidden cursor-wait">
         <CanvasContainer client:only="react" class="z-0"/>
         
-        <div class="content-container wrap-md md:m-10 my-6 absolute top-0 select-none">
+        <div class="content-container wrap-md md:m-10 my-6 absolute bottom-0 select-none">
             <div class="page-title--content mb-8 lg:mb-4">
                 <h1
-                    class="text-8xl md:text-9xl font-semibold tracking-tighter leading-[5rem] md:leading-[6.5rem] mb-0 text-white uppercase"
+                    class="text-5xl md:text-6xl font-semibold tracking-tighter leading-[5rem] md:leading-[6.5rem] mb-0 text-white uppercase"
                 >
-                    I&apos;m Astro Lane - a theme made by Avenue Labs
+                    Boids
                 </h1>
+                <p class="text-2xl md:text-3xl font-semibold tracking-tighter mb-0 text-white ">A dynamic flocking simulation made with three.js</p>
             </div>
         </div>
         <!-- <Scene client:only="react"/> -->
@@ -207,4 +209,5 @@ const sortedPosts = posts
         </SectionContainer>
         <!-- Tags Container -->
     </div>
+</div>
 </Layout>

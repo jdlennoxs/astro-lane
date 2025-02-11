@@ -7,6 +7,7 @@ import SEO from "@/components/seo/SEO.astro";
 import { Icon } from "astro-icon";
 import { SOCIALS } from "@config";
 import Header from "@/components/header/Header.astro";
+import GridWrapper from "@/components/grid-wrapper/GridWrapper.astro"
 
 const currentYear = new Date().getFullYear();
 
@@ -36,8 +37,10 @@ const {
     </head>
     <body class="bg-white">
         <Header />
-        <main class={className}>
-            <slot />
+        <main>
+            <GridWrapper>
+                <slot />
+            </GridWrapper>
         </main>
 
         <SectionContainer class="mt-32">
