@@ -8,6 +8,9 @@ import { Icon } from "astro-icon";
 import { SOCIALS } from "@config";
 import Header from "@/components/header/Header.astro";
 import GridWrapper from "@/components/grid-wrapper/GridWrapper.astro"
+import { Image } from "@astrojs/image/components";
+import profileImage from "../../public/icons/avenue-icon-alt.png";
+import Logo from '@/components/header/Logo.astro';
 
 const currentYear = new Date().getFullYear();
 
@@ -36,23 +39,38 @@ const {
     <link href="prism-material-dark.css" rel="stylesheet" />
     </head>
     <body class="bg-white">
-        <Header />
+        <div class="max-w-8xl mx-auto mt-12">
+        <!-- <Header /> -->
         <main>
-            <GridWrapper>
+            <div  class={`grid grid-cols-4 max-w-8xl mx-auto ${className}`}>
+                <div class="col-span-1">
+                        <Logo/>
+                        <div
+                            class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500 p-2"
+                        >
+                             I'm Jack, I make fun things on the internet and don't really write about them.
+                        </div>
+                </div>
+            <div class="col-span-3">    
+            <slot />
+            </div>
+            </div>
+            <!-- <GridWrapper>
                 <slot />
-            </GridWrapper>
+            </GridWrapper> -->
         </main>
 
         <SectionContainer class="mt-32">
             <footer class="m-4 grid gap-3">
-                <div class="p-8 grid rounded-xl bg-[#fff6fe] text-[#5162ff]">
+                <!-- <div class="p-8 grid rounded-xl bg-[#a9ffdb] text-[#95ffd3]"> -->
+                <div class="p-8 grid rounded-xl bg-white border text-[#5162ff]">
                     <h2
-                        class="font-medium text-4xl md:text-6xl lg:text-7xl leading-10 lg:leading-[70px] tracking-tight lg:tracking-tighter"
+                        class="font-medium text-3xl md:text-4xl leading-10 tracking-tight lg:tracking-tighter"
                     >
                        jdlennoxs
                     </h2>
                     <p
-                        class="text-neutral-500 font-medium text-3xl md:text-5xl lg:text-4xl leading-10 tracking-tight lg:tracking-tighter"
+                        class="text-neutral-500 font-medium text-xl md:text-2xl leading-10 tracking-tight lg:tracking-tighter"
                     >
                         If you want to know more about tweaking my style, adding
                         more posts, and making it truly yours, just click on the
@@ -92,13 +110,11 @@ const {
                 <span
                         class="text-neutral-500 text-md flex flex-wrap gap-4 md:gap-0 md:justify-between"
                     >
-                        <span>Copyright © {currentYear} 🚀 Jack Scott</span>
-                        <a class="" href="https://www.avenuelabs.co/">
-                            Made by Avenue Labs - Christian Luntok
-                        </a>
+                        <span>Copyright © {currentYear} 🌱 Jack Scott</span>
                     </span>
             </footer>
         </SectionContainer>
+        </div>
     </body>
 </html>
 <!-- fff6fe -->

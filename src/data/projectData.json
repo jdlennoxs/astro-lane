@@ -15,13 +15,6 @@
     },
     {
         "id": "3",
-        "title": "Lane",
-        "link": "https://www.lane.avenuelabs.co/",
-        "logo": "/icons/avenue-icon-alt.png",
-        "shortExcerpt": "Portfolio template for developers and designers."
-    },
-    {
-        "id": "3",
         "title": "Articoole",
         "logo": "/icons/articoole-icon.png",
         "shortExcerpt": "Making content creation a breeze.",

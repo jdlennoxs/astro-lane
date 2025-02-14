@@ -3,6 +3,9 @@ module.exports = {
     content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
     theme: {
         extend: {
+            maxWidth: {
+                "8xl": "96rem"
+            },
             fontFamily: {
                 body: ["Inter", "Sans Serif"],
                 title: ["DM Sans", "Sans Serif"]
