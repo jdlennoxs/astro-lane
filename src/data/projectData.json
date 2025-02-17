@@ -1,6 +1,15 @@
 [
     {
         "id": "1",
+        "title": "Boids",
+        "link": "https://www.avenuelabs.co/",
+        "shortExcerpt": "A dynamic flocking simulation made with three.js",
+        "type": "hero",
+        "component": "boids",
+        "badgeContent": "Touch me!"
+    },
+    {
+        "id": "1",
         "title": "Avenue Labs",
         "logo": "/icons/avenue-icon.png",
         "link": "https://www.avenuelabs.co/",

@@ -2,8 +2,9 @@
 import clsx from "clsx";
 
 const CardType = {
-    default: "bg-white -mt-1 mb-1 -ml-1 card-clip",
-    bordered: "border-[1px] border-neutral-200 text-primary-500 p-8"
+    default: "bg-white -mt-1 mb-1 -ml-1 aspect-square",
+    bordered: "bg-neutral-50 border-[1px] border-neutral-200 text-primary-500 p-8 aspect-square",
+    hero: "bg-white col-span-1 md:col-span-2 row-span-2 overflow-clip text-white aspect-square"
 };
 
 const {
@@ -22,10 +23,11 @@ const href =
     href={href}
     target={link ? target : "_self"}
     class={clsx(
-        "card text-black/60 block aspect-square relative rounded-xl transition-all duration-300",
+        "card text-black/60 block relative rounded-xl transition-all duration-300 cursor-cell",
         {
             [CardType.default]: type === "default",
-            [CardType.bordered]: type === "bordered"
+            [CardType.bordered]: type === "bordered",
+            [CardType.hero]: type === "hero"
         },
         className
     )}
