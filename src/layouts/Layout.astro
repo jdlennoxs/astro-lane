@@ -11,6 +11,7 @@ import GridWrapper from "@/components/grid-wrapper/GridWrapper.astro"
 import { Image } from "@astrojs/image/components";
 import profileImage from "../../public/icons/avenue-icon-alt.png";
 import Logo from '@/components/header/Logo.astro';
+import ToggleMenu from '@/components/header/ToggleMenu.astro';
 
 const currentYear = new Date().getFullYear();
 
@@ -25,7 +26,7 @@ const {
 } = Astro.props;
 
 // Check if we're on a blog post page
-const isBlogPost = Astro.url.pathname.startsWith('/posts/');
+const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
 ---
 
 <!DOCTYPE html>
@@ -43,28 +44,36 @@ const isBlogPost = Astro.url.pathname.startsWith('/posts/');
     </head>
     <body class="bg-white">
         <div class="max-w-8xl mx-auto mt-12">
-        <Header />
-        <main class="pl-24">
-            <div  class={`grid grid-cols-1 sm:grid-cols-4 max-w-8xl mx-auto ${className}`}>
-                <span class="col-span-1 m-4">
-                    <slot name="left-column">
-                        {!isBlogPost && (
-                            <div class="flex items-start gap-6">
-                                <Logo class="h-12 w-12"/>
-                                <div
-                                    class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500"
-                                >
-                                     I'm Jack, I make fun things on the internet and don't really write about them.
-                                </div>
-                            </div>
-                        )}
-                    </slot>
-                </span>
-                <div class="col-span-1 sm:col-span-3">    
-                    <slot />
-                </div>
+            <div class="md:hidden fixed top-4 right-4 z-50">
+                <ToggleMenu />
             </div>
-        </main>
+            <Header />
+            <main class="md:pl-24">
+                <div class={`grid grid-cols-1 lg:grid-cols-4 max-w-8xl mx-auto ${className}`}>
+                    <div class="col-span-1 m-4">
+                        <slot name="left-column">
+                            {!isBlogPost && (
+                                <div class="sticky top-8 ">
+                                    <a href="/">
+                                        <Logo class="h-12 w-12  mb-8"/>
+                                    </a>
+                                    <div
+                                        class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500"
+                                    >
+                                         I'm Jack, I make fun things on the internet and don't really write about them.
+                                    </div>
+                                </div>
+                            )}
+                        </slot>
+                    </div>
+                    <div class="col-span-1 sm:col-span-3">    
+                        <slot />
+                         <div class="text-zinc-500 m-4 mt-32 text-right">
+                            © {new Date().getFullYear()} jdlennoxs
+                         </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </body>
 </html>

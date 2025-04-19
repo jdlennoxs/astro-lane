@@ -1,0 +1,41 @@
+---
+import FormattedDate from "@/components/FormattedDate.astro";
+import { CollectionEntry } from "astro:content";
+
+export interface Props {
+    posts: CollectionEntry<"post">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="list-none space-y-5">
+    {
+        posts.map((post) => (
+            <li class="flex flex-col gap-1">
+                <a
+                    href={`/posts/${post.slug}`}
+                    class="block w-full card-clip p-4 no-underline sm:flex-row sm:gap-8 bg-white rounded-[40px] transition-all duration-300"
+                >
+                    <span class="grid flex-1 gap-1">
+                        <span class="line-clamp-1 md:inline-flex items-center">
+                            <span class="text-plum inline-block font-semibold text-lg">
+                                {post.data.title}
+                            </span>
+                            <span class="md:mb-0 my-2 md:my-0 md:ml-2 text-sm w-max md:w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-zinc-600 block md:inline-flex">
+                                <span class="px-2">
+                                    <FormattedDate
+                                        date={post.data.pubDate}
+                                    />
+                                </span>
+                            </span>
+                        </span>
+                        <span class="text-neutral-700 line-clamp-2 ">
+                            {post.data.description}
+                        </span>
+                    </span>
+                </a>
+            </li>
+        ))
+    }
+</ul> 

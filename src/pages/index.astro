@@ -4,18 +4,15 @@ import SectionContainer from "@/components/SectionContainer.astro";
 import { Image } from "@astrojs/image/components";
 import profileImage from "../../public/icons/avenue-icon-alt.png";
 import projectData from "@/data/projectData.json";
-import CardGroup from "@/components/card/CardGroup.astro";
-import Card from "@/components/card/Card.astro";
-import CardBody from "@/components/card/CardBody.astro";
-import CardImage from "@/components/card/CardImage.astro";
-import CardHeader from "@/components/card/CardHeader.astro";
 import Section from "@/components/section/Section.astro";
 import FormattedDate from "../../src/components/FormattedDate.astro";
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import getSortedTags from "@/utils/getSortedTags";
-import {CanvasContainer as Boids} from "jdls-boids-canvas"
 import Logo from "@/components/header/Logo.astro";
+import { SITE } from "@config";
+import ProjectCardGroup from "@/components/projects/ProjectCardGroup.astro";
+import PostList from "@/components/posts/PostList.astro";
 
 // const components = {
 //     boids: () => <Boids client:only="react" class="z-0"/>
@@ -27,214 +24,78 @@ const tags = getSortedTags(posts).slice(0, 6);
 const sortedPosts = posts
     .filter((post) => post.data.featured == true)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    .slice(0, 5);
+    .slice(0, SITE.postPerPage);
+
+const projects = projectData.slice(0, SITE.postPerPage);
 ---
 
 <Layout
     title="jdlennoxs"
     description=""
 >
-            <h2
-                class="font-medium text-h4 text-neutral-800 m-4 leading-8 tracking-tighter"
-            >
-                Projects
-            </h2>
-<!-- <SectionContainer class="hero--container h-[40vh] relative m-4 rounded-xl overflow-hidden cursor-cell">
-        <CanvasContainer client:only="react" class="z-0"/>
-        
-        <div class="content-container wrap-md md:m-6 absolute bottom-0 select-none">
-            <div class="page-title--content">
-                <h1
-                    class="text-3xl md:text-4xl font-medium tracking-tighter mb-0 text-white lowercase"
-                >
-                    Boids
-                </h1>
-                <p class="text-xl md:text-2xl font-medium tracking-tighter mb-0 text-neutral-50 ">A dynamic flocking simulation made with three.js</p>
-            </div>
+    <SectionContainer class="projects--container">
+         <div class="flex flex-row items-center text-neutral-500">
+          
+              <h2
+            class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter"
+        >
+            Projects
+        </h2>
+            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4">
+                View all projects
+                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+            </a>
         </div>
-        
+        <ProjectCardGroup projects={projects} />
+    </SectionContainer>
 
+    <!--  Projects Container -->
+    <SectionContainer class="blogs--container">
+        <div class="flex flex-row my-4 items-center text-neutral-500">
+          
+              <h2
+            class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter"
+        >
+            Posts
+        </h2>
+            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4">
+                View all posts
+                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+            </a>
+        </div>
 
-    </SectionContainer> -->
-
-     <!-- <Card
-                            target="_blank"
-                            class="h-[40vh]"
-                            type="hero"
-                        >
-                            
-                        <Boids client:only="react" class="z-0"/>
-                        <CardBody>
-                        <div class="card-content absolute bottom-8 left-6 right-6">
-                                    <CardHeader class="">
-                                        boids
-                                    </CardHeader>
-                                    <div class="content break-words text-3xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-700 ">
-                                        <p>A dynamic flocking simulation made with three.js</p>
-                                    </div>
-                                </div>
-                            </CardBody>
-                        </Card> -->
-    
-
-    <!-- <div class="main-wrapper wrap-lg grid gap-16 px-8 md:gap-24 lg:gap-32">
-        <SectionContainer class="hero--container flex flex-col gap-8 mt-32 bg-black">
-            
-    <div class="main-wrapper wrap-lg grid gap-16 px-8 md:gap-24 lg:gap-32 md:grid-cols-3">
-           
-            <div class="content-container wrap-md md:col-span-2">
-                <div class="page-title--content max-w-[54rem] mb-8 lg:mb-4">
-                    <h1
-                        class="text-4xl lg:text-3xl font-medium leading-8 lg:leading-10 tracking-tight lg:tracking-tighter mb-0 text-neutral-700"
-                    >
-                        I&apos;m Astro Lane - a theme made by Avenue Labs
-                    </h1>
-                </div>
-                <div
-                    class="content text-3xl md:text-3xl font-medium leading-8 lg:leading-10 tracking-tight lg:tracking-tighter text-neutral-500"
-                >
-                    I'm a theme designed for Astro that shows how you can create
-                    a personal blog and showcase your projects using this
-                    starter.
-                </div>
-            </div>
-             <Image
-                src={profileImage}
-                alt={"Lane - Avenue Labs"}
-                width={160}
-                height={160}
-                aspectRatio={1 / 1}
-                format={"webp"}
-                class="rounded-full h-32 w-32 bg-neutral-50 object-cover p-4"
-            />
-            </div>
-        </SectionContainer> -->
-        <!-- Header/Hero Section -->
-        <SectionContainer class="projects--container">
-           
-            <CardGroup
-                class="grid scroll-m-24 gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full p-4 mt-[-1rem]"
+        <PostList posts={sortedPosts} />
+    </SectionContainer>
+    <!-- Blog Container -->
+    <SectionContainer class="tags--container">
+        <div class="flex flex-row my-4 items-center text-neutral-500">
+            <h2
+                class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter mb-0"
             >
-                {
-                    projectData.map((project) => (
-                        <Card
-                            key={project.id}
-                            className="col-span-1"
-                            link={project.link}
-                            target="_blank"
-                            type={project.type ?? "bordered"}
-                        >
-                            {!!project.badgeContent && (
-                                <div class="badge-group text-sm w-auto absolute mb-0 m-6 z-10">
-                                    <div class="badge-group--container w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 inline-flex">
-                                        <div class="badge-group--message px-2">
-                                            {project.badgeContent}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {project.component && <Boids client:only="react" class="z-0" avoid duration={120} highlight="pink" />}
-                            <CardBody>
-                                {project.logo &&
-                                <CardImage
-                                    src={project.logo}
-                                    alt="Articoole Banner"
-                                    imageClass="absolute top-0 right-0 m-6 p-4 bg-white rounded-3xl"
-                                    width={80}
-                                    height={80}
-                                />}
-                                <div class="card-content absolute bottom-8 left-6 right-6">
-                                    <CardHeader class="">
-                                        {project.title}
-                                    </CardHeader>
-                                    <div class="content break-words  text-2xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-50 ">
-                                        <p>{project.shortExcerpt}</p>
-                                    </div>
-                                </div>
-                            </CardBody>
-                        </Card>
-                    ))
-                }
-            </CardGroup>
-        </SectionContainer>
-        <!--  Projects Container -->
-        <SectionContainer class="blogs--container">
-            <div class="flex flex-row my-4 items-center text-neutral-500">
-              
-                  <h2
-                class="font-medium text-h4 text-neutral-500 m-4 leading-8 tracking-tighter"
-            >
-                Posts
+                Top Tags
             </h2>
-                <a href="/posts" class="font-medium flex no-underline ml-auto">
-                    View all posts
-                    <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
-                </a>
-            </div>
 
-            <ul class="list-none space-y-5">
-                {
-                    sortedPosts.map((post) => (
-                        <li class="flex flex-col gap-1">
-                            <a
-                                href={`/posts/${post.slug}`}
-                                class="block w-full card-clip p-4 no-underline sm:flex-row sm:gap-8 bg-white rounded-[40px] transition-all duration-300"
-                            >
-                                <span class="grid flex-1 gap-1">
-                                    <span class=" line-clamp-1 md:inline-flex items-center">
-                                        <span class="text-plum inline-block font-semibold text-lg">
-                                            {/* <Logo class="w-5 h-5" variant="icon" /> */}
-                                            {post.data.title}
-                                        </span>
-                                        <span class="md:mb-0 my-2 md:my-0 md:ml-2 text-sm w-max md:w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-zinc-600 block md:inline-flex">
-                                            <span class="px-2">
-                                                <FormattedDate
-                                                    date={post.data.pubDate}
-                                                />
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span class="text-neutral-700 line-clamp-2 ">
-                                        {post.data.description}
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </SectionContainer>
-        <!-- Blog Container -->
-        <SectionContainer class="tags--container">
-            <div class="flex flex-row my-4 items-center text-neutral-500">
-                <h2
-                    class="font-medium text-h4 text-neutral-500 m-4 leading-8 tracking-tighter mb-0"
-                >
-                    Top Tags
-                </h2>
+            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4">
+                View all tags
+                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+            </a>
+        </div>
 
-                <a href="/tags" class="font-medium flex no-underline ml-auto">
-                    View all tags
-                    <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
-                </a>
-            </div>
-
-            <ul class="list-none space-y-5">
-                {
-                    tags.map((tag) => (
-                        <li class={`inline-block my-3 mx-4 underline-offset-8`}>
-                            <a
-                                href={`/tags/${tag.toLowerCase()}`}
-                                class={`text-lg text-zinc-600 pr-2 flex flex-wrap items-center relative underline hover:-top-0.5 hover:text-skin-accent focus-visible:p-1`}
-                            >
-                                <Icon name="tabler:hash" class="w-5 h-5 text-[#9ce0d6]" />
-                                &nbsp;<span>{tag.toLowerCase()}</span>
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </SectionContainer>
-        <!-- Tags Container -->
-    </div>
+        <ul class="list-none space-y-5">
+            {
+                tags.map((tag) => (
+                    <li class={`inline-block my-3 mx-4 underline-offset-8`}>
+                        <a
+                            href={`/tags/${tag.toLowerCase()}`}
+                            class={`text-lg text-zinc-600 pr-2 flex flex-wrap items-center relative underline hover:-top-0.5 hover:text-skin-accent focus-visible:p-1`}
+                        >
+                            <Icon name="tabler:hash" class="w-5 h-5 text-[#9ce0d6]" />
+                            &nbsp;<span>{tag.toLowerCase()}</span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </SectionContainer>
+    <!-- Tags Container -->
 </Layout>

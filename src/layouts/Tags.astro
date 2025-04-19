@@ -20,24 +20,14 @@ const { posts, title, tag } = Astro.props;
     description={`A list of posts from ${SITE.author} in ${SITE.title}`}
 >
     <div
-        class="main-wrapper wrap-sm grid gap-16 px-8 md:gap-24 lg:gap-32 mx-auto"
+        class="main-wrapper wrap-sm grid gap-16 md:gap-24 lg:gap-32 mx-auto"
     >
-        <SectionContainer class="blogs--container mt-32">
-            <a
-                href="/"
-                class="font-medium flex no-underline text-neutral-500 mb-8"
-            >
-                <Icon name="ph:arrow-left-light" class="w-6 h-6 mr-4" />
-                Back to home
-            </a>
-            <h2
-                class="font-medium text-h4 text-neutral-500 my-4 leading-8 tracking-tighter"
-            >
-                Tags:{tag}
-                <span class="ml-2 opacity-70 text-xl"
-                    >(All the posts with the tag "{`${tag}`}")</span
-                >
-            </h2>
+        <SectionContainer class="blogs--container">
+            <div class="flex flex-row my-4 items-center text-neutral-500">
+                <h2 class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter mb-0">
+                    Tags: {tag}
+                </h2>
+            </div>
 
             <ul class="list-none space-y-5">
                 {
@@ -45,14 +35,14 @@ const { posts, title, tag } = Astro.props;
                         <li class="flex flex-col gap-1">
                             <a
                                 href={`/blog/${post.slug}`}
-                                class="block w-full card-clip p-8 no-underline sm:flex-row sm:gap-8 bg-neutral-50 rounded-[40px] transition-all duration-300"
+                                class="block w-full card-clip p-4 no-underline sm:flex-row sm:gap-8 bg-white rounded-[40px] transition-all duration-300"
                             >
                                 <span class="grid flex-1 gap-1">
-                                    <span class="text-neutral-900 line-clamp-1 md:inline-flex items-center">
-                                        <span class="inline-block font-medium">
+                                    <span class="line-clamp-1 md:inline-flex items-center">
+                                        <span class="text-plum inline-block font-semibold text-lg">
                                             {post.data.title}
                                         </span>
-                                        <span class="md:mb-0 my-2 md:my-0 md:ml-2 text-sm w-max md:w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 block md:inline-flex">
+                                        <span class="md:mb-0 my-2 md:my-0 md:ml-2 text-sm w-max md:w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-zinc-600 block md:inline-flex">
                                             <span class="px-2">
                                                 <FormattedDate
                                                     date={post.data.pubDate}
@@ -60,7 +50,7 @@ const { posts, title, tag } = Astro.props;
                                             </span>
                                         </span>
                                     </span>
-                                    <span class="text-neutral-500 line-clamp-2 ">
+                                    <span class="text-neutral-700 line-clamp-2 ">
                                         {post.data.description}
                                     </span>
                                 </span>
@@ -69,6 +59,24 @@ const { posts, title, tag } = Astro.props;
                     ))
                 }
             </ul>
+
+            <nav
+                class="pagination--container flex flex-wrap mx-auto justify-center mt-8 text-neutral-500"
+                aria-label="Back to tags"
+            >
+                <a
+                    href="/tags"
+                    class="select-none flex flex-wrap"
+                    aria-label="Back to tags"
+                >
+                    <Icon
+                        name="ph:arrow-left-light"
+                        class="w-6 h-6 mr-4"
+                        optimize={false}
+                    />
+                    Back to all
+                </a>
+            </nav>
         </SectionContainer>
     </div>
 </Layout>

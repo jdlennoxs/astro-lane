@@ -10,7 +10,7 @@ export const SITE: Site = {
     ogImage: "images/astro-lane.png",
     keywords:
         "Personal portfolio, landing page, page template, developer portfoliom designer portfolio",
-    postPerPage: 5
+    postPerPage: 6
 };
 
 // The site uses iconify - you can find icons on https://iconify.design/.
