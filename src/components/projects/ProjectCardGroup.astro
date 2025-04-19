@@ -15,6 +15,7 @@ interface Project {
     component?: string;
     badgeContent?: string;
     logo?: string;
+    post?: string;
 }
 
 export interface Props {
@@ -32,7 +33,7 @@ const { projects } = Astro.props;
             <Card
                 key={project.id}
                 className="col-span-1"
-                link={project.link}
+                link={project.post}
                 target="_blank"
                 type={project.type ?? "bordered"}
             >
