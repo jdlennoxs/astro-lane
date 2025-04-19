@@ -57,7 +57,7 @@ Here is the sample frontmatter for a post.
 ---
 title: The title of the post
 author: your name
-pubDate: 2023-03-25
+# pubDate is required (e.g., 2023-03-25)
 featured: true
 draft: false
 tags:

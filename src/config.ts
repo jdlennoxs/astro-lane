@@ -40,10 +40,17 @@ export const SOCIALS: SocialMediaObjects = [
     {
         name: "YouTube",
         href: "https://github.com/christian-luntok/astro-lane/",
-        icon: "",
+        icon: "tabler:brand-youtube",
         title: `${SITE.title} on YouTube`,
-        active: false
-    }
+        active: true
+    },
+    {
+        name: "Bluesky",
+        href: "https://github.com/christian-luntok/astro-lane/",
+        icon: "tabler:brand-bluesky",
+        title: `${SITE.title} on Bluesky`,
+        active: true
+    },
     // {
     //     name: "Discord",
     //     href: "https://github.com/christian-luntok/astro-lane/",

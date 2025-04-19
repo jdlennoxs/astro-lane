@@ -2,7 +2,7 @@
 title: "How to configure Astro Lane Theme"
 description: "Astro Lane is an awesome customizable blog theme for Astro, You'll be able to easily personalize everything to suit your unique style. In this post, we'll walk you through some simple ways to make customizations in the config file."
 pubDate: 2023-04-15
-heroImage: ""
+heroImage: "/images/astro-lane.png"
 featured: true
 draft: false
 tags:

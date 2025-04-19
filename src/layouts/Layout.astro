@@ -4,7 +4,7 @@
 import "../styles/globals.scss";
 import SectionContainer from "@/components/SectionContainer.astro";
 import SEO from "@/components/seo/SEO.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import { SOCIALS } from "@config";
 import Header from "@/components/header/Header.astro";
 import GridWrapper from "@/components/grid-wrapper/GridWrapper.astro"
@@ -23,6 +23,9 @@ const {
     twitterhandle,
     image
 } = Astro.props;
+
+// Check if we're on a blog post page
+const isBlogPost = Astro.url.pathname.startsWith('/posts/');
 ---
 
 <!DOCTYPE html>
@@ -41,79 +44,27 @@ const {
     <body class="bg-white">
         <div class="max-w-8xl mx-auto mt-12">
         <Header />
-        <main>
+        <main class="pl-24">
             <div  class={`grid grid-cols-1 sm:grid-cols-4 max-w-8xl mx-auto ${className}`}>
-                <div class="col-span-1 m-4">
-                        <Logo/>
-                        <div
-                            class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500"
-                        >
-                             I'm Jack, I make fun things on the internet and don't really write about them.
-                        </div>
+                <span class="col-span-1 m-4">
+                    <slot name="left-column">
+                        {!isBlogPost && (
+                            <div class="flex items-start gap-6">
+                                <Logo class="h-12 w-12"/>
+                                <div
+                                    class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500"
+                                >
+                                     I'm Jack, I make fun things on the internet and don't really write about them.
+                                </div>
+                            </div>
+                        )}
+                    </slot>
+                </span>
+                <div class="col-span-1 sm:col-span-3">    
+                    <slot />
                 </div>
-            <div class="col-span-3">    
-            <slot />
             </div>
-            </div>
-            <!-- <GridWrapper>
-                <slot />
-            </GridWrapper> -->
         </main>
-
-        <SectionContainer class="mt-32">
-            <footer class="m-4 grid gap-3">
-                <!-- <div class="p-8 grid rounded-xl bg-[#a9ffdb] text-[#95ffd3]"> -->
-                <div class="p-8 grid rounded-xl bg-white border text-[#5162ff]">
-                    <h2
-                        class="font-medium text-3xl md:text-4xl leading-10 tracking-tight lg:tracking-tighter"
-                    >
-                       jdlennoxs
-                    </h2>
-                    <p
-                        class="text-neutral-500 font-medium text-xl md:text-2xl leading-10 tracking-tight lg:tracking-tighter"
-                    >
-                        If you want to know more about tweaking my style, adding
-                        more posts, and making it truly yours, just click on the
-                        GitHub link below to check out my repo.
-                    </p>
-                    <div class="footer-credits text-neutral-500">
-                        <a
-                            class="block text-3xl md:text-5xl lg:text-4xl font-medium mb-2 md:mb-8 lg:mb-4 leading-10 tracking-tighter relative hover:underline hover:-top-0.5 hover:text-skin-accent hover:text-black focus-visible:p-1"
-                            href="mailto:hey@avenuelabs.co"
-                        >
-                            hey@avenuelabs.co
-                        </a>
-                        <div
-                            class="footer-socials font-medium flex gap-6 md:gap-10 max-w-md text-xl md:text-3xl lg:text-2xl leading-10 tracking-tighter"
-                        >
-                            {
-                                SOCIALS.filter((social) => social.active).map(
-                                    (social) => (
-                                        <a
-                                            href={social.href}
-                                            class="relative hover:underline hover:-top-0.5 hover:text-skin-accent hover:text-black focus-visible:p-1 flex items-center"
-                                            target="_blank"
-                                            title={social.title}
-                                        >
-                                            <Icon
-                                                name={social.icon}
-                                                class="w-10 h-10 inline"
-                                            />
-                                        </a>
-                                    )
-                                )
-                            }
-                        </div>
-                    </div>
-                    
-                </div>
-                <span
-                        class="text-neutral-500 text-md flex flex-wrap gap-4 md:gap-0 md:justify-between"
-                    >
-                        <span>Copyright © {currentYear} 🌱 Jack Scott</span>
-                    </span>
-            </footer>
-        </SectionContainer>
         </div>
     </body>
 </html>

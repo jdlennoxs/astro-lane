@@ -6,9 +6,20 @@ import getSortedPosts from "@/utils/getSortedPosts";
 import Posts from "@/layouts/Posts.astro";
 
 const posts = await getCollection("post", ({ data }) => !data.draft);
+console.log('Initial posts collection:', posts.map(post => ({
+    title: post.data.title,
+    pubDate: post.data.pubDate,
+    draft: post.data.draft
+})));
+
 const sortedPosts = getSortedPosts(posts);
 const totalPages = getPageNumbers(sortedPosts.length);
 const paginatedPosts = sortedPosts.slice(0, SITE.postPerPage);
+
+console.log('Final paginated posts:', paginatedPosts.map(post => ({
+    title: post.data.title,
+    pubDate: post.data.pubDate
+})));
 ---
 
 <Posts

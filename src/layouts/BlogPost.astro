@@ -3,8 +3,10 @@ import type { CollectionEntry } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import Layout from "./Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@config";
+import { Fragment } from "react";
+import Logo from "@/components/header/Logo.astro";
 
 export interface Props {
     post: CollectionEntry<"post">;
@@ -15,11 +17,20 @@ const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage } = post.data;
 
 const ogUrl = new URL(
-    heroImage ? heroImage : `${title.replace(/\s+/g, "-").toLowerCase()}.png`,
+    heroImage ? heroImage : `${encodeURIComponent(post.slug)}.png`,
     Astro.url.origin
 ).href;
 
 const { Content } = await post.render();
+
+// Extract table of contents from the content
+const tocRegex = /## Table of contents\n([\s\S]*?)(?=##|$)/;
+const tocMatch = post.body.match(tocRegex);
+const tableOfContents = tocMatch ? tocMatch[1].trim() : null;
+
+// Extract headings from the content
+const headingsRegex = /^##\s+(.+)$/gm;
+const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
 ---
 
 <Layout
@@ -27,57 +38,97 @@ const { Content } = await post.render();
     description={description}
     image={ogUrl}
 >
-    <SectionContainer class="wrap wrap-px grid gap-8 px-4 sm:gap-16 sm:px-8">
-        <div class="flex mt-32">
-            <div class="content--container flex-1 md:pr-6">
-                <article
-                    class="mx-auto prose prose-neutral prose-headings:font-medium prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h5:text-lg prose-h6:text-base prose-h2:scroll-mt-4 prose-h3:scroll-mt-4 prose-h4:scroll-mt-4 prose-h5:scroll-mt-4 prose-h6:scroll-mt-4 prose-headings:my-8 prose-headings:font-title"
-                >
-                    <a
-                        class="blog-back-button cursor-pointer text-neutral-500 flex no-underline mb-16"
-                        href="/blog/"
-                    >
-                        <Icon name="ph:arrow-left-light" class="w-6 h-6 mr-4" />
-                        Back
-                    </a>
-                    <div class="post--title">
-                        <h1 class="text-3xl md:text-4xl">
-                            {title}
-                        </h1>
-                    </div>
-                    <span
-                        class="mb-4 text-sm w-max md:w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 block md:inline-flex"
-                    >
-                        <span class="px-2">
-                            <FormattedDate date={pubDate} />
-                        </span>
-                    </span>
-                    {
-                        updatedDate && (
-                            <div class="last-updated-on">
-                                Last updated on{" "}
-                                <FormattedDate date={updatedDate} />
-                            </div>
-                        )
-                    }
-                    {
-                        heroImage && (
-                            <img
-                                width={720}
-                                height={360}
-                                src={heroImage}
-                                alt={title}
-                            />
-                        )
-                    }
-                    <div
-                        class="prose-code:whitespace-pre-wrap prose-code:break-words prose-code:overflow-x-auto"
-                    >
-                        <Content />
-                    </div>
-                </article>
+
+    <Fragment slot="left-column">
+                  <a
+                class="blog-back-button cursor-pointer text-neutral-500 flex no-underline mb-16"
+                href="/blog/"
+            >
+                <Icon name="ph:arrow-left-light" class="w-6 h-6 mr-4" />
+                Back
+            </a>
+        {(tableOfContents || headings.length > 0) && (
+            <div class="sticky top-8">
+                <div class="prose prose-sm">
+                    <ul class="list-none space-y-2">
+                        {tableOfContents 
+                            ? tableOfContents.split('\n').map((item) => {
+                                const link = item.trim().replace(/^-\s*/, '');
+                                const anchor = link.toLowerCase().replace(/\s+/g, '-');
+                                return (
+                                    <li>
+                                        <a href={`#${anchor}`} class="text-neutral-500 hover:text-neutral-900">
+                                            {link}
+                                        </a>
+                                    </li>
+                                );
+                            })
+                            : headings.map((heading) => {
+                                const anchor = heading.toLowerCase().replace(/\s+/g, '-');
+                                return (
+                                    <li>
+                                        <a href={`#${anchor}`} class="text-neutral-500 hover:text-neutral-900">
+                                            {heading}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                    </ul>
+                </div>
             </div>
-        </div>
+        )}
+    </Fragment>
+    <SectionContainer class="wrap wrap-px">
+       
+         {
+                heroImage && (
+                    <img
+                        width={720}
+                        height={360}
+                        src={heroImage}
+                        alt={title}
+                        class="rounded-lg border border-neutral-200 w-auto"
+                    />
+                )
+            }
+           
+        <article
+            class="prose prose-neutral prose-headings:font-medium prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h5:text-lg prose-h6:text-base prose-h2:scroll-mt-4 prose-h3:scroll-mt-4 prose-h4:scroll-mt-4 prose-h5:scroll-mt-4 prose-h6:scroll-mt-4 prose-headings:my-8 prose-headings:font-title"
+        >
+           
+              
+            <div class="post--title flex flex-col gap-4 pb-4 border-b-2 mb-4 border-neutral-200">
+                <div class="flex items-center gap-4">
+                    <Logo class="w-12 h-12" />
+                    <h1 class="text-4xl md:text-5xl text-neutral-900 text-body text-[#5162FF]">
+                        {title}
+                    </h1>
+                </div>
+                <span
+                    class="text-sm w-fit items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 block md:inline-flex"
+                >
+                    <span class="px-2">
+                        <FormattedDate date={pubDate} /> 
+                        {updatedDate && <>- updated <FormattedDate date={updatedDate} /></>}
+                    </span>
+                </span>
+            </div>
+        
+            
+                <!-- {
+                updatedDate && (
+                    <div class="last-updated-on">
+                        Last updated on{" "}
+                        <FormattedDate date={updatedDate} />
+                    </div>
+                )
+            } -->
+            <div
+                class="prose-code:whitespace-pre-wrap prose-code:break-words prose-code:overflow-x-auto"
+            >
+                <Content />
+            </div>
+        </article>
     </SectionContainer>
 </Layout>
 
@@ -96,7 +147,7 @@ const { Content } = await post.render();
         if (window.history.length > 1) {
             window.history.back();
         } else {
-            window.location.href = "/blog/";
+            window.location.href = "/posts/";
         }
     }
 </script>

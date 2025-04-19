@@ -25,6 +25,7 @@ export type SocialMediaTypes =
     | "Facebook"
     | "Instagram"
     | "LinkedIn"
+    | "Bluesky"
     | "Mail"
     | "Twitter"
     | "YouTube"

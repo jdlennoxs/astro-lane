@@ -2,6 +2,7 @@
 title: "Astro Lane V1.0.0"
 description: "Are you looking to personalize your blog's look and feel? Look no further than Astro Lane, the latest AstroJS theme from Avenue Labs!"
 pubDate: 2023-04-24
+updatedDate: 2025-01-01
 heroImage: "/images/astro-lane.png"
 featured: true
 draft: false

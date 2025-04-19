@@ -2,7 +2,7 @@
 import FormattedDate from "@/components/FormattedDate.astro";
 import Layout from "@/layouts/Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@config";
 import { CollectionEntry } from "astro:content";
 
@@ -62,7 +62,7 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
                     posts.map((post) => (
                         <li class="flex flex-col gap-1">
                             <a
-                                href={`/post/${post.slug}`}
+                                href={`/posts/${post.slug}`}
                                 class="block w-full card-clip p-8 no-underline sm:flex-row sm:gap-8 bg-neutral-50 rounded-[40px] transition-all duration-300"
                             >
                                 <span class="grid flex-1 gap-1">
@@ -95,7 +95,7 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
                     >
                         <a
                             tabindex={prev === "disabled" ? "-1" : "0"}
-                            href={`/blog${
+                            href={`/posts${
                                 pageNum - 1 !== 1 ? "/" + (pageNum - 1) : "/"
                             }`}
                             class={`mr-4 select-none flex flex-wrap ${
@@ -114,7 +114,7 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
                         </a>
                         <a
                             tabindex={next === "disabled" ? "-1" : "0"}
-                            href={`/blog/${pageNum + 1}`}
+                            href={`/posts/${pageNum + 1}`}
                             class={`ml-4 select-none flex flex-wrap ${
                                 next === "disabled"
                                     ? "disabled select-none pointer-events-none opacity-70"

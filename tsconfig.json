@@ -33,7 +33,7 @@
       ]
     },
     "types": [
-      "@astrojs/image/client"
+      "@astrojs/client"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "react"

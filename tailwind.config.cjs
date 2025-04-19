@@ -8,7 +8,7 @@ module.exports = {
             },
             fontFamily: {
                 body: ["Inter", "Sans Serif"],
-                title: ["DM Sans", "Sans Serif"]
+                title: ["Inter", "Sans Serif"]
             },
             fontSize: {
                 body: [
