@@ -5,7 +5,6 @@ import Layout from "./Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
 import { Icon } from "astro-icon/components";
 import { SITE } from "@config";
-import { Fragment } from "react";
 import Logo from "@/components/header/Logo.astro";
 
 export interface Props {
@@ -92,7 +91,7 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
             </div>
         )}
 
-        <SectionContainer class="wrap wrap-px">
+        <SectionContainer>
             <article
                 class="prose prose-neutral prose-headings:font-medium prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h5:text-lg prose-h6:text-base prose-h2:scroll-mt-4 prose-h3:scroll-mt-4 prose-h4:scroll-mt-4 prose-h5:scroll-mt-4 prose-h6:scroll-mt-4 prose-h2:my-8 prose-h3:my-8 prose-h4:my-8 prose-h5:my-8 prose-h6:my-8 prose-headings:font-title"
             >

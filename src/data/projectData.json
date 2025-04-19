@@ -3,6 +3,7 @@
         "id": "1",
         "title": "Boids",
         "link": "https://www.avenuelabs.co/",
+        "post": "/posts/simulating-boids-with-threejs",
         "shortExcerpt": "A dynamic flocking simulation made with three.js",
         "type": "hero",
         "component": "boids",

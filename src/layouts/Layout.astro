@@ -2,16 +2,20 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <SEO /> component.
 import "../styles/globals.scss";
-import SectionContainer from "@/components/SectionContainer.astro";
 import SEO from "@/components/seo/SEO.astro";
-import { Icon } from "astro-icon/components";
-import { SOCIALS } from "@config";
 import Header from "@/components/header/Header.astro";
-import GridWrapper from "@/components/grid-wrapper/GridWrapper.astro"
-import { Image } from "@astrojs/image/components";
-import profileImage from "../../public/icons/avenue-icon-alt.png";
 import Logo from '@/components/header/Logo.astro';
 import ToggleMenu from '@/components/header/ToggleMenu.astro';
+
+interface Props {
+    class?: string;
+    title: string;
+    description?: string;
+    keywords?: string;
+    url?: string;
+    image?: string;
+    children?: any;
+}
 
 const currentYear = new Date().getFullYear();
 
@@ -21,7 +25,6 @@ const {
     description,
     keywords,
     url,
-    twitterhandle,
     image
 } = Astro.props;
 
@@ -69,7 +72,7 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
                     <div class="col-span-1 sm:col-span-3">    
                         <slot />
                          <div class="text-zinc-500 m-4 mt-32 text-right">
-                            © {new Date().getFullYear()} jdlennoxs
+                            © {currentYear} jdlennoxs
                          </div>
                     </div>
                 </div>

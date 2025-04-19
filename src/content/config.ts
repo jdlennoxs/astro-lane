@@ -19,7 +19,8 @@ const post = defineCollection({
         tags: z.array(z.string()).default(["others"]),
         author: z.string().optional(),
         draft: z.boolean().optional(),
-        featured: z.boolean().optional()
+        featured: z.boolean().optional(),
+        project: z.boolean().optional()
     })
 });
 

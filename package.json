@@ -24,7 +24,8 @@
         "start": "astro dev",
         "build": "astro build",
         "preview": "astro preview",
-        "astro": "astro"
+        "astro": "astro",
+        "generate-favicons": "node scripts/generate-favicons.js"
     },
     "dependencies": {
         "@astrojs/image": "^0.18.0",

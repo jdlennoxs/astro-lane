@@ -1,28 +1,20 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
-import { Image } from "@astrojs/image/components";
-import profileImage from "../../public/icons/avenue-icon-alt.png";
 import projectData from "@/data/projectData.json";
-import Section from "@/components/section/Section.astro";
-import FormattedDate from "../../src/components/FormattedDate.astro";
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import getSortedTags from "@/utils/getSortedTags";
-import Logo from "@/components/header/Logo.astro";
 import { SITE } from "@config";
 import ProjectCardGroup from "@/components/projects/ProjectCardGroup.astro";
 import PostList from "@/components/posts/PostList.astro";
 
-// const components = {
-//     boids: () => <Boids client:only="react" class="z-0"/>
-// }
 
 const posts = await getCollection("post");
 
 const tags = getSortedTags(posts).slice(0, 6);
 const sortedPosts = posts
-    .filter((post) => post.data.featured == true)
+    .filter((post) => post.data.featured == true && !post.data.project)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .slice(0, SITE.postPerPage);
 
