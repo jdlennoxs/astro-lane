@@ -34,7 +34,7 @@
       ]
     },
     "types": [
-      "@astrojs/client"
+      "astrojs/client"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "react"
