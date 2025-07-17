@@ -2,7 +2,7 @@
     {
         "id": "1",
         "title": "Boids",
-        "link": "https://www.avenuelabs.co/",
+        "link": "",
         "post": "/posts/simulating-boids-with-threejs",
         "shortExcerpt": "A dynamic flocking simulation made with three.js",
         "type": "hero",
@@ -10,18 +10,17 @@
         "badgeContent": "Touch me!"
     },
     {
-        "id": "1",
-        "title": "Avenue Labs",
-        "logo": "/icons/avenue-icon.png",
-        "link": "https://www.avenuelabs.co/",
-        "shortExcerpt": "After-hours digital playground."
+        "id": "2",
+        "title": "Re:Tuned",
+        "link": "https://retuned.jdlennoxs.com/",
+        "image": "/images/retuned-wide.gif",
+        "shortExcerpt": "Swipeable music discovery"
     },
     {
         "id": "2",
-        "title": "Pathway",
-        "link": "https://pathway.avenuelabs.co/",
-        "logo": "/icons/pathway-icon.png",
-        "shortExcerpt": "A NextJS Tailwind CSS SAAS Landing Page."
+        "title": "DEAD INTERNET SOCIETY",
+        "image": "/images/dead-internet-society.png",
+        "shortExcerpt": ""
     },
     {
         "id": "3",
