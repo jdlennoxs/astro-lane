@@ -1,0 +1,26 @@
+---
+// src/components/card/CardBackground.astro
+export interface Props {
+    src: string;
+    alt: string;
+    imageClass?: string; // Allow additional classes
+    overlayClass?: string; // Allow customization of overlay
+}
+
+const { src, alt, imageClass, overlayClass } = Astro.props;
+---
+
+<div class="absolute inset-0 w-full h-full">
+     
+    <img
+        src={src}
+        alt={alt}
+        class:list={[
+            "absolute inset-0 w-full h-full object-cover z-0", // Base image styles
+            imageClass,
+        ]}
+        loading="lazy"
+        decoding="async"
+    />
+  
+</div> 

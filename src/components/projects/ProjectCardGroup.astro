@@ -4,6 +4,7 @@ import Card from "@/components/card/Card.astro";
 import CardBody from "@/components/card/CardBody.astro";
 import CardImage from "@/components/card/CardImage.astro";
 import CardHeader from "@/components/card/CardHeader.astro";
+import CardBackground from "@/components/card/CardBackground.astro";
 import {CanvasContainer as Boids} from "jdls-boids-canvas"
 
 interface Project {
@@ -16,6 +17,7 @@ interface Project {
     badgeContent?: string;
     logo?: string;
     post?: string;
+    image?: string;
 }
 
 export interface Props {
@@ -37,6 +39,9 @@ const { projects } = Astro.props;
                 target="_blank"
                 type={project.type ?? "bordered"}
             >
+                {project.image && (
+                    <CardBackground src={project.image} alt={project.title} />
+                )}
                 {!!project.badgeContent && (
                     <div class="badge-group text-sm w-auto absolute mb-0 m-6 z-10">
                         <div class="badge-group--container w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 inline-flex">
@@ -58,11 +63,12 @@ const { projects } = Astro.props;
                         width={80}
                         height={80}
                     />}
-                    <div class="card-content absolute bottom-8 left-6 right-6">
+                    <div class="absolute bottom-0 left-0 right-0 h-48 backdrop-blur-xs bg-black/50 [mask-image:linear-gradient(to_top,black_20%,transparent_100%)] pointer-events-none"></div>
+                    <div class="card-content absolute bottom-0 left-0 right-0 p-6 z-10">
                         <CardHeader class="">
                             {project.title}
                         </CardHeader>
-                        <div class="content break-words  text-2xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-50 ">
+                        <div class="content break-words text-2xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-50">
                             <p>{project.shortExcerpt}</p>
                         </div>
                     </div>
