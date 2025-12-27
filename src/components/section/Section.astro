@@ -1,8 +1,19 @@
 ---
-const { class: className } = Astro.props;
+import { clsx } from "clsx";
+
+export interface Props {
+    class?: string;
+    height?: "screen" | "auto";
+}
+
+const { class: className, height = "screen" } = Astro.props;
+
+const heightClasses = {
+    screen: "h-screen",
+    auto: "h-auto",
+};
 ---
 
-
-<section class={`h-screen ${className && className}`}>
+<section class={clsx(heightClasses[height], className)}>
     <slot />
 </section>

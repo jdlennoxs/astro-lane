@@ -10,17 +10,17 @@ export interface Props {
 const { src, alt, imageClass, overlayClass } = Astro.props;
 ---
 
-<div class="absolute inset-0 w-full h-full">
+<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden">
      
     <img
         src={src}
         alt={alt}
         class:list={[
-            "absolute inset-0 w-full h-full object-cover z-0", // Base image styles
+            "absolute inset-0 w-full h-full object-cover z-0 rounded-xl", // Base image styles
             imageClass,
         ]}
         loading="lazy"
         decoding="async"
     />
   
-</div> 
+</div>

@@ -20,7 +20,14 @@ const post = defineCollection({
         author: z.string().optional(),
         draft: z.boolean().optional(),
         featured: z.boolean().optional(),
-        project: z.boolean().optional()
+        project: z.boolean().optional(),
+        type: z.enum(['post', 'project']).default('post'),
+        projectMetadata: z.object({
+            techStack: z.array(z.string()).optional(),
+            githubLink: z.string().optional(),
+            liveLink: z.string().optional()
+        }).optional(),
+        heroType: z.string().optional()
     })
 });
 

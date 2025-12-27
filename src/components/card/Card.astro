@@ -1,36 +1,46 @@
 ---
-import clsx from "clsx";
+import { clsx } from "clsx";
 
-const CardType = {
-    default: "bg-white -mt-1 mb-1 -ml-1 aspect-square",
-    bordered: "bg-neutral-50 border-[1px] border-neutral-200 text-primary-500 p-8 aspect-square xl:aspect-auto",
-    hero: "bg-white col-span-1 md:col-span-2 overflow-clip text-white aspect-square md:aspect-[4/3]"
-};
+export interface Props {
+    as?: "div" | "a";
+    class?: string;
+    href?: string;
+    target?: string;
+    rel?: string;
+    aspectRatio?: "square" | "4/3" | "auto";
+    bordered?: boolean;
+}
 
 const {
-    link = "",
+    as: Element = "div",
     class: className,
-    target = "",
-    type = "default"
+    href,
+    aspectRatio = "auto",
+    bordered = false,
+    ...rest
 } = Astro.props;
 
-const Element = link ? "a" : "div";
-const href =
-    typeof link === "string" ? link : link?.href != null ? link.href : "";
----
+const target = href && (Astro.props.target || "_blank");
+const rel = target === "_blank" ? "noopener noreferrer" : Astro.props.rel;
 
+const aspectRatioClasses = {
+    square: "aspect-square",
+    "4/3": "aspect-[4/3]",
+    auto: "aspect-auto",
+};
+---
 <Element
     href={href}
-    target={link ? target : "_self"}
+    target={target}
+    rel={rel}
     class={clsx(
-        "card text-black/60 block relative rounded-xl transition-all duration-300 cursor-cell overflow-hidden",
-        {
-            [CardType.default]: type === "default",
-            [CardType.bordered]: type === "bordered",
-            [CardType.hero]: type === "hero"
-        },
+        "card group relative block h-full w-full rounded-xl text-black/60 transition-all duration-300",
+        href && "cursor-pointer overflow-hidden focus-visible:outline-plum",
+        aspectRatioClasses[aspectRatio],
+        bordered && "border border-neutral-300",
         className
     )}
+    {...rest}
 >
     <slot />
 </Element>

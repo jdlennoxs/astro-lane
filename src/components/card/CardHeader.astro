@@ -1,15 +1,21 @@
 ---
-import clsx from "clsx";
-const { class: className } = Astro.props;
+import { clsx } from "clsx";
+
+export interface Props {
+    as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    class?: string;
+}
+
+const { as: Element = "h2", class: className } = Astro.props;
 ---
 
-<div class="card--header flex flex-row w-auto items-center justify-between">
-    <h2
+<div class="card--header">
+    <Element
         class={clsx(
-            "font-medium text-zinc-800 mb-0 text-3xl leading-9 tracking-tighter",
+            "font-medium text-zinc-800 text-3xl leading-9 tracking-tighter",
             className
         )}
     >
         <slot />
-    </h2>
+    </Element>
 </div>

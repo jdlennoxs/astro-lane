@@ -10,11 +10,12 @@
 **/
 
 html {
+    font-size: 17px;
 }
 
 body {
     font-family: general-variables.$body-font;
-    letter-spacing: functions.rem(-0.5);
+    letter-spacing: functions.rem(-0.25);
 }
 
 .main {
@@ -38,7 +39,7 @@ body {
 @layer components {
     .header-nav--menu {
         .active {
-            @apply bg-primary-700 text-white lg:text-black lg:bg-white;
+            @apply bg-primary-500 text-white lg:text-black lg:bg-white;
         }
     }
 }

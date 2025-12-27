@@ -1,0 +1,62 @@
+---
+import { Icon } from "astro-icon/components";
+import planet from "./planet.svg?raw";
+import { SOCIALS } from "@config";
+
+export interface Props {
+    isMobile?: boolean;
+}
+
+const { isMobile = false } = Astro.props;
+
+const navLinks = [
+    { href: "/projects", text: "Projects" },
+    { href: "/posts", text: "Posts" },
+    { href: "/about", text: "About" },
+];
+---
+
+{isMobile ? (
+    <ul class="space-y-4">
+        <li>
+            <a class="block px-4 py-2 text-lg font-medium text-center text-secondary-600 hover:text-secondary-900 dark:text-secondary-200 dark:hover:text-white transition-colors duration-300" href="/">
+                Home
+            </a>
+        </li>
+        {navLinks.map(link => (
+            <li>
+                <a class="block px-4 py-2 text-lg font-medium text-center text-secondary-600 hover:text-secondary-900 dark:text-secondary-200 dark:hover:text-white transition-colors duration-300 " href={link.href}>
+                    {link.text}
+                </a>
+            </li>
+        ))}
+    </ul>
+) : (
+    <ul class="flex w-full flex-col items-center pt-4 text-xl md:w-auto md:pt-4 md:text-base">
+        <li class="relative w-20 h-20 flex justify-center mb-4">
+            <a class="flex items-center justify-center w-12 h-12 text-secondary-600 hover:text-secondary-900 dark:text-secondary-200 dark:hover:text-white transition-all duration-300 ease-in-out hover:scale-110" href="/" aria-label="Home">
+                <Fragment set:html={planet} />
+            </a>
+        </li>
+        {navLinks.map(link => (
+            <li class="relative w-24 h-24 flex justify-center">
+                <a class="absolute whitespace-nowrap px-2 py-3 font-medium transition-all duration-300 ease-in-out text-secondary-600 hover:text-secondary-900 dark:text-secondary-200 dark:hover:text-white transform rotate-90 origin-center font-sans" href={link.href}>
+                    {link.text}
+                </a>
+            </li>
+        ))}
+    </ul>
+)}
+
+<div class:list={["mt-auto flex flex-col items-center", isMobile ? "gap-4" : "space-y-4"]}>
+    <div class:list={["flex items-center", isMobile ? "flex-row flex-wrap gap-4 justify-center" : "flex-col space-y-4 md:flex"]}>
+        {SOCIALS.filter(social => social.active).map(social => (
+            <a href={social.href} class="inline-flex items-center rounded-lg p-2.5 text-sm text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:text-secondary-200 dark:hover:bg-secondary-800 dark:hover:text-white dark:focus:ring-secondary-700 transition-colors duration-300" target="_blank" title={social.title}>
+                <Icon name={social.icon} class="w-5 h-5" />
+            </a>
+        ))}
+        <a class="inline-flex items-center rounded-lg p-2.5 text-sm text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:text-secondary-200 dark:hover:bg-secondary-800 dark:hover:text-white dark:focus:ring-secondary-700 transition-colors duration-300" aria-label="RSS Feed" href="/rss.xml">
+            <Icon name="tabler:satellite" class="h-5 w-5" />
+        </a>
+    </div>
+</div>

@@ -37,50 +37,24 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
     description={description}
     image={ogUrl}
 >
-    <div slot="left-column" class="sticky top-8">
+    <!-- <div slot="left-column" class="sticky top-8">
         <a
-            class="blog-back-button cursor-pointer text-neutral-500 flex items-center no-underline mb-8 hover:text-neutral-900 prose-sm"
+            class="blog-back-button cursor-pointer text-secondary-500 dark:text-secondary-400 flex items-center no-underline mb-8 hover:text-secondary-900 dark:hover:text-secondary-100 transition-colors duration-300 prose-sm"
             href="/"
         >
             <Logo class="h-12 w-12" />
         </a>
-        {(tableOfContents || headings.length > 0) && (
-                <div class="prose prose-sm">
-                    <ul class="list-none space-y-2">
-                        {tableOfContents 
-                            ? tableOfContents.split('\n').map((item) => {
-                                const link = item.trim().replace(/^-\s*/, '');
-                                const anchor = link.toLowerCase().replace(/\s+/g, '-');
-                                return (
-                                    <li>
-                                        <a href={`#${anchor}`} class="text-neutral-500 hover:text-neutral-900">
-                                            {link}
-                                        </a>
-                                    </li>
-                                );
-                            })
-                            : headings.map((heading) => {
-                                const anchor = heading.toLowerCase().replace(/\s+/g, '-');
-                                return (
-                                    <li>
-                                        <a href={`#${anchor}`} class="text-neutral-500 hover:text-neutral-900">
-                                            {heading}
-                                        </a>
-                                    </li>
-                                );
-                            })}
-                    </ul>
-                </div>
-        )}
-    </div>
+       
+    </div> -->
 
-    <div class="main-wrapper wrap-lg grid mx-4">
-        <h2 class="font-medium text-h4 text-zinc-800 my-4 leading-8 tracking-tighter">
+    <div class="main-wrapper wrap-lg mx-4 grid grid-cols-[1fr_min(65ch,100%)_1fr]">
+        <div class="col-start-2 row-span-1 row-start-1">
+        <h2 class="font-medium text-h4 text-text dark:text-cream my-4 leading-8 tracking-tighter">
             {title}
         </h2>
 
         {heroImage && (
-            <div class="col-span-full relative border-[1px] border-neutral-200 rounded-xl">
+            <div class="relative rounded-xl">
                 <img
                     width={1920}
                     height={960}
@@ -90,19 +64,48 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
                 />
             </div>
         )}
+        </div>  
 
-        <SectionContainer>
+        <!-- <SectionContainer class="row-span-1 row-start-2 col-span-full"> -->
+             {(tableOfContents || headings.length > 0) && (
+                <div class="prose prose-sm dark:prose-invert col-start-1 font-sans row-start-2">
+                    <ul class="list-none space-y-2">
+                        {tableOfContents 
+                            ? tableOfContents.split('\n').map((item) => {
+                                const link = item.trim().replace(/^-\s*/, '');
+                                const anchor = link.toLowerCase().replace(/\s+/g, '-');
+                                return (
+                                    <li>
+                                        <a href={`#${anchor}`} class="text-secondary-400 dark:text-secondary-400 hover:text-secondary-900text-sm dark:hover:text-secondary-100 transition-colors duration-300 no-underline hover:underline">
+                                            {link}
+                                        </a>
+                                    </li>
+                                );
+                            })
+                            : headings.map((heading) => {
+                                const anchor = heading.toLowerCase().replace(/\s+/g, '-');
+                                return (
+                                    <li>
+                                        <a href={`#${anchor}`} class="text-secondary-400 dark:text-secondary-400 hover:text-secondary-900 text-xs dark:hover:text-secondary-100 transition-colors duration-300 no-underline hover:underline">
+                                            {heading}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                    </ul>
+                </div>
+        )}
             <article
-                class="prose prose-neutral prose-headings:font-medium prose-h2:text-xl prose-h3:text-xl prose-h4:text-lg prose-h5:text-lg prose-h6:text-base prose-h2:scroll-mt-4 prose-h3:scroll-mt-4 prose-h4:scroll-mt-4 prose-h5:scroll-mt-4 prose-h6:scroll-mt-4 prose-h2:mt-8 prose-h2:mb-2 prose-h3:mt-8 prose-h4:mt-8 prose-h5:mt-8 prose-h6:mt-8 prose-h3:mb-2 prose-headings:font-title prose-h2:text-plum prose-h2:font-semibold"
+                class="prose prose-text dark:prose-invert prose-headings:font-medium prose-h2:text-lg prose-h3:text-lg prose-h4:text-base prose-h5:text-base prose-h6:text-base prose-h2:scroll-mt-4 prose-h3:scroll-mt-4 prose-h4:scroll-mt-4 prose-h5:scroll-mt-4 prose-h6:scroll-mt-4 prose-h2:mt-8 prose-h2:mb-2 prose-h3:mt-8 prose-h4:mt-8 prose-h5:mt-8 prose-h6:mt-8 prose-h3:mb-2 prose-headings:font-body prose-h2:text-text dark:prose-h2:text-cream grid col-start-2"
             >
-                <div class="flex flex-col gap-1">
-                    <span class="text-sm w-fit items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-zinc-600 block md:inline-flex mt-4">
+                <!-- <div class="flex flex-col gap-1">
+                    <span class="text-sm w-fit items-center rounded-full border border-secondary-200 dark:border-secondary-700 bg-background px-1 py-[2px] font-medium text-secondary-600 dark:text-secondary-200 block md:inline-flex mt-4 transition-colors duration-300">
                         <span class="px-2">
                             <FormattedDate date={pubDate} />
                             {updatedDate && <>- updated <FormattedDate date={updatedDate} /></>}
                         </span>
                     </span>
-                </div>
+                </div> -->
 
                 <div
                     class="prose-code:whitespace-pre-wrap prose-code:break-words prose-code:overflow-x-auto"
@@ -110,7 +113,7 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
                     <Content />
                 </div>
             </article>
-        </SectionContainer>
+        <!-- </SectionContainer> -->
     </div>
 </Layout>
 

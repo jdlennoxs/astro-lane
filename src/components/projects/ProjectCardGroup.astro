@@ -5,7 +5,9 @@ import CardBody from "@/components/card/CardBody.astro";
 import CardImage from "@/components/card/CardImage.astro";
 import CardHeader from "@/components/card/CardHeader.astro";
 import CardBackground from "@/components/card/CardBackground.astro";
-import {CanvasContainer as Boids} from "jdls-boids-canvas"
+import 'jdls-boids-canvas';
+import CardContent from "@/components/card/CardContent.astro";
+import { clsx } from "clsx";
 
 interface Project {
     id: string;
@@ -28,52 +30,63 @@ const { projects } = Astro.props;
 ---
 
 <CardGroup
-    class="grid scroll-m-24 gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full p-4 mt-[-1rem]"
+    class="grid scroll-m-24 gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full p-4"
 >
     {
         projects.map((project) => (
             <Card
-                key={project.id}
-                className="col-span-1"
-                link={project.post}
+                as="a"
+                href={project.post}
                 target="_blank"
-                type={project.type ?? "bordered"}
+                class={clsx(
+                    "col-span-1",
+                    project.type === "hero" && "md:col-span-2"
+                )}
+                aspectRatio="4/3"
+                bordered={project.type === "bordered"}
             >
                 {project.image && (
                     <CardBackground src={project.image} alt={project.title} />
                 )}
                 {!!project.badgeContent && (
                     <div class="badge-group text-sm w-auto absolute mb-0 m-6 z-10">
-                        <div class="badge-group--container w-auto items-center rounded-full border border-neutral-300 bg-white px-1 py-[2px] font-medium text-primary-500 inline-flex">
+                        <div class="badge-group--container w-auto items-center rounded-full border border-secondary-200 dark:border-secondary-700 bg-background px-1 py-[2px] font-medium text-primary-500 inline-flex transition-colors duration-300">
                             <div class="badge-group--message px-2">
                                 {project.badgeContent}
                             </div>
                         </div>
                     </div>
                 )}
-               {project.component && <Boids 
-                        client:only="react" class="z-0" avoid 
-                        duration={120} highlight="pink" />}
+                {project.component && <boids-canvas background-color="#5162FF" light-color="#FFFCEC" fog-color="#9DA7FF" boid-color="#40e0d0" highlight="#ffc0cb" count="150" use-orbit-controls="true" duration="30" forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}' orientation-slerp="0.2" />}
                 <CardBody>
                     {project.logo &&
                     <CardImage
                         src={project.logo}
                         alt="Articoole Banner"
-                        imageClass="absolute top-0 right-0 m-6 p-4 bg-white rounded-3xl"
+                        imageClass="absolute top-0 right-0 m-6 p-4 bg-background rounded-3xl transition-colors duration-300"
                         width={80}
                         height={80}
                     />}
-                    <div class="absolute bottom-0 left-0 right-0 h-48 backdrop-blur-xs bg-black/50 [mask-image:linear-gradient(to_top,black_20%,transparent_100%)] pointer-events-none"></div>
-                    <div class="card-content absolute bottom-0 left-0 right-0 p-6 z-10">
+                    {/* <div class="absolute bottom-0 left-0 right-0 h-48 backdrop-blur-xs bg-black/50 [mask-image:linear-gradient(to_top,black_20%,transparent_100%)] pointer-events-none rounded-xl"></div> */}
+                    {/* <CardContent class="absolute bottom-0 left-0 right-0 p-6 z-10 rounded-b-xl">
                         <CardHeader class="">
                             {project.title}
                         </CardHeader>
                         <div class="content break-words text-2xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-50">
                             <p>{project.shortExcerpt}</p>
                         </div>
-                    </div>
+                    </CardContent> */}
                 </CardBody>
             </Card>
         ))
     }
-</CardGroup> 
+</CardGroup>
+
+<script>
+    // Only load the webcomponent in the browser
+    if (typeof window !== 'undefined') {
+        import('jdls-boids-canvas').catch(err => {
+            console.warn('Failed to load boids webcomponent:', err);
+        });
+    }
+</script>

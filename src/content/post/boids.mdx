@@ -1,0 +1,60 @@
+---
+title: Boids
+description: A dynamic flocking simulation made with three.js
+pubDate: 2023-11-01
+heroImage: /images/boids-hero.png
+type: project
+heroType: boids
+projectMetadata:
+  techStack:
+    - Three.js
+    - Web Components
+    - TypeScript
+  githubLink: https://github.com/jdlennoxs/boids
+  liveLink: https://jdlennoxs.github.io/boids
+  
+tags:
+  - threejs
+---
+
+## Introduction
+
+Boids is an artificial life program, developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds. His paper on this topic was published in 1987 in the proceedings of the ACM SIGGRAPH conference. The name "boid" corresponds to a shortened version of "bird-oid object", which refers to a bird-like object.
+
+## How it works
+
+The simulation is based on three simple rules that describe how an individual boid maneuvers based on the positions and velocities of its nearby flockmates:
+
+1.  **Separation**: steer to avoid crowding local flockmates
+2.  **Alignment**: steer towards the average heading of local flockmates
+3.  **Cohesion**: steer to move toward the average position (center of mass) of local flockmates
+
+## Implementation
+
+This implementation uses Three.js for rendering and a custom physics engine to handle the boid behaviors. It is encapsulated in a Web Component for easy reusability across different projects.
+
+### The Code
+
+The core logic involves iterating through each boid and calculating the steering forces based on the three rules.
+
+```typescript
+// Simplified pseudo-code
+function updateBoids() {
+  for (let boid of boids) {
+    let separation = calculateSeparation(boid);
+    let alignment = calculateAlignment(boid);
+    let cohesion = calculateCohesion(boid);
+    
+    boid.acceleration.add(separation);
+    boid.acceleration.add(alignment);
+    boid.acceleration.add(cohesion);
+    
+    boid.velocity.add(boid.acceleration);
+    boid.position.add(boid.velocity);
+  }
+}
+```
+
+## Conclusion
+
+This project was a fun exploration into emergent behavior and particle systems. It demonstrates how complex patterns can arise from simple rules.

@@ -1,0 +1,31 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionContainer from "@/components/SectionContainer.astro";
+import { Icon } from "astro-icon/components";
+
+---
+
+<Layout
+    title="About - jdlennoxs"
+    description="About me"
+>
+    <SectionContainer class="about--container">
+        <div class="flex flex-col items-start text-secondary-600 dark:text-secondary-200">
+            <h1
+                class="font-medium text-h3 text-text dark:text-cream mb-8 leading-8 tracking-tighter font-body"
+            >
+                About
+            </h1>
+            
+            <div class="prose dark:prose-invert max-w-none font-sans">
+                <p class="text-lg leading-relaxed mb-6">
+                    Hello! I'm a developer passionate about building beautiful and functional web applications. 
+                    This is my personal portfolio where I share my projects and thoughts on technology.
+                </p>
+                <p class="text-lg leading-relaxed">
+                    Feel free to explore my projects and posts to learn more about what I do.
+                </p>
+            </div>
+        </div>
+    </SectionContainer>
+</Layout>

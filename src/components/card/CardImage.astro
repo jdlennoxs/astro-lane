@@ -1,17 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-const { class: className, imageClass, width, height, alt, src } = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div class={`card--image ${className && className}`}>
-    <Image
-        src={src}
-        width={width}
-        height={height}
-        alt={alt}
-        loading="lazy"
-        format={"webp"}
-        class={`object-cover ${imageClass && imageClass}`}
-    />
-</div>
+<Image class:list={["object-cover", className]} {...rest} />

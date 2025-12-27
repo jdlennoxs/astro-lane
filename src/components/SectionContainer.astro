@@ -1,5 +1,14 @@
 ---
-const { class: className } = Astro.props;
+import { clsx } from "clsx";
+
+export interface Props {
+    as?: "section" | "div";
+    class?: string;
+}
+
+const { as: Element = "section", class: className } = Astro.props;
 ---
 
-<section class={`${className && className}`}><slot /></section>
+<Element class={clsx("mx-8 max-w-8xl", className)}>
+    <slot />
+</Element>

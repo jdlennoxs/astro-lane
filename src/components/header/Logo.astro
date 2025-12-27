@@ -1,29 +1,26 @@
 ---
-import mid from "/icons/mid.svg?raw"
-import icon from "/icons/icon.svg?raw"
+import mid from "/icons/mid.svg?raw";
+import icon from "/icons/icon.svg?raw";
+import { SITE } from "@config";
 
 interface Props {
-  class?: string;
-  variant?: 'default' | 'icon';
+    class?: string;
+    variant?: "default" | "icon";
 }
 
-const { class: className, variant = 'default' } = Astro.props;
+const { class: className, variant = "default" } = Astro.props;
 
-// Select SVG based on variant
-const rawSvg = variant === 'icon' ? icon : mid;
+const rawSvg = variant === "icon" ? icon : mid;
 
-// Process SVG to make it scalable
-const processedSvg = rawSvg
-  .replace(/<svg([^>]*)>/, (match, attributes) => {
-    // Remove width/height but keep viewBox
+const processedSvg = rawSvg.replace(/<svg([^>]*)>/, (match, attributes) => {
     const cleanedAttributes = attributes
-      .replace(/\s*width="[^"]*"/, '')
-      .replace(/\s*height="[^"]*"/, '');
-    
-    return `<svg${cleanedAttributes} width="100%" height="100%">`;
-  });
+        .replace(/\s*width="[^\"]*"/, "")
+        .replace(/\s*height="[^\"]*"/, "");
+
+    return `<svg${cleanedAttributes} width="100%" height="100%" role="img" aria-label="${SITE.author} Logo">`;
+});
 ---
 
-<div class={`flex-shrink-0 ${className}`}>
-  <Fragment set:html={processedSvg} />
+<div class:list={["flex-shrink-0", className]}>
+    <Fragment set:html={processedSvg} />
 </div>
