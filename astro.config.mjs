@@ -16,6 +16,7 @@ export default defineConfig({
     }
   },
     site: "https://jdlennoxs.github.io",
+      base: "/astro",
     markdown: {
         syntaxHighlight: "prism",
         remarkPlugins: [remarkToc, remarkReadingTime]
