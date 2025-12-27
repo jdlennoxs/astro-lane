@@ -16,7 +16,7 @@ export default defineConfig({
     }
   },
     site: "https://jdlennoxs.github.io",
-      base: "/astro",
+      base: "/astro-lane",
     markdown: {
         syntaxHighlight: "prism",
         remarkPlugins: [remarkToc, remarkReadingTime]
