@@ -15,7 +15,7 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/noop'
     }
   },
-    site: "https://www.astro-lane.avenuelabs.co/",
+    site: "https://jdlennoxs.github.io",
     markdown: {
         syntaxHighlight: "prism",
         remarkPlugins: [remarkToc, remarkReadingTime]
