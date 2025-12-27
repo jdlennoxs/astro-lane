@@ -1,113 +1,161 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-    theme: {
-        extend: {
-            maxWidth: {
-                "8xl": "96rem"
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      maxWidth: {
+        '8xl': '96rem'
+      },
+      colors: {
+        primary: {
+          50: '#f0f1ff',
+          100: '#e4e6ff',
+          200: '#cdd1ff',
+          300: '#a7aeff',
+          400: '#8085ff',
+          500: '#5162FF', // base color
+          600: '#3a45db',
+          700: '#2d35b7',
+          800: '#252c94',
+          900: '#1e2370',
+          950: '#13164d'
+        },
+        secondary: {
+          50: '#f7f7f7',
+          100: '#e3e3e3',
+          200: '#c8c8c8',
+          300: '#a4a4a4',
+          400: '#818181',
+          500: '#52525b', // base color
+          600: '#434343',
+          700: '#383838',
+          800: '#313131',
+          900: '#1a1a1a',
+          950: '#0a0a0a'
+        },
+        accent: {
+          50: '#f0f1ff',
+          100: '#e4e6ff',
+          200: '#cdd1ff',
+          300: '#a7aeff',
+          400: '#8085ff',
+          500: '#5162FF', // base color
+          600: '#3a45db',
+          700: '#2d35b7',
+          800: '#252c94',
+          900: '#1e2370',
+          950: '#13164d'
+        },
+        background: 'var(--color-background)',
+        text: 'var(--color-text)',
+        cream: 'var(--color-cream)',
+        mint: 'var(--color-mint)',
+        'mint-icon': '#9ce0d6',
+        badge: 'var(--color-badge)',
+        badgeText: 'var(--color-badge-text)',
+      },
+      fontFamily: {
+        sans: ['var(--font-family-sans)'],
+        title: ['var(--font-family-title)'],
+        body: ['var(--font-family-body)'],
+        mono: ['var(--font-family-mono)']
+      },
+      fontSize: {
+        base: 'var(--font-size-base)',
+        sm: 'var(--font-size-sm)',
+        lg: 'var(--font-size-lg)',
+        xl: 'var(--font-size-xl)',
+        '2xl': 'var(--font-size-2xl)',
+        h1: ['var(--font-size-h1)', {
+          lineHeight: '3.75rem'
+        }],
+        h2: ['var(--font-size-h2)', {
+          lineHeight: '2.625rem'
+        }],
+        h3: ['var(--font-size-h3)', {
+          lineHeight: '2.25rem'
+        }],
+        h4: ['var(--font-size-h4)', {
+          lineHeight: '2rem'
+        }],
+        h5: ['var(--font-size-h5)', {
+          lineHeight: '1.75rem'
+        }],
+        h6: ['var(--font-size-h6)', {
+          lineHeight: '1.5rem'
+        }],
+        mini: ['var(--font-size-mini)', {
+          lineHeight: '1.5rem'
+        }]
+      },
+      spacing: {
+        xs: 'var(--spacing-xs)',
+        sm: 'var(--spacing-sm)',
+        md: 'var(--spacing-md)',
+        lg: 'var(--spacing-lg)',
+        xl: 'var(--spacing-xl)',
+      },
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        full: 'var(--radius-full)',
+      },
+      boxShadow: {
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            '--tw-prose-code': 'var(--font-family-mono)',
+            code: {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
             },
-            fontFamily: {
-                body: ["Inter", "Sans Serif"],
-                title: ["Inter", "Sans Serif"]
+            'pre code': {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
             },
-            fontSize: {
-                body: [
-                    "1rem",
-                    {
-                        lineHeight: "1.5rem"
-                    }
-                ],
-                h1: [
-                    "3.5rem",
-                    {
-                        lineHeight: "3.75rem"
-                    }
-                ],
-                h2: [
-                    "2.25rem",
-                    {
-                        lineHeight: "2.625rem"
-                    }
-                ],
-                h3: [
-                    "1.875rem",
-                    {
-                        lineHeight: "2.25rem"
-                    }
-                ],
-                h4: [
-                    "1.5rem",
-                    {
-                        lineHeight: "2rem"
-                    }
-                ],
-                h5: [
-                    "1.25rem",
-                    {
-                        lineHeight: "1.75rem"
-                    }
-                ],
-                h6: [
-                    "1.125rem",
-                    {
-                        lineHeight: "1.5rem"
-                    }
-                ],
-                mini: [
-                    "0.75rem",
-                    {
-                        lineHeight: "1.5rem"
-                    }
-                ]
+            'code::before': false,
+            'code::after': false,
+          },
+        },
+        sm: {
+          css: {
+            fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            '--tw-prose-code': 'var(--font-family-mono)',
+            code: {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
             },
-            colors: {
-                // black: {
-                //     DEFAULT: "#000000",
-                //     50: "#E6E6E6",
-                //     100: "#CCCCCC",
-                //     200: "#999999",
-                //     300: "#666666",
-                //     400: "#333333",
-                //     500: "#000000",
-                //     600: "#000000",
-                //     700: "#000000",
-                //     800: "#000000",
-                //     900: "#000000"
-                // },
-                white: {
-                    DEFAULT: "#FFFFFF",
-                    50: "#FFFFFF",
-                    100: "#FCFCFC",
-                    200: "#FCFCFC",
-                    300: "#FAFAFA",
-                    400: "#FAFAFA",
-                    500: "#F7F7F7",
-                    600: "#C7C7C7",
-                    700: "#949494",
-                    800: "#636363",
-                    900: "#303030"
-                },
-                primary: {
-                    50: "#f7f7f7",
-                    100: "#e3e3e3",
-                    200: "#c8c8c8",
-                    300: "#a4a4a4",
-                    400: "#818181",
-                    500: "#737373",
-                    600: "#5162FF",
-                    700: "#434343",
-                    800: "#383838",
-                    900: "#313131",
-                    950: "#1a1a1a"
-                },
-                black: "1f1f1f",
-                plum: "#5162FF",
-                cream: "#FFFCEC",
-                mint: "#E0FFE9",
-                badge: "#F1F5F9",
-                badgeText: "#475569"
-            }
-        }
+            'pre code': {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
+            },
+            'code::before': false,
+            'code::after': false,
+          },
+        },
+        lg: {
+          css: {
+            fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            '--tw-prose-code': 'var(--font-family-mono)',
+            code: {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
+            },
+            'pre code': {
+              fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
+            },
+            'code::before': false,
+            'code::after': false,
+          },
+        },
+      },
     },
-    plugins: [require("@tailwindcss/typography")]
-};
+  },
+  plugins: [
+    require("@tailwindcss/typography")({
+      target: 'modern',
+    }),
+  ],
+}

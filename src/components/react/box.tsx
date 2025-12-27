@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export default function Box() {
+export default function Box({position}) {
     const meshRef = useRef();
     // Set up state for the hovered and active state
     const [hovered, setHover] = useState(false);
@@ -10,7 +10,7 @@ export default function Box() {
     useFrame((state, delta) => (meshRef.current.rotation.x += delta));
     return (
         <mesh
-            position={[-1.2, 0, 0]}
+            position={position}
             ref={meshRef}
             scale={active ? 1.5 : 1}
             onClick={(event) => setActive(!active)}
@@ -18,7 +18,7 @@ export default function Box() {
             onPointerOut={(event) => setHover(false)}
         >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+            <meshPhysicalMaterial color={hovered ? "hotpink" : "orange"} clearcoat={0.8} clearcoatRoughness={0.2} />
         </mesh>
     );
 }

@@ -2,6 +2,6 @@
 const { class: className } = Astro.props;
 ---
 
-<div class={`card--body h-full w-full ${className && className}`}>
+<div class:list={["card--content", className]}>
     <slot />
 </div>

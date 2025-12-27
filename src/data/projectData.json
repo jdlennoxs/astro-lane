@@ -3,7 +3,7 @@
         "id": "1",
         "title": "Boids",
         "link": "",
-        "post": "/posts/simulating-boids-with-threejs",
+        "post": "/posts/boids",
         "shortExcerpt": "A dynamic flocking simulation made with three.js",
         "type": "hero",
         "component": "boids",
@@ -19,12 +19,13 @@
     {
         "id": "2",
         "title": "DEAD INTERNET SOCIETY",
-        "image": "/images/dead-internet-society.png",
+        "image": "/images/anthropo-scene.png",
+        "type":"bordered",
         "shortExcerpt": ""
     },
     {
         "id": "3",
-        "title": "Articoole",
+        "title": "Bookthing",
         "logo": "/icons/articoole-icon.png",
         "shortExcerpt": "Making content creation a breeze.",
         "badgeContent": "On Going"

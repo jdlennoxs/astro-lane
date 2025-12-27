@@ -6,6 +6,8 @@ import SEO from "@/components/seo/SEO.astro";
 import Header from "@/components/header/Header.astro";
 import Logo from '@/components/header/Logo.astro';
 import ToggleMenu from '@/components/header/ToggleMenu.astro';
+import planet from "@/components/header/planet.svg?raw";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 interface Props {
     class?: string;
@@ -42,43 +44,48 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
             url={url}
             image={image}
         />
-          <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet" />
-    <link href="prism-material-dark.css" rel="stylesheet" />
+        <link href="prism-material-dark.css" rel="stylesheet" />
+        <script>
+            // Initialize theme
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.add(theme);
+        </script>
     </head>
-    <body class="bg-white">
+    <body class="bg-background text-text transition-colors duration-300">
         <div class="max-w-8xl mx-auto mt-12">
-            <div class="md:hidden fixed top-4 right-4 z-50">
-                <ToggleMenu />
-            </div>
+            <header class="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 bg-background border-b border-secondary-100 dark:border-secondary-800 transition-colors duration-300">
+                <button type="button" class="flex items-center justify-center w-10 h-10 text-secondary-600 dark:text-secondary-200 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 focus:outline-none" aria-label="Toggle Menu" data-aw-toggle-menu>
+                    <Fragment set:html={planet} />
+                </button>
+            </header>
             <Header />
             <main class="md:pl-24">
-                <div class={`grid grid-cols-1 lg:grid-cols-4 max-w-8xl mx-auto ${className}`}>
-                    <div class="col-span-1 m-4">
+                <!-- <div class={`grid grid-cols-1 lg:grid-cols-4 max-w-8xl mx-auto ${className}`}> -->
+                    <!-- <div class="col-span-1 m-4">
                         <slot name="left-column">
                             {!isBlogPost && (
-                                <div class="sticky top-8 ">
-                                    <a href="/" class="inline-flex items-center justify-center w-14 h-14 rounded-lg text-zinc-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                                        <Logo class="h-12 w-12"/>
-                                    </a>
-                                    <div
-                                        class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-neutral-500"
-                                    >
-                                         I'm Jack, I make fun things on the internet and don't really write about them.
+                                <div class="sticky top-8 space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <a href="/" class="inline-flex items-center justify-center w-14 h-14 rounded-lg text-text hover:bg-secondary-100 dark:hover:bg-secondary-800 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:focus:ring-secondary-700">
+                                            <Logo class="h-12 w-12"/>
+                                        </a>
+                                        <ThemeSwitcher client:load />
+                                    </div>
+                                    <div class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-secondary-600 dark:text-secondary-200">
+                                        I'm Jack, I make fun things on the internet and don't really write about them.
                                     </div>
                                 </div>
                             )}
                         </slot>
-                    </div>
-                    <div class="col-span-1 sm:col-span-3">    
+                    </div> -->
+                    <!-- <div class="col-span-1 sm:col-span-3">     -->
                         <slot />
-                         <div class="text-zinc-500 m-4 mt-32 text-right">
+                        <div class="text-secondary-500 dark:text-secondary-400 m-4 mt-32 text-right">
                             © {currentYear} jdlennoxs
-                         </div>
-                    </div>
-                </div>
+                        </div>
+                    <!-- </div>
+                </div> -->
             </main>
         </div>
     </body>
 </html>
-<!-- fff6fe -->
-<!-- E0FFE9 -->

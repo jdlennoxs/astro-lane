@@ -74,13 +74,13 @@ export default function Sphere({
     const [{ wobble, coat, color, ambient, env }] = useSpring(
         {
             wobble: hovered ? 1.4 : 1,
-            coat: 0.04,
+            coat: hovered ? 0.2 : 0.1,
             ambient: !hovered ? 1 : 0.5,
             env: !hovered ? 0.4 : 1,
             color: !hovered ? colour : "##5162ff",
             config: (n) =>
                 n === "wobble" &&
-                hovered && { mass: scale * 2, tension: 500, friction: 5 }
+                hovered && { mass: scale * 2, tension: 50, friction: 5 }
         },
         [mode, hovered, down]
     );
@@ -103,8 +103,8 @@ export default function Sphere({
                 distort={0.5}
                 color={color}
                 envMapIntensity={env}
-                clearcoat={coat}
-                clearcoatRoughness={0.5}
+                clearcoat={0.8}
+                clearcoatRoughness={coat}
                 metalness={0.1}
             />
         </a.mesh>

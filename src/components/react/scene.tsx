@@ -6,7 +6,6 @@ import {
 } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import Sphere from "./sphere";
-import Cube from "./cube";
 import { Suspense, useRef, useState } from "react";
 import Box from "./box";
 import { LineDashedMaterial } from "three";
@@ -38,16 +37,11 @@ const Scene = () => {
 
     return (
         // <a.main style={{ background }}>
-
+        <div style={{ background }}>
         <Suspense fallback={null}>
             <Sphere light={light} />
-            {/* <Box /> */}
-            <Sphere
-                scale={0.5}
-                light={light}
+            <Box
                 position={[0, 0, -10]}
-                rotation={[Math.PI / 2, 0, 0]}
-                colour={"#E0FFE9"}
             />
             <Sphere
                 scale={0.3}
@@ -58,7 +52,7 @@ const Scene = () => {
             />
             <Line scale={[5, 6, 5]} rotation={[Math.PI / 2, 0, 0]} />
             <Line scale={[7, 8, 7]} rotation={[-Math.PI / 2, 0, Math.PI / 3]} />
-            <Environment preset="warehouse" />
+            <Environment preset="city" />
             <PerspectiveCamera makeDefault position={[4, 0, 4]} fov={75} />
             <ambientLight intensity={1} color="#E0FFE9" />
             <pointLight
@@ -75,6 +69,7 @@ const Scene = () => {
                 // minPolarAngle={Math.PI / 2}
             />
         </Suspense>
+        </div>
         // </a.main>
     );
 };

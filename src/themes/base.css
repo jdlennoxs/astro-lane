@@ -1,0 +1,65 @@
+:root {
+  /* Colors */
+  --color-primary: #5162FF;
+  --color-secondary: #52525b;
+  --color-accent: #5162FF;
+  --color-background: #ffffff;
+  --color-text: #27272a;
+  --color-cream: #FFFEF4;
+  --color-mint: #E0FFE9;
+  --color-badge: #F1F5F9;
+  --color-badge-text: #475569;
+
+  /* Typography */
+  --font-family-title: 'Chakra Petch', system-ui, -apple-system, sans-serif;
+  --font-family-body: 'Iowan Old Style', system-ui, -apple-system, sans-serif;
+  --font-family-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', system-ui, -apple-system, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-h1: 3.5rem;
+  --font-size-h2: 2.25rem;
+  --font-size-h3: 1.875rem;
+  --font-size-h4: 1.5rem;
+  --font-size-h5: 1.25rem;
+  --font-size-h6: 1.125rem;
+  --font-size-mini: 0.75rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-full: 9999px;
+}
+
+/* Dark mode overrides */
+:root.dark {
+  --color-background: #141413;
+  --color-text: #ffffff;
+  --color-primary: #5162FF;
+  --color-secondary: #FFFEF4;
+  --color-accent: #5162FF;
+  --color-badge: #1f2937;
+  --color-badge-text: #f3f4f6;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.1);
+} 

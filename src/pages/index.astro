@@ -26,14 +26,13 @@ const projects = projectData.slice(0, SITE.postPerPage);
     description=""
 >
     <SectionContainer class="projects--container">
-         <div class="flex flex-row items-center text-neutral-500">
-          
+         <div class="flex flex-row items-center text-secondary-600 dark:text-secondary-200">
               <h2
-            class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter"
-        >
-            Projects
-        </h2>
-            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4">
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
+              >
+                Projects
+              </h2>
+            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
                 View all projects
                 <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
             </a>
@@ -43,14 +42,13 @@ const projects = projectData.slice(0, SITE.postPerPage);
 
     <!--  Projects Container -->
     <SectionContainer class="blogs--container">
-        <div class="flex flex-row my-4 items-center text-neutral-500">
-          
+        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
               <h2
-            class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter"
-        >
-            Posts
-        </h2>
-            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4">
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
+              >
+                Posts
+              </h2>
+            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
                 View all posts
                 <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
             </a>
@@ -60,28 +58,29 @@ const projects = projectData.slice(0, SITE.postPerPage);
     </SectionContainer>
     <!-- Blog Container -->
     <SectionContainer class="tags--container">
-        <div class="flex flex-row my-4 items-center text-neutral-500">
+        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
             <h2
-                class="font-medium text-h4 text-zinc-800 m-4 leading-8 tracking-tighter mb-0"
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter mb-0 font-body"
             >
                 Top Tags
             </h2>
 
-            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4">
+            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
                 View all tags
                 <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
             </a>
         </div>
 
-        <ul class="list-none space-y-5">
+        <ul class="list-none flex flex-wrap gap-4 px-4">
             {
                 tags.map((tag) => (
-                    <li class={`inline-block my-3 mx-4 underline-offset-8`}>
+                    <li class={`inline-block`}>
                         <a
                             href={`/tags/${tag.toLowerCase()}`}
-                            class={`text-lg text-zinc-600 pr-2 flex flex-wrap items-center relative underline hover:-top-0.5 hover:text-skin-accent focus-visible:p-1`}
+                            class={`text-lg text-secondary-600 dark:text-secondary-200 pr-2 flex flex-wrap items-center relative underline hover:text-secondary-900 dark:hover:text-white decoration-secondary-200
+                            decoration-2 transition-all duration-300 hover:-translate-y-0.5 focus-visible:p-1`}
                         >
-                            <Icon name="tabler:hash" class="w-5 h-5 text-[#9ce0d6]" />
+                            <Icon name="tabler:hash" class="w-5 h-5 text-mint-icon" />
                             &nbsp;<span>{tag.toLowerCase()}</span>
                         </a>
                     </li>

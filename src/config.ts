@@ -4,8 +4,8 @@ import type { Site, SocialMediaObjects } from "./types";
 
 export const SITE: Site = {
     siteUrl: "https:/www.astro-lane.avenuelabs.co/", // Always put "/" at the end of the URL
-    author: "Jack",
-    desc: "A personal portfolio landing template for developers and designers. Made by Avenue Labs.",
+    author: "jdlennoxs",
+    desc: "A personal portfolio landing template for developers and designers. Made by Jack.",
     title: "jdlennoxs",
     ogImage: "images/astro-lane.png",
     keywords:
