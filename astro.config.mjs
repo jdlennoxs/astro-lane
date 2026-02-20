@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import { remarkReadingTime } from "./remark-reading-time";
+import { remarkMermaid } from "./src/plugins/remark-mermaid.mjs";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
@@ -18,7 +19,7 @@ export default defineConfig({
     site: "https://www.astro-lane.avenuelabs.co/",
     markdown: {
         syntaxHighlight: "prism",
-        remarkPlugins: [remarkToc, remarkReadingTime]
+        remarkPlugins: [remarkToc, remarkReadingTime, remarkMermaid]
     },
     vite: {
         optimizeDeps: {
