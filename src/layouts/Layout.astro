@@ -52,7 +52,7 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
         </script>
     </head>
     <body class="bg-background text-text transition-colors duration-300">
-        <div class="max-w-8xl mx-auto mt-12">
+        <div class="max-w-8xl mx-auto mt-16 md:mt-12">
             <header class="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 bg-background border-b border-secondary-100 dark:border-secondary-800 transition-colors duration-300">
                 <button type="button" class="flex items-center justify-center w-10 h-10 text-secondary-600 dark:text-secondary-200 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 focus:outline-none" aria-label="Toggle Menu" data-aw-toggle-menu>
                     <Fragment set:html={planet} />
@@ -80,9 +80,11 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
                     </div> -->
                     <!-- <div class="col-span-1 sm:col-span-3">     -->
                         <slot />
-                        <div class="text-secondary-500 dark:text-secondary-400 m-4 mt-32 text-right">
-                            © {currentYear} jdlennoxs
-                        </div>
+                        <footer class="mt-24 mx-4 md:mx-4 pt-8 pb-8 border-t border-secondary-200 dark:border-secondary-800">
+                            <div class="text-secondary-500 dark:text-secondary-400 text-sm text-right font-sans">
+                                © {currentYear} jdlennoxs
+                            </div>
+                        </footer>
                     <!-- </div>
                 </div> -->
             </main>

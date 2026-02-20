@@ -11,26 +11,26 @@ export interface Props {
 const { posts } = Astro.props;
 ---
 
-<ul class="list-none space-y-5">
+<ul class="list-none space-y-2">
     {
         posts.map((post) => (
-            <li>
+            <li class="border-b border-secondary-100 dark:border-secondary-800 last:border-b-0">
                 <Card as="a" href={`/posts/${post.slug}`} class="block p-4 no-underline sm:flex-row sm:gap-8 transition-all duration-300">
                     <CardBody class="flex md:gap-x-24 gap-x-4">
-                          <span class="font-sans text-semibold flex-shrink-0 w-20">
+                          <span class="font-sans text-xs text-secondary-400 dark:text-secondary-500 flex-shrink-0 w-20 pt-1 uppercase tracking-wide">
                                     <FormattedDate
                                         date={post.data.pubDate}
                                     />
                             </span>
                             <div class="flex-1">
                         <span class="line-clamp-1 md:inline-flex items-center">
-                            <span class="text-text dark:text-cream inline-block font-semibold text-lg font-body transition-colors duration-300 hover:underline decoration-secondary-200
-                            decoration-2">
+                            <span class="text-text dark:text-cream inline-block font-semibold text-lg font-body transition-all duration-300 hover:underline decoration-primary-500
+                            decoration-2 underline-offset-4">
                                 {post.data.title}
                             </span>
                           
                         </span>
-                        <span class="max-w-2xl dark:text-secondary-50 line-clamp-2 tracking-tight text-semibold font-sans">
+                        <span class="max-w-2xl text-secondary-500 dark:text-secondary-400 line-clamp-2 tracking-tight text-sm font-sans mt-1 block">
                             {post.data.description}
                         </span>
                         </div>

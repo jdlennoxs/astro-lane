@@ -28,13 +28,13 @@ const projects = projectData.slice(0, SITE.postPerPage);
     <SectionContainer class="projects--container">
          <div class="flex flex-row items-center text-secondary-600 dark:text-secondary-200">
               <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-sans border-l-2 border-primary-500 pl-3"
               >
                 Projects
               </h2>
-            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
+            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
                 View all projects
-                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
             </a>
         </div>
         <ProjectCardGroup projects={projects} />
@@ -44,13 +44,13 @@ const projects = projectData.slice(0, SITE.postPerPage);
     <SectionContainer class="blogs--container">
         <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
               <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-sans border-l-2 border-primary-500 pl-3"
               >
                 Posts
               </h2>
-            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
+            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
                 View all posts
-                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
             </a>
         </div>
 
@@ -60,14 +60,14 @@ const projects = projectData.slice(0, SITE.postPerPage);
     <SectionContainer class="tags--container">
         <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
             <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter mb-0 font-body"
+                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter mb-0 font-sans border-l-2 border-primary-500 pl-3"
             >
                 Top Tags
             </h2>
 
-            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 font-sans">
+            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
                 View all tags
-                <Icon name="ph:arrow-right-light" class="w-6 h-6 ml-4" />
+                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
             </a>
         </div>
 

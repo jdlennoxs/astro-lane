@@ -35,7 +35,7 @@ const aspectRatioClasses = {
     rel={rel}
     class={clsx(
         "card group relative block h-full w-full rounded-xl text-black/60 transition-all duration-300",
-        href && "cursor-pointer overflow-hidden focus-visible:outline-plum",
+        href && "cursor-pointer overflow-hidden focus-visible:outline-plum hover:-translate-y-1 dark:hover:border-secondary-600",
         aspectRatioClasses[aspectRatio],
         bordered && "border border-neutral-300",
         className

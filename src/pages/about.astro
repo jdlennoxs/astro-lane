@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
 import { Icon } from "astro-icon/components";
 
+const interests = ["Web Development", "Three.js", "Creative Coding", "AI", "Open Source"];
 ---
 
 <Layout
@@ -11,11 +12,14 @@ import { Icon } from "astro-icon/components";
 >
     <SectionContainer class="about--container">
         <div class="flex flex-col items-start text-secondary-600 dark:text-secondary-200">
-            <h1
-                class="font-medium text-h3 text-text dark:text-cream mb-8 leading-8 tracking-tighter font-body"
-            >
-                About
-            </h1>
+            <div class="mb-8">
+                <h1
+                    class="font-medium text-h3 text-text dark:text-cream leading-8 tracking-tighter font-sans"
+                >
+                    About
+                </h1>
+                <div class="w-12 h-0.5 bg-primary-500 mt-3"></div>
+            </div>
             
             <div class="prose dark:prose-invert max-w-none font-sans">
                 <p class="text-lg leading-relaxed mb-6">
@@ -26,6 +30,18 @@ import { Icon } from "astro-icon/components";
                     Feel free to explore my projects and posts to learn more about what I do.
                 </p>
             </div>
+
+            <div class="mt-10 pt-8 border-t border-secondary-200 dark:border-secondary-800 w-full">
+                <h2 class="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-4 font-sans">Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    {interests.map(interest => (
+                        <span class="px-3 py-1.5 rounded-full text-sm font-medium bg-badge text-badgeText font-sans transition-colors duration-300">
+                            {interest}
+                        </span>
+                    ))}
+                </div>
+            </div>
         </div>
     </SectionContainer>
 </Layout>
+

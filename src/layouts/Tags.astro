@@ -21,21 +21,24 @@ const { posts, title, tag } = Astro.props;
 >
       <div class="grid gap-16 md:gap-24 lg:gap-32">
         <SectionContainer class="blogs--container">
-            <div class="flex flex-row my-4 items-center text-neutral-500">
-                <h2 class="font-medium text-h4 mx-4 text-zinc-800 leading-8 tracking-tighter mb-0">
-                    Tags: {tag}
-                </h2>
+            <div class="flex flex-row my-4 items-center text-secondary-500 dark:text-secondary-400">
+                <div class="mx-4 mb-4">
+                    <h1 class="font-medium text-h3 text-text dark:text-cream leading-8 tracking-tighter font-sans">
+                        Tags: {tag}
+                    </h1>
+                    <div class="w-12 h-0.5 bg-primary-500 mt-3"></div>
+                </div>
             </div>
 
             <PostList posts={posts} />
 
             <nav
-                class="pagination--container flex flex-wrap mx-auto justify-center mt-8 text-neutral-500"
+                class="pagination--container flex flex-wrap mx-auto justify-center mt-8 text-secondary-500 dark:text-secondary-400"
                 aria-label="Back to tags"
             >
                 <a
                     href="/tags"
-                    class="select-none flex flex-wrap"
+                    class="select-none flex flex-wrap hover:text-secondary-900 dark:hover:text-secondary-100 transition-colors duration-300"
                     aria-label="Back to tags"
                 >
                     <Icon

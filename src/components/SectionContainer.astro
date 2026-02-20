@@ -9,6 +9,6 @@ export interface Props {
 const { as: Element = "section", class: className } = Astro.props;
 ---
 
-<Element class={clsx("mx-8 max-w-8xl", className)}>
+<Element class={clsx("md:mx-8 max-w-8xl", className)}>
     <slot />
 </Element>
