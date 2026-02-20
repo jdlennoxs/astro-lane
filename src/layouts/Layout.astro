@@ -8,6 +8,7 @@ import Logo from '@/components/header/Logo.astro';
 import ToggleMenu from '@/components/header/ToggleMenu.astro';
 import planet from "@/components/header/planet.svg?raw";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
     class?: string;
@@ -89,5 +90,6 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
                 </div> -->
             </main>
         </div>
+        <Analytics />
     </body>
 </html>
