@@ -17,11 +17,18 @@
         "shortExcerpt": "Swipeable music discovery"
     },
     {
-        "id": "2",
-        "title": "DEAD INTERNET SOCIETY",
-        "image": "/images/anthropo-scene.png",
+        "id": "3",
+        "title": "gardenbrain",
+        "image": "/images/garden_brain.png",
         "type":"bordered",
         "shortExcerpt": ""
+    },
+    {
+        "id": "4",
+        "title": "Yobbies",
+        "post": "/posts/yobbies",
+        "image": "/images/yobbies-desktop.png",
+        "shortExcerpt": "Organising a film club"
     },
     {
         "id": "3",

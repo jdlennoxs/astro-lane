@@ -72,9 +72,10 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
         </div>
 
         <!-- Hero Section -->
+        { (heroType === 'boids' || heroImage) && (
         <div class="max-w-screen-xl mx-auto px-4 pb-12">
             <div class="w-full h-[60vh] relative bg-black overflow-hidden rounded-3xl">
-                {heroType === 'boids' && (
+                {heroType === 'boids' ? (
                     <boids-canvas
                         background-color="#FFF"
                         light-color="#FFFCEC"
@@ -88,9 +89,16 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
                         orientation-slerp="0.2"
                         class="w-full h-full block"
                     />
-                )}
+                ) : heroImage ? (
+                    <img
+                        src={heroImage}
+                        alt={title}
+                        class="w-full h-full object-cover"
+                    />
+                ) : null}
             </div>
         </div>
+        )}
 
         <!-- Main Content Grid -->
         <div class="max-w-screen-xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 relative pb-12">

@@ -43,7 +43,7 @@ const { Content, headings } = await post.render();
                 ))}
             </div>
             
-            <h1 class="text-3xl md:text-4xl text-text dark:text-cream leading-tight tracking-tighter mb-6 font-body">
+            <h1 class="text-2xl md:text-3xl text-text dark:text-cream leading-tight tracking-tighter mb-6 font-body font-semibold">
                 {title}
             </h1>
 
@@ -65,16 +65,16 @@ const { Content, headings } = await post.render();
         <!-- Hero Image Section Removed -->
 
         <!-- Main Content Grid -->
-        <div class="max-w-screen-xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+        <div class="max-w-screen-xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-8 relative">
             
             <!-- Left Sidebar (TOC) -->
-            <div class="hidden lg:block lg:col-span-3">
-                <div class="sticky top-24 pr-4 border-secondary-200 dark:border-secondary-800">
+            <div class="hidden lg:block lg:col-span-2">
+                <div class="sticky top-24 border-secondary-200 dark:border-secondary-800">
                     {headings && headings.length > 0 && (
-                        <ul class="space-y-3 text-sm font-sans">
+                        <ul class="space-y-3 text-sm font-body">
                             {headings.filter((h) => h.depth === 2).map((heading) => (
                                 <li>
-                                    <a href={`#${heading.slug}`} class="block text-secondary-500 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                    <a href={`#${heading.slug}`} class="block text-secondary-400 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                                         {heading.text}
                                     </a>
                                 </li>
@@ -85,7 +85,7 @@ const { Content, headings } = await post.render();
             </div>
 
             <!-- Content Column -->
-            <div class="lg:col-span-7 lg:col-start-4">
+            <div class="lg:col-span-6 lg:col-start-3">
                 <div class="prose dark:prose-invert max-w-none 
                     prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-text dark:prose-headings:text-cream prose-headings:scroll-mt-24
                     prose-p:text-secondary-600 dark:prose-p:text-secondary-300 prose-p:leading-relaxed

@@ -48,6 +48,7 @@
         "astro-icon": "^1.1.5",
         "eslint-config-next": "13.1.2",
         "framer-motion": "^10.18.0",
+        "gsap": "^3.14.2",
         "jdls-boids-canvas": "^0.3.5",
         "mermaid": "^11.12.2",
         "remark-toc": "^8.0.1",

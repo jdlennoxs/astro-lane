@@ -111,6 +111,12 @@ module.exports = {
         DEFAULT: {
           css: {
             fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            h1: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h2: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h3: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h4: { fontSize: 'var(--font-size-h5)', lineHeight: '1.75rem' },
+            h5: { fontSize: 'var(--font-size-h6)', lineHeight: '1.5rem' },
+            h6: { fontSize: 'var(--font-size-base)', lineHeight: '1.5rem' },
             '--tw-prose-code': 'var(--font-family-mono)',
             code: {
               fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
@@ -125,6 +131,12 @@ module.exports = {
         sm: {
           css: {
             fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            h1: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h2: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h3: { fontSize: 'var(--font-size-2xl)', lineHeight: '2rem' },
+            h4: { fontSize: 'var(--font-size-h5)', lineHeight: '1.75rem' },
+            h5: { fontSize: 'var(--font-size-h6)', lineHeight: '1.5rem' },
+            h6: { fontSize: 'var(--font-size-base)', lineHeight: '1.5rem' },
             '--tw-prose-code': 'var(--font-family-mono)',
             code: {
               fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
@@ -139,6 +151,12 @@ module.exports = {
         lg: {
           css: {
             fontFamily: ['var(--font-family-body)', 'system-ui', 'sans-serif'].join(','),
+            h1: { fontSize: 'var(--font-size-h2)', lineHeight: '2.625rem' },
+            h2: { fontSize: 'var(--font-size-h3)', lineHeight: '2.25rem' },
+            h3: { fontSize: 'var(--font-size-h4)', lineHeight: '2rem' },
+            h4: { fontSize: 'var(--font-size-h5)', lineHeight: '1.75rem' },
+            h5: { fontSize: 'var(--font-size-h6)', lineHeight: '1.5rem' },
+            h6: { fontSize: 'var(--font-size-base)', lineHeight: '1.5rem' },
             '--tw-prose-code': 'var(--font-family-mono)',
             code: {
               fontFamily: ['var(--font-family-mono)', 'monospace'].join(','),
