@@ -1,11 +1,4 @@
-/**
-
-=========================================================
-** Custom Utilities styling
-=========================================================
-
-**/
-
+@reference "tailwindcss";
 @layer utilities {
   .wrap {
     @apply container my-0 mx-auto w-full;

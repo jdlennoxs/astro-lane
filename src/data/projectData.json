@@ -31,10 +31,11 @@
         "shortExcerpt": "Organising a film club"
     },
     {
-        "id": "3",
-        "title": "Bookthing",
+        "id": "5",
+        "title": "BookStack",
+        "link": "https://bookstack.jdlennoxs.com/?username=jdlennoxs",
         "logo": "/icons/articoole-icon.png",
-        "shortExcerpt": "Making content creation a breeze.",
+        "shortExcerpt": "Your yearly reads in a pile, gravity tested in 3d",
         "badgeContent": "On Going"
     }
 ]

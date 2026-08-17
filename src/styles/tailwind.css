@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* === Design tokens (port of tailwind.config.cjs extend + base.css) === */
+@theme {
+    --color-primary-50: #f0f1ff;
+    --color-primary-100: #e4e6ff;
+    --color-primary-200: #cdd1ff;
+    --color-primary-300: #a7aeff;
+    --color-primary-400: #8085ff;
+    --color-primary-500: #5162ff;
+    --color-primary-600: #3a45db;
+    --color-primary-700: #2d35b7;
+    --color-primary-800: #252c94;
+    --color-primary-900: #1e2370;
+    --color-primary-950: #13164d;
+
+    --color-secondary-50: #f7f7f7;
+    --color-secondary-100: #e3e3e3;
+    --color-secondary-200: #c8c8c8;
+    --color-secondary-300: #a4a4a4;
+    --color-secondary-400: #818181;
+    --color-secondary-500: #52525b;
+    --color-secondary-600: #434343;
+    --color-secondary-700: #383838;
+    --color-secondary-800: #313131;
+    --color-secondary-900: #1a1a1a;
+    --color-secondary-950: #0a0a0a;
+
+    --color-accent-50: #f0f1ff;
+    --color-accent-100: #e4e6ff;
+    --color-accent-200: #cdd1ff;
+    --color-accent-300: #a7aeff;
+    --color-accent-400: #8085ff;
+    --color-accent-500: #5162ff;
+    --color-accent-600: #3a45db;
+    --color-accent-700: #2d35b7;
+    --color-accent-800: #252c94;
+    --color-accent-900: #1e2370;
+    --color-accent-950: #13164d;
+
+    --color-background: var(--paper);
+    --color-text: #27272a;
+    --color-cream: #fffef4;
+    --color-mint: #e0ffe9;
+    --color-mint-icon: #9ce0d6;
+    --color-badge: #f1f5f9;
+    --color-badge-text: #475569;
+    --color-card-border: #475569;
+    /* Cosmic palette — exposed from base.css variables. */
+    --color-bubblegum: var(--bubblegum);
+    --color-surface: var(--surface);
+    --color-border-soft: var(--border-soft);
+
+    --font-sans: var(--font-family-sans);
+    --font-title: var(--font-family-title);
+    --font-body: var(--font-family-body);
+    --font-mono: var(--font-family-mono);
+
+    --text-base: var(--font-size-base);
+    --text-sm: var(--font-size-sm);
+    --text-lg: var(--font-size-lg);
+    --text-xl: var(--font-size-xl);
+    --text-2xl: var(--font-size-2xl);
+    --text-h1: var(--font-size-h1);
+    --text-h1--line-height: 3.75rem;
+    --text-h2: var(--font-size-h2);
+    --text-h2--line-height: 2.625rem;
+    --text-h3: var(--font-size-h3);
+    --text-h3--line-height: 2.25rem;
+    --text-h4: var(--font-size-h4);
+    --text-h4--line-height: 2rem;
+    --text-h5: var(--font-size-h5);
+    --text-h5--line-height: 1.75rem;
+    --text-h6: var(--font-size-h6);
+    --text-h6--line-height: 1.5rem;
+    --text-mini: var(--font-size-mini);
+    --text-mini--line-height: 1.5rem;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+    --max-width-8xl: 96rem;
+}

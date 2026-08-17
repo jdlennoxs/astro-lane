@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({ params }) => {
         return new Response("No slug provided", { status: 400 });
     }
     const posts = await getCollection("post");
-    const post = posts.find(p => p.slug === decodeURIComponent(params.ogImage as string));
+    const post = posts.find(p => p.id.replace(/\.mdx?$/, '') === decodeURIComponent(params.ogImage as string));
     if (!post) {
         return new Response("Post not found", { status: 404 });
     }
@@ -29,7 +29,7 @@ export function getStaticPaths() {
         .filter(({ data }) => !data.heroImage)
         .map((post) => ({
             params: {
-                ogImage: encodeURIComponent(post.slug)
+                ogImage: encodeURIComponent(post.id.replace(/\.mdx?$/, ''))
             }
         }));
 }

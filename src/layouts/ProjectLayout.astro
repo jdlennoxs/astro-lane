@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import Layout from "./Layout.astro";
 import { SITE } from "@config";
@@ -14,11 +15,11 @@ const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, tags, projectMetadata, heroType } = post.data;
 
 const ogUrl = new URL(
-    heroImage ? heroImage : `${encodeURIComponent(post.slug)}.png`,
+    heroImage ? heroImage : `${encodeURIComponent(post.id.replace(/\.mdx?$/, ''))}.png`,
     Astro.url.origin
 ).href;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 // Extract table of contents from the content
 const tocRegex = /## Table of contents\n([\s\S]*?)(?=##|$)/;
