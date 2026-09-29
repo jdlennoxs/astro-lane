@@ -15,7 +15,7 @@ const { posts } = Astro.props;
     {
         posts.map((post) => (
             <li class="border-b border-secondary-100 dark:border-secondary-800 last:border-b-0">
-                <Card as="a" href={`/posts/${post.slug}`} class="block p-4 no-underline sm:flex-row sm:gap-8 transition-all duration-300">
+                <Card as="a" href={`/posts/${post.id.replace(/\.mdx?$/, '')}`} class="block p-4 no-underline sm:flex-row sm:gap-8 transition-all duration-300">
                     <CardBody class="flex md:gap-x-24 gap-x-4">
                           <span class="font-sans text-xs text-secondary-400 dark:text-secondary-500 flex-shrink-0 w-20 pt-1 uppercase tracking-wide">
                                     <FormattedDate

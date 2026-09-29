@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import Layout from "./Layout.astro";
 import { SITE } from "@config";
@@ -14,11 +15,11 @@ const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, tags, projectMetadata, heroType } = post.data;
 
 const ogUrl = new URL(
-    heroImage ? heroImage : `${encodeURIComponent(post.slug)}.png`,
+    heroImage ? heroImage : `${encodeURIComponent(post.id.replace(/\.mdx?$/, ''))}.png`,
     Astro.url.origin
 ).href;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 // Extract table of contents from the content
 const tocRegex = /## Table of contents\n([\s\S]*?)(?=##|$)/;
@@ -71,35 +72,6 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
             </div>
         </div>
 
-        <!-- Hero Section -->
-        { (heroType === 'boids' || heroImage) && (
-        <div class="max-w-screen-xl mx-auto px-4 pb-12">
-            <div class="w-full h-[60vh] relative bg-black overflow-hidden rounded-3xl">
-                {heroType === 'boids' ? (
-                    <boids-canvas
-                        background-color="#FFF"
-                        light-color="#FFFCEC"
-                        fog-color="#FFF"
-                        boid-color="#40e0d0"
-                        highlight="#ffc0cb"
-                        count="200"
-                        use-orbit-controls="true"
-                        duration="30"
-                        forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}'
-                        orientation-slerp="0.2"
-                        class="w-full h-full block"
-                    />
-                ) : heroImage ? (
-                    <img
-                        src={heroImage}
-                        alt={title}
-                        class="w-full h-full object-cover"
-                    />
-                ) : null}
-            </div>
-        </div>
-        )}
-
         <!-- Main Content Grid -->
         <div class="max-w-screen-xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 relative pb-12">
             
@@ -109,21 +81,6 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
                     <!-- Project Metadata -->
                     {projectMetadata && (
                         <div class="space-y-6">
-                            {/* {projectMetadata.techStack && (
-                                <div>
-                                    <h3 class="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-3">Tech Stack</h3>
-                                    <div class="flex flex-wrap gap-2">
-                                        {projectMetadata.techStack.map(tech => (
-                                            <div class={`text-sm text-secondary-600 dark:text-secondary-200 pr-2 flex flex-wrap items-center relative underline hover:text-secondary-900 dark:hover:text-white decoration-secondary-200
-                                            decoration-2 transition-all duration-300 hover:-translate-y-0.5 focus-visible:p-1 cursor-default`}>
-                                                <Icon name="tabler:hash" class="w-4 h-4 text-mint-icon" />
-                                                &nbsp;<span>{tech}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )} */}
-                            
                             {(projectMetadata.githubLink || projectMetadata.liveLink) && (
                                 <div>
                                     <h3 class="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-3">Links</h3>
@@ -180,6 +137,34 @@ const headings = [...post.body.matchAll(headingsRegex)].map(match => match[1]);
 
             <!-- Content Column -->
             <div class="lg:col-span-7 lg:col-start-4">
+                <!-- Hero picture lives in the content column, so it is
+                     constrained to the content width instead of full-bleed. -->
+                { (heroType === 'boids' || heroImage) && (
+                <div class="w-full h-[60vh] relative bg-black overflow-hidden rounded-3xl mb-10">
+                    {heroType === 'boids' ? (
+                        <boids-canvas
+                            background-color="#FFF"
+                            light-color="#FFFCEC"
+                            fog-color="#FFF"
+                            boid-color="#40e0d0"
+                            highlight="#ffc0cb"
+                            count="200"
+                            use-orbit-controls="true"
+                            duration="30"
+                            forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}'
+                            orientation-slerp="0.2"
+                            class="w-full h-full block"
+                        />
+                    ) : heroImage ? (
+                        <img
+                            src={heroImage}
+                            alt={title}
+                            class="w-full h-full object-cover"
+                        />
+                    ) : null}
+                </div>
+                )}
+
                 <div class="prose dark:prose-invert max-w-none 
                     prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-text dark:prose-headings:text-cream
                     prose-p:text-secondary-600 dark:prose-p:text-secondary-300 prose-p:leading-relaxed

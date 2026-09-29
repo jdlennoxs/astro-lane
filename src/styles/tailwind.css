@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import "tailwindcss";
+@import "./tokens.css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* === Tailwind theme mapping ===============================================
+   Maps the raw tokens in `tokens.css` onto Tailwind namespaces so utilities
+   exist. `static` keeps every token in the output even when no utility class
+   uses it — components read some of these as runtime CSS variables (e.g.
+   `--card-ink` via `var(--color-accent-800)`), which tree-shaking would drop. */
+@theme static {
+    --color-primary-50: #eeefff;
+    --color-primary-100: #dce0ff;
+    --color-primary-200: #b9c0ff;
+    --color-primary-300: #97a1ff;
+    --color-primary-400: #7481ff;
+    --color-primary-500: #5162ff;
+    --color-primary-600: #414ecc;
+    --color-primary-700: #313b99;
+    --color-primary-800: #202766;
+    --color-primary-900: #101433;
+
+    --color-secondary-50: #f7f7f7;
+    --color-secondary-100: #e3e3e3;
+    --color-secondary-200: #c8c8c8;
+    --color-secondary-300: #a4a4a4;
+    --color-secondary-400: #818181;
+    --color-secondary-500: #52525b;
+    --color-secondary-600: #434343;
+    --color-secondary-700: #383838;
+    --color-secondary-800: #313131;
+    --color-secondary-900: #1a1a1a;
+    --color-secondary-950: #0a0a0a;
+
+    --color-accent-50: #fff2f6;
+    --color-accent-100: #ffe5ed;
+    --color-accent-200: #ffccdb;
+    --color-accent-300: #ffb2c9;
+    --color-accent-400: #ff99b7;
+    --color-accent-500: #ff7fa5;
+    --color-accent-600: #cc6684;
+    --color-accent-700: #994c63;
+    --color-accent-800: #663342;
+    --color-accent-900: #331921;
+
+    /* Semantic surfaces — follow dark mode on their own. */
+    --color-background: var(--background);
+    --color-text: var(--ink);
+    --color-surface: var(--surface);
+    --color-border-soft: var(--border-soft);
+
+    --color-cream: #fffef4;
+    --color-badge: #f1f5f9;
+    --color-badge-text: #475569;
+    --color-card-border: #475569;
+
+    /* Cosmic palette */
+    --color-bubblegum: var(--bubblegum);
+    --color-mint-icon: var(--aqua);
+
+    --font-sans: var(--font-family-sans);
+    --font-title: var(--font-family-title);
+    --font-body: var(--font-family-body);
+    --font-mono: var(--font-family-mono);
+
+    --text-base: var(--font-size-base);
+    --text-sm: var(--font-size-sm);
+    --text-lg: var(--font-size-lg);
+    --text-xl: var(--font-size-xl);
+    --text-2xl: var(--font-size-2xl);
+    --text-h1: var(--font-size-h1);
+    --text-h1--line-height: 3.75rem;
+    --text-h2: var(--font-size-h2);
+    --text-h2--line-height: 2.625rem;
+    --text-h3: var(--font-size-h3);
+    --text-h3--line-height: 2.25rem;
+    --text-h4: var(--font-size-h4);
+    --text-h4--line-height: 2rem;
+    --text-h5: var(--font-size-h5);
+    --text-h5--line-height: 1.75rem;
+    --text-h6: var(--font-size-h6);
+    --text-h6--line-height: 1.5rem;
+    --text-mini: var(--font-size-mini);
+    --text-mini--line-height: 1.5rem;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+    --max-width-8xl: 96rem;
+}

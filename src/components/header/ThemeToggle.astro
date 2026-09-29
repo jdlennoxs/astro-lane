@@ -1,0 +1,69 @@
+---
+// Vanilla theme toggle — no React, no hydration. Two icons are stacked and
+// cross-fade via `dark:` variants on <html>, which Layout.astro sets at parse
+// time. The button matches the round 8x8 pill style from the spec.
+---
+
+<button
+    type="button"
+    data-theme-toggle
+    aria-label="Toggle color theme"
+    class="group relative inline-flex h-8 w-8 ml-3 items-center justify-center rounded-full border border-neutral-200 dark:border-white/10 bg-neutral-100 dark:bg-white/5 text-secondary-600 dark:text-white/70 transition-colors duration-200 hover:text-text dark:hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+>
+    {/* Sun — visible in light mode */}
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        class="h-4 w-4 transition-all duration-300 opacity-100 scale-100 rotate-0 dark:opacity-0 dark:scale-75 dark:-rotate-90"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        ></path>
+    </svg>
+
+    {/* Moon — visible in dark mode */}
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        class="absolute h-4 w-4 transition-all duration-300 opacity-0 scale-75 rotate-90 dark:opacity-100 dark:scale-100 dark:rotate-0"
+    >
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+    </svg>
+</button>
+
+<script>
+    // Click handler. Visual state is CSS-driven via `dark:` classes, so the
+    // only JS we need is to flip the root class and persist the choice.
+    document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
+        const syncLabel = (root: HTMLElement) => {
+            const isDark = root.classList.contains("dark");
+            const next = isDark ? "light" : "dark";
+            btn.setAttribute("aria-label", `Switch to ${next} mode`);
+            btn.setAttribute("title", `Switch to ${next} mode`);
+        };
+        syncLabel(document.documentElement);
+        btn.addEventListener("click", () => {
+            const root = document.documentElement;
+            const next = root.classList.contains("dark") ? "light" : "dark";
+            root.classList.remove("light", "dark");
+            root.classList.add(next);
+            try {
+                localStorage.setItem("theme", next);
+            } catch {
+                /* storage unavailable — toggle still works for the session */
+            }
+            syncLabel(root);
+        });
+    });
+</script>

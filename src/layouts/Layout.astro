@@ -1,14 +1,13 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <SEO /> component.
-import "../styles/globals.scss";
+// One style import. Order is declared in global.css so the cascade does not
+// depend on the order of imports here.
+import "../styles/global.css";
 import SEO from "@/components/seo/SEO.astro";
-import Header from "@/components/header/Header.astro";
-import Logo from '@/components/header/Logo.astro';
-import ToggleMenu from '@/components/header/ToggleMenu.astro';
-import planet from "@/components/header/planet.svg?raw";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import SiteNav from "@/components/header/SiteNav.astro";
 import Analytics from '@vercel/analytics/astro';
+import MeshGradient from "@/components/MeshGradient.astro";
+import FooterContent from "@/components/footer/FooterContent.astro";
+import Card from "@/components/card-stack/Card.astro";
 
 interface Props {
     class?: string;
@@ -20,8 +19,6 @@ interface Props {
     children?: any;
 }
 
-const currentYear = new Date().getFullYear();
-
 const {
     class: className,
     title,
@@ -30,9 +27,6 @@ const {
     url,
     image
 } = Astro.props;
-
-// Check if we're on a blog post page
-const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
 ---
 
 <!DOCTYPE html>
@@ -45,50 +39,43 @@ const isBlogPost = Astro.url.pathname.match(/^\/posts\/[^0-9/]+\/?$/);
             url={url}
             image={image}
         />
-        <link href="/prism-night-owl-light.css" rel="stylesheet" />
         <script>
             // Initialize theme
             const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.classList.add(theme);
         </script>
     </head>
-    <body class="bg-background text-text transition-colors duration-300">
-        <div class="max-w-6xl mx-auto mt-16 md:mt-12">
-            <header class="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 bg-background border-b border-secondary-100 dark:border-secondary-800 transition-colors duration-300">
-                <button type="button" class="flex items-center justify-center w-10 h-10 text-secondary-600 dark:text-secondary-200 hover:text-secondary-900 dark:hover:text-white transition-colors duration-300 focus:outline-none" aria-label="Toggle Menu" data-aw-toggle-menu>
-                    <Fragment set:html={planet} />
-                </button>
-            </header>
-            <Header />
-            <main class="md:pl-24">
-                <!-- <div class={`grid grid-cols-1 lg:grid-cols-4 max-w-8xl mx-auto ${className}`}> -->
-                    <!-- <div class="col-span-1 m-4">
-                        <slot name="left-column">
-                            {!isBlogPost && (
-                                <div class="sticky top-8 space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="/" class="inline-flex items-center justify-center w-14 h-14 rounded-lg text-text hover:bg-secondary-100 dark:hover:bg-secondary-800 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:focus:ring-secondary-700">
-                                            <Logo class="h-12 w-12"/>
-                                        </a>
-                                        <ThemeSwitcher client:load />
-                                    </div>
-                                    <div class="content text-lg md:text-xl font-medium tracking-tight lg:tracking-tighter text-secondary-600 dark:text-secondary-200">
-                                        I'm Jack, I make fun things on the internet and don't really write about them.
-                                    </div>
-                                </div>
-                            )}
-                        </slot>
-                    </div> -->
-                    <!-- <div class="col-span-1 sm:col-span-3">     -->
-                        <slot />
-                        <footer class="mt-24 mx-4 md:mx-4 pt-8 pb-8 border-t border-secondary-200 dark:border-secondary-800">
-                            <div class="text-secondary-500 dark:text-secondary-400 text-sm text-right font-sans">
-                                © {currentYear} jdlennoxs
-                            </div>
-                        </footer>
-                    <!-- </div>
-                </div> -->
-            </main>
+    <body class="relative bg-background text-text transition-colors duration-300">
+        {/* Dark hero band — full-bleed and scrolls away with the page.
+            Must be a direct child of <body>: inside <main> it would be clamped
+            to max-w-7xl and inset by the px-* padding. Absolute (not fixed) so
+            it scrolls off; -z-10 puts it behind the nav and content.
+            Fades to the page bg quickly (ramp finishes at 60% of 45vh). */}
+        <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[75vh] bg-gradient-to-b dark:from-primary-900 from-primary-200 from-50% to-background to-95%"
+        />
+            <div
+              class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden"
+              aria-hidden="true"
+            >
+              <div
+                class="absolute -top-[300%] -left-[150%] h-[600%] w-[600%] opacity-20"
+                style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj4KICA8ZmlsdGVyIGlkPSJuIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjg1IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iMSIvPgo8L3N2Zz4='); background-size: 500px; background-repeat: repeat;"
+              ></div>
+            </div>
+            <SiteNav />
+            
+        <main class="max-w-7xl mx-auto mt-8 md:mt-12 pb-20">
+            <slot />
+        </main>
+        {/* Footer styled as the last card, sitting at the bottom of the page.
+            The max-w-7xl + px wrapper mirrors <main> so its edges line up with
+            the stacked cards on wide viewports, where <main> stops growing. */}
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
+            <Card footer index={0} topic="Elsewhere">
+                <FooterContent />
+            </Card>
         </div>
         <Analytics />
     </body>

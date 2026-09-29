@@ -1,0 +1,225 @@
+---
+/**
+ * Card — a single panel in the sticky stacking deck.
+ *
+ * Structure: mobile stacks media above text; desktop is a two-column grid.
+ * The `media` slot is named so callers can pass video, img, iframe, whatever.
+ *
+ * Stacking: `index` drives both the sticky top offset and the z-index. Tailwind
+ * can't compile runtime math, so those are inline. The mobile/desktop increment
+ * difference is handled with a CSS variable set via media query in the <style>
+ * block below (`--stack-step`), because a single inline calc can't vary by
+ * breakpoint.
+ *
+ * Overlap: `--stack-overlap` is applied as a negative bottom margin so the next
+ * card starts rising before this card's bottom edge is reachable, and the same
+ * amount as bottom padding so the painted background still fills that region.
+ * Net effect: you never see the bottom edge of a covered card.
+ */
+export interface Props {
+    /** 0-based position in the stack. Drives sticky offset + z-index. */
+    index: number;
+    /** Small eyebrow label, top-left. */
+    topic?: string;
+    /** Card heading. Plain text, or marked up with <hl>…</hl> to put the
+        highlight colour on any part of it. */
+    title?: string;
+    /** One-line summary under the title. */
+    sub?: string;
+    /** Body copy. Raw HTML, rendered via set:html inside a prose wrapper. */
+    body?: string;
+    /** External URL. Renders the bottom-left button when present. */
+    link?: string;
+    /** Button text. Defaults to "Visit". */
+    linkLabel?: string;
+    class?: string;
+    /** Static card at the end of a page instead of a stack member. Drops the
+        sticky positioning, the media column and the body/button group, leaving
+        a compact text-only card for free-form content via the default slot. */
+    footer?: boolean;
+}
+
+const {
+    index,
+    topic,
+    title,
+    sub,
+    body,
+    link,
+    linkLabel = "Visit",
+    class: className = "",
+    footer = false
+} = Astro.props;
+
+// --- Text styling knobs. Tune these to change the look; nothing else needs
+// --- editing. Everything is a Tailwind class string.
+// Per-topic palette: the cards read their text / button colours from these,
+// routed through CSS variables so each <Card topic="…"> gets its own hue.
+// Values are Tailwind theme token names; `on` is the button label colour.
+// Topic match is case-insensitive; unknown topics fall back to `project`.
+const TOPIC_PALETTE = {
+    project: { ink: "primary-800", body: "primary-700", hl: "primary-500", button: "primary-500", on: "#fff" },
+    writing: { ink: "secondary-800", body: "secondary-700", hl: "secondary-600", button: "secondary-500", on: "var(--color-secondary-900)" },
+    games: { ink: "accent-800", body: "accent-700", hl: "accent-600", button: "accent-600", on: "var(--color-accent-900)" }
+};
+const palette = TOPIC_PALETTE[(topic ?? "").toLowerCase()] ?? TOPIC_PALETTE.project;
+const cardColors =
+    `--card-ink:var(--color-${palette.ink});--card-body:var(--color-${palette.body});` +
+    `--card-hl:var(--color-${palette.hl});--card-btn:var(--color-${palette.button});--card-btn-ink:${palette.on};`;
+
+const textCol = "mx-6 lg:mx-12 flex flex-col justify-between gap-6";
+const topicCol = "font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--card-hl)]";
+const titleCol =
+    "font-title text-3xl tracking-tight leading-10 text-[color:var(--card-ink)] md:text-4xl mb-0";
+const highlightCol = "text-[color:var(--card-hl)]";
+const subCol = "text-[color:var(--card-body)] md:text-base";
+const bodyCol =
+    "prose prose-sm max-w-none text-[color:var(--card-body)] prose-p:my-0 prose-a:text-[color:var(--card-hl)]";
+
+// `<hl>text</hl>` in a title becomes a span carrying highlightCol, so the
+// highlight can sit anywhere in the heading (or appear more than once).
+// NOTE: must come after highlightCol — it's a `const`, so referencing it above
+// its declaration throws (temporal dead zone).
+const titleHtml = title
+    ? title
+          .replace(/<hl>/g, `<span class="${highlightCol}">`)
+          .replace(/<\/hl>/g, "</span>")
+    : undefined;
+const buttonCol =
+    "inline-flex w-fit items-center gap-2 rounded-full bg-[color:var(--card-btn)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--card-btn-ink)] transition-opacity hover:opacity-90";
+---
+<!-- shadow-[inset_0_-60px_60px_rgba(32,39,102,0.12)] -->
+<article
+    class:list={[
+        // Structural placeholders only — swap for theme tokens.
+        footer
+            ? "w-full rounded-t-[3rem] p-6 text-slate-900 bg-[#fefdfc]"
+            : "stack-card sticky flex flex-col gap-6 overflow-hidden rounded-[3rem] p-6 text-slate-900  md:grid md:grid-cols-2 md:items-stretch md:gap-10 md:h-200 bg-[#fefdfc]",
+        // className,
+    ]}
+    style={
+        `${cardColors}${
+            footer
+                ? ""
+                : `--stack-index:${index}; top: calc(var(--stack-top) + var(--stack-index) * var(--stack-step)); z-index: ${index + 1};`
+        }`
+    }
+>
+    <!-- Media first in DOM so it sits above the text on mobile (flex-col). -->
+
+    <!-- The text column must stretch to the card's full height, otherwise the
+         inner justify-between has no free space to push the two groups apart
+         and they collapse to the middle. -->
+    <div class="order-1 flex flex-col md:order-1 md:h-full">
+        <div class:list={[textCol, footer ? "py-2" : "my-8", "h-full"]}>
+            <!-- Top group: tag / title / sub -->
+            {(topic || title || sub) && (
+                <div class="flex flex-col gap-2">
+                    {topic && <span class={topicCol}>{topic}</span>}
+                    {titleHtml && <h3 class={titleCol} set:html={titleHtml} />}
+                    {sub && <p class={subCol}>{sub}</p>}
+                </div>
+            )}
+
+            <!-- Bottom group: body / optional button / free-form slot -->
+            {!footer && (
+                <div class="flex flex-col gap-4 mr-8 mb-8">
+                    {body && <div class={bodyCol} set:html={body} />}
+                    {link && (
+                        <a
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class={buttonCol}
+                        >
+                            {linkLabel}
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    )}
+                </div>
+            )}
+            {footer && <slot />}
+        </div>
+    </div>
+    {!footer && (
+        <div class="order-2 flex items-center justify-center md:order-2 rounded-3xl overflow-hidden w-full md:h-170">
+            <slot name="media" />
+        </div>
+    )}
+</article>
+
+<style>
+    /* Sticky offsets. `--stack-step` is the per-index increment.
+       0 = every card pins at the same top, so each fully covers the last
+       (no visible sliver of the card underneath). Raise it to get the
+       "deck of cards" cascade instead. */
+    .stack-card {
+        --stack-top: 5vh;
+        --stack-step: 0px;
+        /* How far the next card rides up over this one. Must be <= this card's
+           own height, or the overlap swallows the card entirely. */
+        --stack-overlap: 6rem;
+        --stack-gap: 1.5rem;
+
+        /* Negative margin pulls the next card up; equal padding extends this
+           card's painted area into the overlap. They cancel, so the layout
+           footprint stays (height + --stack-gap) whatever the overlap is. */
+        margin-bottom: calc(-1 * var(--stack-overlap) + var(--stack-gap) );
+        padding-bottom: calc(var(--stack-gap) + var(--stack-gap) + var(--stack-overlap));
+    }
+
+    /* Outer upward shadow so each card reads as lifted off the one beneath it.
+       The catch: once every card is pinned they all sit at the same top, so all
+       their shadows land on the same band above the deck and compound into a
+       dark halo. CardStack's script adds `.is-pinned` once a card reaches its
+       pin point; here that simply releases the shadow, so the seam shows while
+       a card is rising and is gone at rest. The fix is JS because there is no
+       CSS `:stuck` selector — a scroll-driven animation can't do it either, as
+       each card reaches its own pin point at a different timeline progress. */
+    .stack-card {
+        box-shadow: 0 -20px 20px -20px rgb(31, 45, 43, 0.12);
+        transition: box-shadow 0.25s ease-out;
+    }
+
+    .stack-card.is-pinned {
+        box-shadow: 0 -20px 20px -20px rgb(31, 45, 43, 0);
+    }
+
+    /* The first card has nothing above it to separate from, so its shadow only
+       ever falls on the page background — drop it entirely. */
+    .stack-card:first-child {
+        box-shadow: none;
+    }
+
+    .stack-card:last-child {
+        margin-bottom: 0;
+        padding-bottom: var(--stack-gap);
+        border-radius: 3rem
+    }
+
+    @media (max-height: 700px) {
+        /* Stacking is off here, so the overlap must go too — otherwise cards
+           would still ride over each other in the degraded list. */
+        .stack-card,
+        .stack-card:last-child {
+            margin-bottom: var(--stack-gap);
+            padding-bottom: var(--stack-gap);
+        }
+    }
+
+    /* Safe-fail: on short viewports a pinned card can't show its content, so
+       drop out of the stacking flow entirely into a normal scrolling list. */
+    @media (max-height: 700px) {
+        .stack-card {
+            position: static;
+            top: auto;
+        }
+    }
+
+    /* Respect reduced motion / forcibly disable stacking when asked. */
+    @media (prefers-reduced-motion: reduce) {
+        .stack-card {
+            scroll-behavior: auto;
+        }
+    }
+</style>

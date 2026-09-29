@@ -1,0 +1,11 @@
+/**
+ * Style entry point — one import for layouts.
+ *
+ * Import order is declared here so the cascade does not depend on which file a
+ * layout happens to import first. `tailwind.css` pulls in `tokens.css` first
+ * (it must, so `@theme` can read the values); `base.css` then applies the reset
+ * and element defaults.
+ */
+
+@import "./tailwind.css";
+@import "./base.css";

@@ -3,7 +3,7 @@
 import type { Site, SocialMediaObjects } from "./types";
 
 export const SITE: Site = {
-    siteUrl: "https:/www.astro-lane.avenuelabs.co/", // Always put "/" at the end of the URL
+    siteUrl: "https://www.jdlennoxs.com/", // Always put "/" at the end of the URL
     author: "jdlennoxs",
     desc: "A personal portfolio landing template for developers and designers. Made by Jack.",
     title: "jdlennoxs",
@@ -50,12 +50,5 @@ export const SOCIALS: SocialMediaObjects = [
         icon: "tabler:brand-bluesky",
         title: `${SITE.title} on Bluesky`,
         active: true
-    },
-    // {
-    //     name: "Discord",
-    //     href: "https://github.com/christian-luntok/astro-lane/",
-    //     icon: "",
-    //     title: `${SITE.title} on Discord`,
-    //     active: false
-    // }
+    }
 ];

@@ -1,0 +1,61 @@
+---
+/**
+ * CardStack — scrollable track that pins and stacks its <Card> children.
+ *
+ * Each child pins at its own `top` offset (derived from its `index`), so later
+ * cards slide up and cover earlier ones. The track needs generous bottom padding
+ * so the final card has room to reach its pinned position before the page
+ * continues.
+ *
+ * Spacing between cards lives on Card (negative bottom margin + padding), not
+ * here — a gap on this flex container would leave a see-through band between
+ * a card and the one covering it.
+ *
+ * Pass cards as children; give each one its own `index`:
+ *
+ *   <CardStack>
+ *     <Card index={0} label="01" heading="…">
+ *       <video slot="media" … />
+ *     </Card>
+ *     <Card index={1} …>…</Card>
+ *   </CardStack>
+ */
+export interface Props {
+    class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section class:list={["card-stack w-full", className]}>
+    <div class="flex w-full flex-col px-4 pb-32 md:px-6 lg:px-10">
+        <slot />
+    </div>
+</section>
+
+<script>
+    // Cards pin at `--stack-top`; once a card reaches it, flag it so CSS can
+    // release its shadow (otherwise every pinned card's shadow stacks into a
+    // dark band above the deck). There's no CSS `:stuck` selector, so this is
+    // the minimum that does the job.
+    const stack = document.querySelector(".card-stack");
+    const cards = stack ? [...stack.querySelectorAll<HTMLElement>(".stack-card")] : [];
+    const first = cards[0];
+
+    if (first && getComputedStyle(first).position === "sticky") {
+        const pin = parseFloat(getComputedStyle(first).top) || 0;
+        let frame = 0;
+        const update = () => {
+            frame = 0;
+            for (const card of cards) {
+                card.classList.toggle("is-pinned", card.getBoundingClientRect().top <= pin + 0.5);
+            }
+        };
+        const schedule = () => {
+            if (!frame) frame = requestAnimationFrame(update);
+        };
+        addEventListener("scroll", schedule, { passive: true });
+        addEventListener("resize", schedule);
+        update();
+    }
+</script>

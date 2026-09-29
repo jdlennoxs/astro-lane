@@ -1,8 +1,7 @@
 ---
-import SectionContainer from "../SectionContainer.astro";
 const { class: className } = Astro.props;
 ---
 
-    <div class={`card-group--container ${className && className}`}>
+    <div class:list={[className]}>
         <slot />
     </div>

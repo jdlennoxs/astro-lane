@@ -1,7 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
-import { Icon } from "astro-icon/components";
 
 const interests = ["Web Development", "Three.js", "Creative Coding", "AI", "Open Source"];
 ---
@@ -10,7 +9,7 @@ const interests = ["Web Development", "Three.js", "Creative Coding", "AI", "Open
     title="About - jdlennoxs"
     description="About me"
 >
-    <SectionContainer class="about--container">
+    <SectionContainer>
         <div class="flex flex-col items-start text-secondary-600 dark:text-secondary-200">
             <div class="mb-8">
                 <h1
@@ -35,7 +34,7 @@ const interests = ["Web Development", "Three.js", "Creative Coding", "AI", "Open
                 <h2 class="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-4 font-sans">Interests</h2>
                 <div class="flex flex-wrap gap-2">
                     {interests.map(interest => (
-                        <span class="px-3 py-1.5 rounded-full text-sm font-medium bg-badge text-badgeText font-sans transition-colors duration-300">
+                        <span class="px-3 py-1.5 rounded-full text-sm font-medium bg-badge text-badge-text font-sans transition-colors duration-300">
                             {interest}
                         </span>
                     ))}

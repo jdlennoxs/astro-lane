@@ -1,0 +1,304 @@
+---
+export interface Props {
+    debug?: boolean;
+}
+
+const { debug = false } = Astro.props;
+---
+
+<canvas data-canvas-ik data-debug={debug ? "" : undefined}></canvas>
+<style>
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<script>
+    const JOINTS = 5;
+    const SEG_LENGTH = 75;
+    const LERP_FACTOR = 0.15;
+    const ITERS = 3;
+
+    const svgImage = new Image();
+    svgImage.src = "/images/flower.svg";
+    const groundImage = new Image();
+    groundImage.src = "/images/ground_plane.svg";
+
+    document.querySelectorAll("[data-canvas-ik]").forEach((canvas) => {
+        const ctx = canvas.getContext("2d");
+        const debug = "debug" in canvas.dataset;
+        // Per-canvas pointer + smoothed target. These must NOT be module-scope:
+        // multiple instances would share one pair, so hovering either canvas
+        // would drag both plants and their animation loops would fight.
+        const mouse = { x: 0, y: 0 };
+        const target = { x: 0, y: 0 };
+        // Root sits at the bottom-center of whatever box the card gives us.
+        const ROOT_X = 0.5;
+        const ROOT_Y_OFFSET = 60; // px between canvas bottom and the plant root
+        let cssW = 0;
+        let cssH = 0;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            cssW = rect.width;
+            cssH = rect.height;
+            canvas.width = rect.width * devicePixelRatio;
+            canvas.height = rect.height * devicePixelRatio;
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+        const ro = new ResizeObserver(resizeCanvas);
+        ro.observe(canvas);
+        resizeCanvas();
+
+        // Idle tip position, in world units (origin = plant root, +y is up).
+        // Kept short of the arm's ~230px reach so the plant rests slightly
+        // curled rather than fully extended. NOTE: must be declared before the
+        // seed block below — it's a `const`, so the seed would otherwise hit
+        // the temporal dead zone and kill this script.
+        const IDLE_HEIGHT = 220;
+        function idleTarget() {
+            return { x: 0, y: IDLE_HEIGHT };
+        }
+
+        // Seed the resting pose now that the canvas has real dimensions.
+        {
+            const idle = idleTarget();
+            mouse.x = idle.x;
+            mouse.y = idle.y;
+            target.x = idle.x;
+            target.y = idle.y;
+        }
+
+        const joints: Object[] = [];
+
+        for (let i = 0; i < JOINTS; i++) {
+            joints[i] = {
+                x: 0,
+                y: i * SEG_LENGTH - i * 10,
+                angle: 0,
+                length: SEG_LENGTH - i * 10
+            };
+        }
+
+        function toCanvas(wx, wy) {
+            return { x: ROOT_X * cssW + wx, y: cssH - wy - ROOT_Y_OFFSET };
+        }
+        function toWorld(cx, cy) {
+            return { x: cx - ROOT_X * cssW, y: cssH - cy - ROOT_Y_OFFSET };
+        }
+
+        canvas.addEventListener("mousemove", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const canvasX = e.clientX - rect.left;
+            const canvasY = e.clientY - rect.top;
+            const p = toWorld(canvasX, canvasY);
+            mouse.x = p.x;
+            mouse.y = Math.max(p.y, -30);
+        });
+
+        canvas.addEventListener("mouseleave", () => {
+            const idle = idleTarget();
+            mouse.x = idle.x;
+            mouse.y = idle.y;
+        });
+        function forwardKinematics(joints) {
+            const positions = [{ x: 0, y: 0 }];
+            let angle = 0;
+            for (let i = 0; i < JOINTS; i++) {
+                const joint = joints[i];
+                angle += joint.angle;
+                const prevNode = positions[i];
+                const x = prevNode.x + joints[i].length * Math.cos(angle);
+                const y = prevNode.y + joints[i].length * Math.sin(angle);
+                positions.push({ x, y });
+            }
+            return positions;
+        }
+
+        function solveCCD(target, joints, iters) {
+            for (let k = 0; k < iters; k++) {
+                for (let i = JOINTS - 1; i >= 0; --i) {
+                    let fk = forwardKinematics(joints);
+                    const currentJointPos = fk[i];
+                    const endEffectorPos = fk[JOINTS];
+                    const toEnd_x = endEffectorPos.x - currentJointPos.x;
+                    const toEnd_y = endEffectorPos.y - currentJointPos.y;
+                    const toTgt_x = target.x - currentJointPos.x;
+                    const toTgt_y = target.y - currentJointPos.y;
+                    let toRotate =
+                        Math.atan2(toTgt_y, toTgt_x) -
+                        Math.atan2(toEnd_y, toEnd_x);
+                    toRotate = Math.atan2(
+                        Math.sin(toRotate),
+                        Math.cos(toRotate)
+                    );
+
+                    // bake angular constraints into the solver
+                    if (i === 0) {
+                        const next = joints[0].angle + toRotate;
+                        joints[0].angle = Math.min(
+                            (5 * Math.PI) / 8,
+                            Math.max((3 * Math.PI) / 8, next)
+                        );
+                    } else {
+                        joints[i].angle += toRotate;
+                    }
+                }
+            }
+        }
+
+        function render() {
+            target.x += (mouse.x - target.x) * LERP_FACTOR;
+            target.y += (mouse.y - target.y) * LERP_FACTOR;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            solveCCD(target, joints, ITERS);
+            const fk = forwardKinematics(joints);
+            const points = [];
+
+            for (let joint in fk) {
+                const point = toCanvas(fk[joint].x, fk[joint].y);
+                points.push(point);
+                if (debug) {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(2,2,2,0.4)";
+                    ctx.fill();
+                }
+            }
+
+            const root = points[0];
+
+            const gw = 200;
+            const gh = 100;
+            ctx.drawImage(
+                groundImage,
+                root.x - gw / 2 + 2,
+                root.y - gh / 2 - 6,
+                gw,
+                gh
+            );
+
+            const currentDist = Math.hypot(
+                points[5].x - points[0].x,
+                points[5].y - points[0].y
+            );
+            const maxArmLength = 230;
+            let linearRatio = Math.min(1, currentDist / maxArmLength);
+
+            let stretchRatio = 0;
+            let shakeRatio = 0;
+            const shakeThreshold = 0.98;
+            const stretchThreshold = 0.87;
+            if (linearRatio > stretchThreshold) {
+                let mappedRatio =
+                    (linearRatio - stretchThreshold) / (1 - stretchThreshold);
+                stretchRatio = Math.pow(mappedRatio, 2);
+            }
+            if (linearRatio > shakeThreshold) {
+                let mappedRatio =
+                    (linearRatio - shakeThreshold) / (1 - shakeThreshold);
+                shakeRatio = Math.pow(mappedRatio, 2);
+            }
+
+            const normalWidth = 12;
+            const thinnestWidth = 6;
+            const currentWidth =
+                normalWidth - (normalWidth - thinnestWidth) * stretchRatio;
+
+            const maxShakePixels = 2;
+            const maxShakeAngle = 0.01;
+            const shakeX =
+                (Math.random() - 0.5) * 1 * maxShakePixels * shakeRatio;
+            const shakeY =
+                (Math.random() - 0.5) * 1 * maxShakePixels * shakeRatio;
+            const shakeRot =
+                (Math.random() - 0.5) * 1 * maxShakeAngle * shakeRatio;
+
+            ctx.save();
+            ctx.translate(points[0].x, points[0].y);
+            const angle = Math.atan2(
+                points[0].y - points[2].y,
+                points[0].x - points[2].x
+            );
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.ellipse(-35, -30, 4, 40, (6 * Math.PI) / 8, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#1a2433";
+            ctx.lineWidth = 16;
+            ctx.stroke();
+            ctx.strokeStyle = "#419d64";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+
+            ctx.restore();
+
+            ctx?.beginPath();
+            ctx.lineCap = "round";
+            ctx.moveTo(points[0].x, points[0].y);
+
+            // cp1 pulls the bottom half of the curve (averaging joints 1 and 2)
+            const cp1x = (points[1].x + points[2].x) / 2;
+            const cp1y = (points[1].y + points[2].y) / 2;
+
+            // cp2 pulls the top half of the curve (averaging joints 3 and 4)
+            const cp2x = (points[3].x + points[4].x) / 2;
+            const cp2y = (points[3].y + points[4].y) / 2;
+
+            const tipX = points[5].x + shakeX * 2;
+            const tipY = points[5].y + shakeY * 2;
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, tipX, tipY);
+
+            ctx.strokeStyle = "#1a2433";
+            ctx.lineWidth = currentWidth + 6;
+            ctx.stroke();
+            ctx.strokeStyle = "#419d64";
+            ctx.lineWidth = currentWidth;
+            ctx?.stroke();
+
+            const t = toCanvas(target.x, target.y);
+
+            if (svgImage.complete && svgImage.naturalWidth > 0) {
+                const imgSize = 128;
+
+                // Calculate the angle using the 2nd control point and the end point
+                const angle = Math.atan2(
+                    points[5].y - cp2y,
+                    points[5].x - cp2x
+                );
+
+                ctx.save();
+
+                ctx.translate(points[5].x + shakeX, points[5].y + shakeY);
+                ctx.rotate(angle + Math.PI / 2 + shakeRot);
+
+                // Draw centered on the 0,0 translated origin
+                ctx.drawImage(
+                    svgImage,
+                    -imgSize / 2,
+                    -imgSize / 2,
+                    imgSize,
+                    imgSize
+                );
+                ctx.restore();
+            }
+
+            if (debug) {
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255,2,2,0.9)";
+                ctx.fill();
+            }
+        }
+
+        function tick() {
+            render();
+            requestAnimationFrame(tick);
+        }
+        tick();
+    });
+</script>

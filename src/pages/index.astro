@@ -1,92 +1,87 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
 import projectData from "@/data/projectData.json";
-import { getCollection } from "astro:content";
-import { Icon } from "astro-icon/components";
-import getSortedTags from "@/utils/getSortedTags";
-import { SITE } from "@config";
-import ProjectCardGroup from "@/components/projects/ProjectCardGroup.astro";
-import PostList from "@/components/posts/PostList.astro";
+import CanvasIk from "@/components/flower/canvas-ik.astro";
+import CardStack from "@/components/card-stack/CardStack.astro";
+import Card from "@/components/card-stack/Card.astro";
+import Scene from "@/components/react/scene";
 
-
-const posts = await getCollection("post");
-
-const tags = getSortedTags(posts).slice(0, 6);
-const sortedPosts = posts
-    .filter((post) => post.data.featured == true && !post.data.project)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    .slice(0, SITE.postPerPage);
-
-const projects = projectData.slice(0, SITE.postPerPage);
+const projects = projectData;
 ---
 
-<Layout
-    title="jdlennoxs"
-    description=""
->
-    <SectionContainer class="projects--container">
-         <div class="flex flex-row items-center text-secondary-600 dark:text-secondary-200">
-              <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
-              >
-                Projects
-              </h2>
-            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all projects
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-        <ProjectCardGroup projects={projects} />
-    </SectionContainer>
+<Layout title="jdlennoxs" description="">
+    <div class="mx-auto max-w-6xl px-6 py-10 md:px-10 md:py-14">
+        <div class="h-[5vh]"></div>
+        <Scene client:load />
+        <section class="relative col-span-12 md:col-span-10 row-span-3 overflow-hidden">
+            <div class="relative z-10 flex h-full flex-col justify-end gap-4">
+                <h1 class="font-title text-5xl leading-[1.05] tracking-tight text-badge-text md:text-7xl">
+                    <span class="italic font-normal text-mint-icon underline">Jack</span> builds <span class="italic font-normal text-accent-500">random</span> things on the{" "}web because he wants to<span class="font-normal text-bubblegum">.</span>
+                </h1>
+                <span class="text-xs uppercase tracking-[0.2em] text-secondary-400 dark:text-white/40">
+                    Based in Bristol · available for projects | talks | ideas
+                </span>
+            </div>
+        </section>
+    </div>
 
-    <!--  Projects Container -->
-    <SectionContainer class="blogs--container">
-        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
-              <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
-              >
-                Posts
-              </h2>
-            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all posts
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-
-        <PostList posts={sortedPosts} />
-    </SectionContainer>
-    <!-- Blog Container -->
-    <SectionContainer class="tags--container">
-        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
-            <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter mb-0 font-body"
+    <CardStack>
+        {projects.map((project, index) => (
+            <Card
+                index={index}
+                topic={project.topic}
+                title={project.title}
+                sub={project.sub}
+                body={project.body}
+                link={project.link || project.post}
+                linkLabel={project.linkLabel ?? (project.post ? "Read more" : "Visit")}
             >
-                Top Tags
-            </h2>
-
-            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all tags
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-
-        <ul class="list-none flex flex-wrap gap-4 px-4">
-            {
-                tags.map((tag) => (
-                    <li class={`inline-block`}>
-                        <a
-                            href={`/tags/${tag.toLowerCase()}`}
-                            class={`text-lg text-secondary-600 dark:text-secondary-200 pr-2 flex flex-wrap items-center relative underline hover:text-secondary-900 dark:hover:text-white decoration-secondary-200
-                            decoration-2 transition-all duration-300 hover:-translate-y-0.5 focus-visible:p-1`}
-                        >
-                            <Icon name="tabler:hash" class="w-5 h-5 text-mint-icon" />
-                            &nbsp;<span>{tag.toLowerCase()}</span>
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </SectionContainer>
-    <!-- Tags Container -->
+                {project.component === "boids" && (
+                    <div slot="media" class="relative h-120 md:h-170 w-full">
+                        <boids-canvas
+                            class="w-full overflow-hidden rounded-3xl"
+                            background-color="#5162FF"
+                            light-color="#FFFCEC"
+                            fog-color="#9DA7FF"
+                            boid-color="#40e0d0"
+                            highlight="#ffc0cb"
+                            count="80"
+                            use-orbit-controls="false"
+                            duration="30"
+                            forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}'
+                            orientation-slerp="0.2"
+                        />
+                        {project.badgeContent && (
+                            <span class="pointer-events-none absolute right-5 top-4 inline-flex h-7 px-2 items-center justify-center rounded-full border border-white/40 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/70">
+                                {project.badgeContent}
+                            </span>
+                        )}
+                    </div>
+                )}
+                {project.component === "IkCanvas" && (
+                    <div slot="media" class="h-120 md:h-170 bg-[#ede6d8]">
+                        <CanvasIk />
+                    </div>
+                )}
+                {!project.component && project.image && (
+                    <img
+                        slot="media"
+                        src={project.image}
+                        alt=""
+                        class="h-full w-full object-cover"
+                    />
+                )}
+            </Card>
+        ))}
+    </CardStack>
 </Layout>
+
+<script>
+    // Lazy-load the boids web component on the client so the home page
+    // stays SSR-safe even though the component touches three.js / WebGL.
+    if (typeof window !== "undefined") {
+        import("jdls-boids-canvas").catch((err) => {
+            console.warn("Failed to load boids webcomponent:", err);
+        });
+    }
+</script>
