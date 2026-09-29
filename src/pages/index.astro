@@ -61,6 +61,11 @@ const projects = projectData;
                 {project.component === "IkCanvas" && (
                     <div slot="media" class="h-120 md:h-170 bg-[#ede6d8]">
                         <CanvasIk />
+                        {project.badgeContent && (
+                            <span class="pointer-events-none absolute right-5 top-4 inline-flex h-7 px-2 items-center justify-center rounded-full border border-white/40 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/70">
+                                {project.badgeContent}
+                            </span>
+                        )}
                     </div>
                 )}
                 {!project.component && project.image && (

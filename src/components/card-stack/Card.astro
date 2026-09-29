@@ -59,7 +59,7 @@ const {
 // Topic match is case-insensitive; unknown topics fall back to `project`.
 const TOPIC_PALETTE = {
     project: { ink: "primary-800", body: "primary-700", hl: "primary-500", button: "primary-500", on: "#fff" },
-    writing: { ink: "secondary-800", body: "secondary-700", hl: "secondary-600", button: "secondary-500", on: "var(--color-secondary-900)" },
+    writing: { ink: "mint-800", body: "mint-700", hl: "mint-600", button: "mint-500", on: "var(--color-mint-900)" },
     games: { ink: "accent-800", body: "accent-700", hl: "accent-600", button: "accent-600", on: "var(--color-accent-900)" }
 };
 const palette = TOPIC_PALETTE[(topic ?? "").toLowerCase()] ?? TOPIC_PALETTE.project;

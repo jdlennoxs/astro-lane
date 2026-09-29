@@ -11,7 +11,7 @@
         "type": "hero",
         "component": "boids",
         "linkLabel": "View project",
-        "badgeContent": "Touch me!"
+        "badgeContent": "Interactive"
     },
     {
         "id": "2",
@@ -67,7 +67,8 @@
         "link": "",
         "shortExcerpt": "Your yearly reads in a pile, gravity tested in 3d",
         "component": "IkCanvas",
-        "linkLabel": "Explore"
+        "linkLabel": "Explore",
+        "badgeContent": "Interactive"
     },
     {
         "id": "7",

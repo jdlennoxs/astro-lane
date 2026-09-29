@@ -46,6 +46,19 @@
     --color-accent-800: #663342;
     --color-accent-900: #331921;
 
+    /* Mint — the writing-card green. Kept separate from `secondary` (now the
+       grey text scale) so the card theme doesn't inherit text-colour changes. */
+    --color-mint-50: #f5fcfb;
+    --color-mint-100: #ebf9f7;
+    --color-mint-200: #d7f3ef;
+    --color-mint-300: #c4ece6;
+    --color-mint-400: #b0e6de;
+    --color-mint-500: #9ce0d6;
+    --color-mint-600: #7db3ab;
+    --color-mint-700: #5e8680;
+    --color-mint-800: #3e5a56;
+    --color-mint-900: #1f2d2b;
+
     /* Semantic surfaces — follow dark mode on their own. */
     --color-background: var(--background);
     --color-text: var(--ink);
