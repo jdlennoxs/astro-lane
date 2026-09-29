@@ -197,19 +197,19 @@ const buttonCol =
         border-radius: 3rem
     }
 
-    @media (max-height: 700px) {
-        /* Stacking is off here, so the overlap must go too — otherwise cards
-           would still ride over each other in the degraded list. */
+    /* Safe-fail: when a pinned card can't show its content, drop out of the
+       stacking flow entirely into a normal scrolling list. Two triggers:
+       - short viewports (max-height: 700px)
+       - mobile widths, where the card is a single tall column (media below the
+         text) that overflows the viewport before it's fully scrollable.
+       The overlap must go too, otherwise cards would still ride over each
+       other in the degraded list. */
+    @media (max-width: 767px), (max-height: 700px) {
         .stack-card,
         .stack-card:last-child {
             margin-bottom: var(--stack-gap);
             padding-bottom: var(--stack-gap);
         }
-    }
-
-    /* Safe-fail: on short viewports a pinned card can't show its content, so
-       drop out of the stacking flow entirely into a normal scrolling list. */
-    @media (max-height: 700px) {
         .stack-card {
             position: static;
             top: auto;
