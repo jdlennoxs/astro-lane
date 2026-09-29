@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["_astro/jdls-boids-canvas-webcomponent.es.DNDXtW8H.js","_astro/rolldown-runtime.BUR9erT_.js"])))=>i.map(i=>d[i]);
-import{t as e}from"./preload-helper.CxFQXtKk.js";typeof window<`u`&&e(()=>import(`./jdls-boids-canvas-webcomponent.es.DNDXtW8H.js`),__vite__mapDeps([0,1])).catch(e=>{console.warn(`Failed to load boids webcomponent:`,e)});
