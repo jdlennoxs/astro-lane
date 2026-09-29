@@ -1,0 +1,61 @@
+/**
+ * Design tokens — the single source of truth for the site's look.
+ *
+ * Raw, semantic values only. The `@theme` block in `tailwind.css` maps these
+ * onto Tailwind's namespaces so utilities like `bg-surface` and `text-h3`
+ * exist. Dark mode overrides the raw values here, so every utility that reads
+ * them follows automatically — prefer a token over a `dark:` variant.
+ *
+ * NOTE: `--color-*` is Tailwind's namespace and is owned by `@theme`. Do not
+ * define a `--color-*` token here as a reference to itself; see `tailwind.css`.
+ */
+
+:root {
+    /* === Semantic surfaces ================================================ */
+    --background: #fefdfc;
+    --ink: oklch(21% 0.006 285.885);
+    --surface: #ffffff;
+    --border-soft: rgba(39, 39, 42, 0.1);
+
+    /* === Cosmic palette ===================================================
+       Accent colours used by the bento hero and mesh gradient. Same hue in
+       both modes so they stay on-brand regardless of theme. */
+    --bubblegum: #ff7fa5;
+    --aqua: #9ce0d6;
+
+    /* === Typography ======================================================= */
+    --font-family-title: "Lora", system-ui, -apple-system, sans-serif;
+    --font-family-body: "Geist", system-ui, -apple-system, sans-serif;
+    --font-family-sans: "Geist", system-ui, -apple-system, sans-serif;
+    --font-family-mono: "JetBrains Mono", system-ui, -apple-system, sans-serif;
+
+    --font-size-base: 1rem;
+    --font-size-sm: 0.875rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-h1: 3.5rem;
+    --font-size-h2: 2.25rem;
+    --font-size-h3: 1.875rem;
+    --font-size-h4: 1.5rem;
+    --font-size-h5: 1.25rem;
+    --font-size-h6: 1.125rem;
+    --font-size-mini: 0.75rem;
+}
+
+/* === Dark mode =========================================================== */
+:root.dark {
+    --background: oklch(21% 0.006 285.885);
+    --ink: #ffffff;
+    --surface: #2d2d30;
+    --border-soft: rgba(255, 255, 255, 0.08);
+
+    /* Overrides for Tailwind-namespace tokens. `:root.dark` outranks the
+       `@theme` `:root` definitions, so the utilities follow dark mode. */
+    --color-badge: #1f2937;
+    --color-badge-text: #f3f4f6;
+
+    --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.1);
+}

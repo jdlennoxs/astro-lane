@@ -3,10 +3,8 @@ import CardGroup from "@/components/card/CardGroup.astro";
 import Card from "@/components/card/Card.astro";
 import CardBody from "@/components/card/CardBody.astro";
 import CardImage from "@/components/card/CardImage.astro";
-import CardHeader from "@/components/card/CardHeader.astro";
 import CardBackground from "@/components/card/CardBackground.astro";
 import 'jdls-boids-canvas';
-import CardContent from "@/components/card/CardContent.astro";
 import { clsx } from "clsx";
 
 interface Project {
@@ -49,9 +47,9 @@ const { projects } = Astro.props;
                     <CardBackground src={project.image} alt={project.title} />
                 )}
                 {!!project.badgeContent && (
-                    <div class="badge-group text-sm w-auto absolute mb-0 m-6 z-10">
-                        <div class="badge-group--container w-auto items-center rounded-full border border-secondary-200 dark:border-secondary-700 bg-background px-1 py-[2px] font-medium text-primary-500 inline-flex transition-colors duration-300">
-                            <div class="badge-group--message px-2">
+                    <div class="text-sm w-auto absolute mb-0 m-6 z-10">
+                        <div class="w-auto items-center rounded-full border border-secondary-200 dark:border-secondary-700 bg-background px-1 py-[2px] font-medium text-primary-500 inline-flex transition-colors duration-300">
+                            <div class="px-2">
                                 {project.badgeContent}
                             </div>
                         </div>
@@ -67,15 +65,6 @@ const { projects } = Astro.props;
                         width={80}
                         height={80}
                     />}
-                    {/* <div class="absolute bottom-0 left-0 right-0 h-48 backdrop-blur-xs bg-black/50 [mask-image:linear-gradient(to_top,black_20%,transparent_100%)] pointer-events-none rounded-xl"></div> */}
-                    {/* <CardContent class="absolute bottom-0 left-0 right-0 p-6 z-10 rounded-b-xl">
-                        <CardHeader class="">
-                            {project.title}
-                        </CardHeader>
-                        <div class="content break-words text-2xl font-medium leading-10 tracking-tight lg:tracking-tighter text-neutral-50">
-                            <p>{project.shortExcerpt}</p>
-                        </div>
-                    </CardContent> */}
                 </CardBody>
             </Card>
         ))

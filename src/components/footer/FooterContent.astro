@@ -9,8 +9,11 @@ import { Icon } from "astro-icon/components";
 
 const currentYear = new Date().getFullYear();
 
+// No `dark:` variants: the footer card keeps its light surface in dark mode,
+// so the icons must inherit the card's dark ink rather than flip to a pale
+// theme colour that would nearly vanish on white.
 const linkClass =
-    "inline-flex px-2.5 text-sm hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:text-secondary-200 dark:hover:bg-secondary-800 dark:hover:text-white dark:focus:ring-secondary-700 transition-colors duration-300";
+    "inline-flex px-2.5 text-sm hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-secondary-200 transition-colors duration-300";
 
 export interface Props {
     class?: string;

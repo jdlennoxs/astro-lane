@@ -1,10 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
-import FormattedDate from "../components/FormattedDate.astro";
+import { existsSync } from "node:fs";
 import Layout from "./Layout.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
-import { Icon } from "astro-icon/components";
 import { SITE } from "@config";
 
 export interface Props {
@@ -13,10 +11,14 @@ export interface Props {
 
 const { post } = Astro.props;
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = post.data;
+const { title, description, heroImage } = post.data;
+
+// heroImage is a /public path. Guard against a dangling reference (a post that
+// names an asset never added) so we never render a broken image or OG preview.
+const hasHero = heroImage ? existsSync(`public${heroImage}`) : false;
 
 const ogUrl = new URL(
-    heroImage ? heroImage : `${encodeURIComponent(post.id.replace(/\.mdx?$/, ''))}.png`,
+    hasHero ? heroImage : `${encodeURIComponent(post.id.replace(/\.mdx?$/, ''))}.png`,
     Astro.url.origin
 ).href;
 
@@ -29,50 +31,16 @@ const { Content, headings } = await render(post);
     image={ogUrl}
 >
     <article class="w-full">
-        <!-- Header Section -->
-        <!-- <div class="max-w-4xl mx-auto px-4 pt-16 pb-16 text-center"> -->
         <div class="max-w-screen-xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-8 relative">
             <div class="lg:col-span-6 lg:col-start-3">
-            <!-- <div class="flex flex-wrap justify-center gap-4 mb-6">
-                {tags && tags.map((tag) => (
-                    <a
-                        href={`/tags/${tag.toLowerCase()}`}
-                        class={`text-lg text-secondary-600 dark:text-secondary-200 pr-2 flex flex-wrap items-center relative underline hover:text-secondary-900 dark:hover:text-white decoration-secondary-200
-                        decoration-2 transition-all duration-300 hover:-translate-y-0.5 focus-visible:p-1`}
-                    >
-                        <Icon name="tabler:hash" class="w-5 h-5 text-mint-icon" />
-                        &nbsp;<span>{tag.toLowerCase()}</span>
-                    </a>
-                ))}
-            </div> -->
-            
                 <div class="text-left leading-9 tracking-tight">
-                   
                     <h1 class="text-4xl md:text-5xl text-text dark:text-cream font-title">
-                    {title}
+                        {title}
                     </h1>
                 </div>
-
-            <!-- <div class="flex items-center justify-center gap-4 text-secondary-500 dark:text-secondary-400 font-sans text-sm">
-                <div class="flex items-center gap-2">
-                    <span>By {SITE.author}</span>
-                </div>
-                <span>•</span>
-                <FormattedDate date={pubDate} />
-                {updatedDate && (
-                    <>
-                        <span>•</span>
-                        <span>Updated <FormattedDate date={updatedDate} /></span>
-                    </>
-                )}
-            </div> -->
             </div>
 
-        <!-- Hero Image Section Removed -->
-
-        <!-- Main Content Grid -->
-            
-            <!-- Left Sidebar (TOC) -->
+            {/* Left sidebar (TOC) */}
             <div class="hidden lg:block lg:col-span-2 lg:col-start-1">
                 <div class="sticky top-24 border-secondary-200 dark:border-secondary-800">
                     {headings && headings.length > 0 && (
@@ -89,9 +57,18 @@ const { Content, headings } = await render(post);
                 </div>
             </div>
 
-            <!-- Content Column -->
+            {/* Content column */}
             <div class="lg:col-span-6 lg:col-start-3">
-                <div class="prose dark:prose-invert max-w-none 
+                {/* Hero picture stays in the content column, so it is
+                     constrained to the content width instead of full-bleed. */}
+                {hasHero && (
+                    <img
+                        src={heroImage}
+                        alt={title}
+                        class="w-full rounded-3xl object-cover mb-10"
+                    />
+                )}
+                <div class="prose dark:prose-invert max-w-none
                     prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-text dark:prose-headings:text-cream prose-headings:scroll-mt-24
                     prose-p:text-secondary-600 dark:prose-p:text-secondary-100 prose-p:leading-relaxed
                     prose-a:font-bold prose-a:underline prose-a:text-text dark:prose-a:text-white hover:prose-a:text-primary-600 dark:hover:prose-a:text-primary-400
@@ -100,12 +77,9 @@ const { Content, headings } = await render(post);
                 </div>
             </div>
 
-            <!-- Right Sidebar (Empty) -->
-            <div class="hidden lg:block lg:col-span-2">
-            </div>
+            <div class="hidden lg:block lg:col-span-2"></div>
         </div>
-        
-        <!-- Mobile TOC / Footer spacing -->
+
         <div class="h-24"></div>
     </article>
     <script>

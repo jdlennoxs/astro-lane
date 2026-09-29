@@ -1,234 +1,79 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import SectionContainer from "@/components/SectionContainer.astro";
 import projectData from "@/data/projectData.json";
-import { getCollection } from "astro:content";
-import { Icon } from "astro-icon/components";
-import getSortedTags from "@/utils/getSortedTags";
-import { SITE } from "@config";
-import ProjectCardGroup from "@/components/projects/ProjectCardGroup.astro";
-import PostList from "@/components/posts/PostList.astro";
-import HeroBento from "@/components/hero/HeroBento.astro";
 import CanvasIk from "@/components/flower/canvas-ik.astro";
 import CardStack from "@/components/card-stack/CardStack.astro";
 import Card from "@/components/card-stack/Card.astro";
 import Scene from "@/components/react/scene";
 
-
-const posts = await getCollection("post");
-
-const tags = getSortedTags(posts).slice(0, 6);
-const sortedPosts = posts
-    .filter((post) => post.data.featured == true && !post.data.project)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    .slice(0, SITE.postPerPage);
-
-// Recent transmissions uses the freshest non-project posts (not just featured),
-// so the bento tile stays populated even when few posts are flagged featured.
-const recentPosts = posts
-    .filter((post) => !post.data.project && !post.data.draft)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    .slice(0, 4);
-
-// Short "MON DD" labels matching the mono-label styling on the post list.
-// UTC components keep server and client renders stable.
-const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-const formatDate = (d: Date) =>
-    `${MONTHS[d.getUTCMonth()]} ${String(d.getUTCDate()).padStart(2, "0")}`;
-
 const projects = projectData;
-
-// Playlist for the "Now spinning" tile is fetched server-side at build
-// time. The Deezer API doesn't return CORS headers so the browser can't
-// call it directly; we have to proxy at build time. Trade-off: preview
-// URLs are signed and expire within ~24h, so the audio will stop working
-// until the site is rebuilt. (To get truly fresh URLs on every visit,
-// add @astrojs/vercel + output:'hybrid' and run this fetch in an API route.)
-const DEEZER_PLAYLIST_ID = "15520933601";
-const DEEZER_PLAYLIST_URL = "https://link.deezer.com/s/33OfjUeUhKe38TFUQyqqW"
-const DEEZER_TRACK_LIMIT = 10;
-
-type DeezerTrack = {
-    id: number;
-    title: string;
-    duration: number;
-    preview: string;
-    time_add?: number;
-    artist: { name: string } | string;
-    album?: {
-        id: number;
-        title: string;
-        cover_medium?: string;
-        cover_big?: string;
-    };
-};
-
-let playlistData: DeezerTrack[] = [];
-try {
-    // `order=date_desc` asks Deezer to return most-recently-added tracks first.
-    // The trailing client-side sort is a fallback in case the API ignores it.
-    const res = await fetch(
-        `https://api.deezer.com/playlist/${DEEZER_PLAYLIST_ID}?order=date_desc`
-    );
-    if (res.ok) {
-        const data = await res.json();
-        playlistData = (data.tracks?.data ?? [])
-            .slice(0, DEEZER_TRACK_LIMIT)
-            .sort((a, b) => (b.time_add ?? 0) - (a.time_add ?? 0));
-    } else {
-        console.warn(`Deezer playlist fetch returned HTTP ${res.status}`);
-    }
-} catch (err) {
-    console.warn("Deezer playlist fetch failed at build time:", err);
-}
 ---
 
-<Layout
-    title="jdlennoxs"
-    description=""
->
-    <!-- <SectionContainer> -->
-        <div class="mx-auto max-w-6xl px-6 py-10 md:px-10 md:py-14">
-            <div class="h-[5vh]"></div>
-            <Scene client:load />
- <section class="relative col-span-12 md:col-span-10 row-span-3 overflow-hidden">
-            <!-- <div class="absolute inset-0 bg-gradient-to-tr from-[#0a0a0c] via-[#0a0a0c]/70 to-transparent"></div> -->
+<Layout title="jdlennoxs" description="">
+    <div class="mx-auto max-w-6xl px-6 py-10 md:px-10 md:py-14">
+        <div class="h-[5vh]"></div>
+        <Scene client:load />
+        <section class="relative col-span-12 md:col-span-10 row-span-3 overflow-hidden">
             <div class="relative z-10 flex h-full flex-col justify-end gap-4">
-                <!-- <span class="text-xs uppercase tracking-[0.2em] text-bubblegum font-mono">v.3 orbital</span> -->
                 <h1 class="font-title text-5xl leading-[1.05] tracking-tight text-badge-text md:text-7xl">
                     <span class="italic font-normal text-mint-icon underline">Jack</span> builds <span class="italic font-normal text-accent-500">random</span> things on the{" "}web because he wants to<span class="font-normal text-bubblegum">.</span>
-                </h1> <span class="text-xs uppercase tracking-[0.2em] text-secondary-400 dark:text-white/40">
-                        Based in Bristol · available for projects | talks | ideas
-                    </span>
-                <!-- <div class="flex flex-wrap items-center gap-4">
-                    <a
-                        href="/about"
-                        class="group inline-flex items-center gap-3 rounded-full border border-primary-500/70 bg-primary-500/10 px-5 py-2 text-sm text-badge-text transition-colors hover:bg-primary-500 hover:text-white"
-                    >
-                        About me
-                        <span aria-hidden class="transition-transform group-hover:translate-x-0.5">→</span>
-                    </a>
-                    <span class="text-xs uppercase tracking-[0.2em] text-secondary-400 dark:text-white/40">
-                        Bristol · available for projects
-                    </span>
-                </div> -->
+                </h1>
+                <span class="text-xs uppercase tracking-[0.2em] text-secondary-400 dark:text-white/40">
+                    Based in Bristol · available for projects | talks | ideas
+                </span>
             </div>
         </section>
-        </div>
-     <CardStack>
-     {projects.map((project, index) => (
-       <Card
-         index={index}
-         topic={project.topic}
-         title={project.title}
-         sub={project.sub}
-         body={project.body}
-         link={project.link || project.post}
-         linkLabel={project.linkLabel ?? (project.post ? "Read more" : "Visit")}
-       >
-         {project.component === "boids" && (
-           <div slot="media" class="relative h-120 md:h-170 w-full">
-             <boids-canvas
-               class="w-full overflow-hidden rounded-3xl"
-               background-color="#5162FF"
-               light-color="#FFFCEC"
-               fog-color="#9DA7FF"
-               boid-color="#40e0d0"
-               highlight="#ffc0cb"
-               count="80"
-               use-orbit-controls="false"
-               duration="30"
-               forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}'
-               orientation-slerp="0.2"
-             />
-             {project.badgeContent && (
-               <span class="pointer-events-none absolute right-5 top-4 inline-flex h-7 px-2 items-center justify-center rounded-full border border-white/40 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/70">
-                 {project.badgeContent}
-               </span>
-             )}
-           </div>
-         )}
-         {project.component === "IkCanvas" && (
-           <div slot="media" class="h-120 md:h-170 bg-[#ede6d8]">
-             <CanvasIk />
-           </div>
-         )}
-         {!project.component && project.image && (
-           <img
-             slot="media"
-             src={project.image}
-             alt=""
-             class="h-full w-full object-cover"
-           />
-         )}
-       </Card>
-     ))}
-   </CardStack>
-<!-- </div> -->
-    <!-- </SectionContainer> -->
+    </div>
 
-    <!-- <SectionContainer class="projects--container">
-        <div class="flex flex-row items-center text-secondary-600 dark:text-secondary-200 mt-8">
-              <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-title"
-              >
-                Projects
-              </h2>
-            <a href="/projects" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all projects
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-        <ProjectCardGroup projects={projects} />
-    </SectionContainer>
-
-    <SectionContainer class="blogs--container">
-        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
-              <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter font-body"
-              >
-                Posts
-              </h2>
-            <a href="/posts" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all posts
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-
-        <PostList posts={sortedPosts} />
-    </SectionContainer>
-    <SectionContainer class="tags--container">
-        <div class="flex flex-row my-4 items-center text-secondary-600 dark:text-secondary-200">
-            <h2
-                class="font-medium text-h4 text-text dark:text-cream m-4 leading-8 tracking-tighter mb-0 font-body"
+    <CardStack>
+        {projects.map((project, index) => (
+            <Card
+                index={index}
+                topic={project.topic}
+                title={project.title}
+                sub={project.sub}
+                body={project.body}
+                link={project.link || project.post}
+                linkLabel={project.linkLabel ?? (project.post ? "Read more" : "Visit")}
             >
-                Top Tags
-            </h2>
-
-            <a href="/tags" class="font-medium flex no-underline ml-auto mr-4 px-4 py-1.5 rounded-full text-sm hover:bg-secondary-100 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-white transition-all duration-300 font-sans items-center">
-                View all tags
-                <Icon name="ph:arrow-right-light" class="w-5 h-5 ml-2" />
-            </a>
-        </div>
-
-        <ul class="list-none flex flex-wrap gap-4 px-4">
-            {
-                tags.map((tag) => (
-                    <li class={`inline-block`}>
-                        <a
-                            href={`/tags/${tag.toLowerCase()}`}
-                            class={`text-lg text-secondary-600 dark:text-secondary-200 pr-2 flex flex-wrap items-center relative underline hover:text-secondary-900 dark:hover:text-white decoration-secondary-200
-                            decoration-2 transition-all duration-300 hover:-translate-y-0.5 focus-visible:p-1`}
-                        >
-                            <Icon name="tabler:hash" class="w-5 h-5 text-mint-icon" />
-                            &nbsp;<span>{tag.toLowerCase()}</span>
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </SectionContainer>
-      -->
+                {project.component === "boids" && (
+                    <div slot="media" class="relative h-120 md:h-170 w-full">
+                        <boids-canvas
+                            class="w-full overflow-hidden rounded-3xl"
+                            background-color="#5162FF"
+                            light-color="#FFFCEC"
+                            fog-color="#9DA7FF"
+                            boid-color="#40e0d0"
+                            highlight="#ffc0cb"
+                            count="80"
+                            use-orbit-controls="false"
+                            duration="30"
+                            forces='{"separation": 0.9, "cohesion": 0.85, "alignment": 0.2, "goal": 0.3}'
+                            orientation-slerp="0.2"
+                        />
+                        {project.badgeContent && (
+                            <span class="pointer-events-none absolute right-5 top-4 inline-flex h-7 px-2 items-center justify-center rounded-full border border-white/40 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/70">
+                                {project.badgeContent}
+                            </span>
+                        )}
+                    </div>
+                )}
+                {project.component === "IkCanvas" && (
+                    <div slot="media" class="h-120 md:h-170 bg-[#ede6d8]">
+                        <CanvasIk />
+                    </div>
+                )}
+                {!project.component && project.image && (
+                    <img
+                        slot="media"
+                        src={project.image}
+                        alt=""
+                        class="h-full w-full object-cover"
+                    />
+                )}
+            </Card>
+        ))}
+    </CardStack>
 </Layout>
 
 <script>
@@ -239,258 +84,4 @@ try {
             console.warn("Failed to load boids webcomponent:", err);
         });
     }
-
-    // "Now spinning" custom audio player. One [data-player] root per tile.
-    // The Deezer API doesn't return CORS headers so the browser can't fetch
-    // it directly — the playlist is fetched server-side at build time and
-    // embedded in a <script type="application/json"> tag inside the tile.
-    type DeezerTrack = {
-        id: number;
-        title: string;
-        duration: number;
-        preview: string;
-        artist: { name: string } | string;
-    };
-
-    const escapeHtml = (s: string) =>
-        s.replace(/[&<>"']/g, (c) =>
-            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string)
-        );
-
-    document.querySelectorAll<HTMLElement>("[data-player]").forEach((player) => {
-        const audio = player.querySelector<HTMLAudioElement>("[data-player-audio]")!;
-        const toggle = player.querySelector<HTMLButtonElement>("[data-player-toggle]")!;
-        const icon = player.querySelector<HTMLElement>("[data-player-icon]")!;
-        const progress = player.querySelector<HTMLElement>("[data-player-progress]")!;
-        const currentEl = player.querySelector<HTMLElement>("[data-player-current]")!;
-        const durationEl = player.querySelector<HTMLElement>("[data-player-duration]")!;
-        const titleEl = player.querySelector<HTMLElement>("[data-player-title]")!;
-        const titleOverlay = player.querySelector<HTMLElement>("[data-player-title-overlay]")!;
-        const coverEl = player.querySelector<HTMLImageElement>("[data-player-cover]")!;
-        const dot = player.querySelector<HTMLElement>("[data-player-dot]")!;
-        const orbits = player.querySelectorAll<HTMLElement>("[data-player-orbit]");
-        const tracksList = player.querySelector<HTMLElement>("[data-player-tracks]")!;
-        const payload = player.querySelector<HTMLScriptElement>("[data-player-playlist]");
-
-        let tracks: DeezerTrack[] = [];
-        let currentIndex = -1;
-        let isPlaying = false;
-
-        const fmt = (s: number) => {
-            if (!isFinite(s) || s < 0) return "0:00";
-            const m = Math.floor(s / 60);
-            const sec = Math.floor(s % 60);
-            return `${m}:${String(sec).padStart(2, "0")}`;
-        };
-
-        const setPlaying = (playing: boolean) => {
-            isPlaying = playing;
-            icon.textContent = playing ? "❚❚" : "▶";
-            dot.classList.toggle("bg-mint-icon", playing);
-            dot.classList.toggle("animate-pulse", playing);
-            dot.classList.toggle("bg-secondary-300", !playing);
-            dot.classList.toggle("dark:bg-white/40", !playing);
-
-            // Speed the orbits up when audio plays; ease back when paused.
-            orbits.forEach((orbit) => {
-                const reverse = orbit.dataset.reverse === "true";
-                orbit.style.animationDuration = playing
-                    ? reverse
-                        ? "6s"
-                        : "4s"
-                    : reverse
-                      ? "40s"
-                      : "18s";
-            });
-
-            // Active-track marker: replace the number with ▶ while playing.
-            tracksList.querySelectorAll<HTMLElement>("[data-player-num]").forEach((num) => {
-                const idx = Number(num.dataset.idx);
-                if (idx === currentIndex) {
-                    num.textContent = playing ? "▶" : String(idx + 1).padStart(2, "0");
-                }
-            });
-        };
-
-        const loadTrack = (index: number, autoplay: boolean) => {
-            const track = tracks[index];
-            if (!track || !track.preview) return;
-            currentIndex = index;
-            audio.src = track.preview;
-            titleEl.textContent = track.title;
-            progress.style.width = "0%";
-            currentEl.textContent = "0:00";
-            durationEl.textContent = "0:00";
-
-            // Swap album art into the inner orbit circle. If the track has no
-            // cover (rare), keep the title overlay visible.
-            const cover = track.album?.cover_medium ?? track.album?.cover_big ?? "";
-            if (cover) {
-                coverEl.src = cover;
-                coverEl.alt = track.album?.title ?? track.title;
-                coverEl.classList.remove("opacity-0");
-                coverEl.classList.add("opacity-100");
-                titleOverlay.classList.remove("opacity-100");
-                titleOverlay.classList.add("opacity-0");
-            } else {
-                coverEl.removeAttribute("src");
-                coverEl.classList.remove("opacity-100");
-                coverEl.classList.add("opacity-0");
-                titleOverlay.classList.remove("opacity-0");
-                titleOverlay.classList.add("opacity-100");
-            }
-
-            tracksList.querySelectorAll<HTMLElement>("[data-player-track]").forEach((b) => {
-                b.classList.toggle(
-                    "text-mint-icon",
-                    Number(b.dataset.index) === index
-                );
-            });
-
-            if (autoplay) {
-                audio.play().catch((err) => console.warn("Playback failed:", err));
-            }
-        };
-
-        toggle.addEventListener("click", () => {
-            if (currentIndex === -1) {
-                loadTrack(0, true);
-            } else if (audio.paused) {
-                audio.play().catch((err) => console.warn("Playback failed:", err));
-            } else {
-                audio.pause();
-            }
-        });
-
-        tracksList.addEventListener("click", (event) => {
-            const target = event.target as HTMLElement;
-            const btn = target.closest<HTMLElement>("[data-player-track]");
-            if (!btn) return;
-            const idx = Number(btn.dataset.index);
-            if (currentIndex === idx && !audio.paused) {
-                audio.pause();
-            } else {
-                loadTrack(idx, true);
-            }
-        });
-
-        audio.addEventListener("play", () => setPlaying(true));
-        audio.addEventListener("pause", () => setPlaying(false));
-        audio.addEventListener("ended", () => {
-            // Advance to the next track that has a preview.
-            for (let i = currentIndex + 1; i < tracks.length; i++) {
-                if (tracks[i].preview) {
-                    loadTrack(i, true);
-                    return;
-                }
-            }
-            setPlaying(false);
-        });
-        audio.addEventListener("timeupdate", () => {
-            if (!isFinite(audio.duration) || audio.duration === 0) return;
-            progress.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
-            currentEl.textContent = fmt(audio.currentTime);
-        });
-        audio.addEventListener("loadedmetadata", () => {
-            durationEl.textContent = fmt(audio.duration);
-        });
-        audio.addEventListener("error", () => {
-            titleEl.textContent = "— couldn't load track —";
-            setPlaying(false);
-        });
-
-        // Read the build-time playlist payload and render rows. Tracks with
-        // an empty `preview` are shown but disabled (greyed out).
-        const renderError = (message: string) => {
-            tracksList.innerHTML = `<li class="px-1 py-2 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-secondary-400 dark:text-white/40">${escapeHtml(message)}</li>`;
-        };
-
-        try {
-            tracks = payload?.textContent ? JSON.parse(payload.textContent) : [];
-        } catch (err) {
-            console.warn("Failed to parse embedded playlist payload:", err);
-            tracks = [];
-        }
-
-        if (tracks.length === 0) {
-            renderError("Playlist unavailable — rebuild to fetch fresh data");
-        } else {
-            tracksList.innerHTML = tracks
-                .map((t, i) => {
-                    const num = String(i + 1).padStart(2, "0");
-                    const title = escapeHtml(t.title);
-                    const artist =
-                        typeof t.artist === "string"
-                            ? t.artist
-                            : t.artist?.name ?? "";
-                    if (t.preview) {
-                        return `
-                            <li>
-                                <button
-                                    type="button"
-                                    data-player-track
-                                    data-index="${i}"
-                                    class="group flex w-full items-center gap-3 px-1 py-1.5 text-left transition-colors"
-                                >
-                                    <span
-                                        data-player-num
-                                        data-idx="${i}"
-                                        class="w-5 shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-secondary-400 dark:text-white/40 transition-colors group-hover:text-mint-icon"
-                                    >${num}</span>
-                                    <span class="flex-1 min-w-0 overflow-hidden">
-                                        <span
-                                            data-player-track-title
-                                            data-marquee
-                                            class="inline-block whitespace-nowrap font-title text-sm text-text dark:text-white transition-colors group-hover:text-mint-icon"
-                                        >${title} <span class="font-mono text-[0.6rem] uppercase tracking-[0.15em] text-secondary-400 dark:text-white/40">&nbsp; ${escapeHtml(artist)}</span></span>
-                                    </span>
-                                </button>
-                            </li>`;
-                    }
-                    return `
-                        <li>
-                            <div
-                                class="flex items-center gap-3 px-1 py-1.5 opacity-40 cursor-not-allowed"
-                                title="Preview not available on Deezer"
-                            >
-                                <span class="w-5 shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-secondary-400 dark:text-white/40">${num}</span>
-                                <span class="flex-1 min-w-0 overflow-hidden">
-                                    <span class="inline-block whitespace-nowrap font-title text-sm text-secondary-500 dark:text-white/50">${title} <span class="font-mono text-[0.6rem] uppercase tracking-[0.15em] text-secondary-400 dark:text-white/40">— ${escapeHtml(artist)}</span></span>
-                                </span>
-                            </div>
-                        </li>`;
-                })
-                .join("");
-
-            // Wire up hover-scrolling marquees on title and artist. The
-            // inner span (data-marquee) is wider than its overflow-hidden
-            // parent when the text doesn't fit; on hover we translate it by
-            // the overflow distance so the rest becomes visible. On leave
-            // we snap back.
-            const startMarquee = (el: HTMLElement) => {
-                const parent = el.parentElement;
-                if (!parent) return;
-                const distance = el.scrollWidth - parent.clientWidth;
-                if (distance <= 0) return;
-                el.style.transition = `transform ${Math.max(0.6, distance / 30)}s linear`;
-                el.style.transform = `translateX(-${distance}px)`;
-            };
-            const stopMarquee = (el: HTMLElement) => {
-                el.style.transition = "transform 0.25s ease";
-                el.style.transform = "translateX(0)";
-            };
-
-            tracksList
-                .querySelectorAll<HTMLButtonElement>("[data-player-track]")
-                .forEach((btn) => {
-                    const marquees = btn.querySelectorAll<HTMLElement>("[data-marquee]");
-                    btn.addEventListener("mouseenter", () =>
-                        marquees.forEach(startMarquee)
-                    );
-                    btn.addEventListener("mouseleave", () =>
-                        marquees.forEach(stopMarquee)
-                    );
-                });
-        }
-    });
 </script>

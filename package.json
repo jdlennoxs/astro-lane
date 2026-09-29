@@ -32,7 +32,6 @@
         "@astrojs/mdx": "^7.0.2",
         "@astrojs/rss": "^4.0.19",
         "@astrojs/sitemap": "^3.7.3",
-        "@iconify-json/mdi": "^1.2.3",
         "@iconify-json/ph": "^1.2.2",
         "@iconify-json/tabler": "^1.2.17",
         "@react-spring/three": "^9.7.5",
@@ -46,13 +45,9 @@
         "@vercel/analytics": "^1.6.1",
         "astro": "^7.0.7",
         "astro-icon": "^1.1.5",
-        "eslint-config-next": "13.1.2",
-        "framer-motion": "^10.18.0",
-        "gsap": "^3.14.2",
         "jdls-boids-canvas": "^0.3.5",
         "mermaid": "^11.12.2",
         "remark-toc": "^8.0.1",
-        "sass": "^1.86.3",
         "satori": "^0.4.14",
         "tailwindcss": "^4.3.2",
         "three": "^0.160.1",
@@ -62,14 +57,11 @@
         "@astrojs/react": "^6.0.1",
         "@tailwindcss/typography": "^0.5.19",
         "clsx": "^1.2.1",
-        "eslint": "^8.57.1",
-        "eslint-config-prettier": "^8.10.0",
         "mdast-util-to-string": "^3.2.0",
         "prettier": "2.8.6",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "reading-time": "^1.5.0",
-        "sharp": "^0.31.3",
-        "stylelint": "^14.16.1"
+        "sharp": "^0.31.3"
     }
 }

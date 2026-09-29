@@ -3,7 +3,7 @@
 ---
 
 <div
-  class="absolute inset-0 h-[800px] pointer-events-none z-[-1] bg-[var(--paper)] overflow-hidden"
+  class="absolute inset-0 h-[800px] pointer-events-none z-[-1] bg-background overflow-hidden"
   aria-hidden="true"
 >
   <div class="absolute inset-0 mesh-layer"></div>
@@ -12,8 +12,8 @@
 <style>
   .mesh-layer {
     /* Light-mode defaults — soft versions of the palette */
-    --g1: color-mix(in srgb, var(--color-primary) 28%, transparent);
-    --g2: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    --g1: color-mix(in srgb, var(--color-primary-500) 28%, transparent);
+    --g2: color-mix(in srgb, var(--color-primary-500) 20%, transparent);
     --g3: color-mix(in srgb, var(--bubblegum) 23%, transparent);
     --g4: color-mix(in srgb, var(--bubblegum) 18%, transparent);
     --g5: color-mix(in srgb, var(--aqua) 21%, transparent);
@@ -29,8 +29,8 @@
   }
 
   :global(:root.dark) .mesh-layer {
-    --g1: color-mix(in srgb, var(--color-primary) 25%, transparent);
-    --g2: color-mix(in srgb, var(--color-primary) 14%, transparent);
+    --g1: color-mix(in srgb, var(--color-primary-500) 25%, transparent);
+    --g2: color-mix(in srgb, var(--color-primary-500) 14%, transparent);
     --g3: color-mix(in srgb, var(--bubblegum) 18%, transparent);
     --g4: color-mix(in srgb, var(--bubblegum) 10%, transparent);
     --g5: color-mix(in srgb, var(--aqua) 16%, transparent);

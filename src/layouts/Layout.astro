@@ -1,12 +1,7 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <SEO /> component.
-import "../styles/tailwind.css";
-import "../themes/base.css";
-import "../styles/core/_misc.css";
-import "../styles/core/_general.css";
-import "../styles/core/_typography.css";
-import "../styles/core/_utilities.css";
+// One style import. Order is declared in global.css so the cascade does not
+// depend on the order of imports here.
+import "../styles/global.css";
 import SEO from "@/components/seo/SEO.astro";
 import SiteNav from "@/components/header/SiteNav.astro";
 import Analytics from '@vercel/analytics/astro';
@@ -44,7 +39,6 @@ const {
             url={url}
             image={image}
         />
-        <link href="/prism-night-owl-light.css" rel="stylesheet" />
         <script>
             // Initialize theme
             const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');

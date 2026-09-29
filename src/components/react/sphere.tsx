@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
@@ -31,8 +31,6 @@ export default function Sphere({
     setHovered = () => {}
 }: SphereProps) {
     const sphere = useRef<THREE.Mesh>(null);
-    // const light = useRef();
-    const [down, setDown] = useState(false);
 
     // Change cursor on hovered state
     useEffect(() => {
@@ -65,31 +63,11 @@ export default function Sphere({
         }
     });
 
-    // Springs for color and overall looks, this is state-driven animation
-    // React-spring is physics based and turns static props into animated values
-    // const [{ wobble, coat, color, ambient, env }] = useSpring(
-    //     {
-    //         wobble: 1,
-    //         coat: 0.05,
-    //         ambient: 0.05,
-    //         env: 0.5,
-    //         color: "#202020",
-    //         config: (n) =>
-    //             n === "wobble" &&
-    //             hovered && { mass: 2, tension: 1000, friction: 10 }
-    //     },
-    //     []
-    // );
-
     const [{ coat, color, env }] = useSpring(
         {
             coat: hovered ? 0.2 : 0.1,
-            env: !hovered ? 0.4 : 1,
-            color: !hovered ? colour : "#5162ff"
-            // react-spring's config callback must always return a config object;
-            // returning `false` for non-matching keys is not allowed.
-            // config: (n: string) =>
-            //     hovered ? { mass: scale * 2, tension: 50, friction: 25 } : {}
+            env: hovered ? 1 : 0.4,
+            color: hovered ? "#5162ff" : colour
         },
         [hovered]
     );
@@ -102,10 +80,6 @@ export default function Sphere({
             scale={scale}
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}
-            onPointerDown={() => setDown(true)}
-            onPointerUp={() => {
-                setDown(false);
-            }}
         >
             <sphereGeometry args={[1, 64, 64]} />
             <AnimatedMaterial

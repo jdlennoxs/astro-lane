@@ -1,35 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import {
-    OrbitControls,
-    PerspectiveCamera,
-    Environment,
-    OrthographicCamera,
-    Torus
-} from "@react-three/drei";
+import { PerspectiveCamera, Environment } from "@react-three/drei";
 import Sphere from "./sphere";
 import { Suspense, useRef, useState } from "react";
-import Box from "./box";
-import Donut from "./torus";
-import Line from "./line";
-
 import type { PointLight as PointLightType } from "three";
 
 const Scene = () => {
-    // Springs for color and overall looks, this is state-driven animation
-    // React-spring is physics based and turns static props into animated values
-    // const [{ wobble, coat, color, ambient, env }] = useSpring(
-    //     {
-    //         wobble: 1,
-    //         coat: 1,
-    //         ambient: 0.5,
-    //         env: 1,
-    //         color: "#202020",
-    //         config: (n) =>
-    //             n === "wobble" && { mass: 2, tension: 1000, friction: 10 }
-    //     },
-    //     []
-    // );
-
     const light = useRef<PointLightType>(null);
 
     const [hovered, setHovered] = useState(false);
@@ -53,8 +28,6 @@ const Scene = () => {
                     hovered={hovered}
                     setHovered={setHovered}
                 />
-                {/* <Box position={[5, 3, -2]} hovered={hovered} />
-                <Donut position={[-5, 2, -2]} hovered={hovered} /> */}
 
                 <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={80} />
                 <ambientLight intensity={1} color="#E0FFE9" />

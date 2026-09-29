@@ -1,14 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
+@import "./tokens.css";
 
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* === Design tokens (port of tailwind.config.cjs extend + base.css) ===
-   `static` keeps every token in the output even when no utility class uses it —
-   components read these as runtime CSS variables (e.g. --card-ink via
-   var(--color-accent-800)), which the default tree-shaking would otherwise drop. */
+/* === Tailwind theme mapping ===============================================
+   Maps the raw tokens in `tokens.css` onto Tailwind namespaces so utilities
+   exist. `static` keeps every token in the output even when no utility class
+   uses it — components read some of these as runtime CSS variables (e.g.
+   `--card-ink` via `var(--color-accent-800)`), which tree-shaking would drop. */
 @theme static {
     --color-primary-50: #eeefff;
     --color-primary-100: #dce0ff;
@@ -21,16 +23,17 @@
     --color-primary-800: #202766;
     --color-primary-900: #101433;
 
-    --color-secondary-50: #f5fcfb;
-    --color-secondary-100: #ebf9f7;
-    --color-secondary-200: #d7f3ef;
-    --color-secondary-300: #c4ece6;
-    --color-secondary-400: #b0e6de;
-    --color-secondary-500: #9ce0d6;
-    --color-secondary-600: #7db3ab;
-    --color-secondary-700: #5e8680;
-    --color-secondary-800: #3e5a56;
-    --color-secondary-900: #1f2d2b;
+    --color-secondary-50: #f7f7f7;
+    --color-secondary-100: #e3e3e3;
+    --color-secondary-200: #c8c8c8;
+    --color-secondary-300: #a4a4a4;
+    --color-secondary-400: #818181;
+    --color-secondary-500: #52525b;
+    --color-secondary-600: #434343;
+    --color-secondary-700: #383838;
+    --color-secondary-800: #313131;
+    --color-secondary-900: #1a1a1a;
+    --color-secondary-950: #0a0a0a;
 
     --color-accent-50: #fff2f6;
     --color-accent-100: #ffe5ed;
@@ -43,16 +46,20 @@
     --color-accent-800: #663342;
     --color-accent-900: #331921;
 
-    --color-background: var(--paper);
-    --color-text: #27272a;
+    /* Semantic surfaces — follow dark mode on their own. */
+    --color-background: var(--background);
+    --color-text: var(--ink);
+    --color-surface: var(--surface);
+    --color-border-soft: var(--border-soft);
+
     --color-cream: #fffef4;
     --color-badge: #f1f5f9;
     --color-badge-text: #475569;
     --color-card-border: #475569;
-    /* Cosmic palette — exposed from base.css variables. */
+
+    /* Cosmic palette */
     --color-bubblegum: var(--bubblegum);
-    --color-surface: var(--surface);
-    --color-border-soft: var(--border-soft);
+    --color-mint-icon: var(--aqua);
 
     --font-sans: var(--font-family-sans);
     --font-title: var(--font-family-title);
