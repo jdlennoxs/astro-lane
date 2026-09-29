@@ -28,7 +28,7 @@ const planetIcon = planet.replace(/<svg([^>]*)>/, (_match, attrs) =>
     class="top-0"
 >
 
-    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 md:px-10">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 md:px-10 ">
         {/* Wordmark — planet glyph tilted by default, straightens on hover */}
         <a
             href="/"
@@ -43,7 +43,7 @@ const planetIcon = planet.replace(/<svg([^>]*)>/, (_match, attrs) =>
 
         {/* Desktop nav */}
         <nav class="hidden md:flex items-center gap-1 text-sm font-sans" aria-label="Main">
-            {
+            <!-- {
                 items.map((item) => {
                     const active = isActive(item.href);
                     const base =
@@ -61,7 +61,7 @@ const planetIcon = planet.replace(/<svg([^>]*)>/, (_match, attrs) =>
                         </a>
                     );
                 })
-            }
+            } -->
            
             <ThemeToggle />
         </nav>

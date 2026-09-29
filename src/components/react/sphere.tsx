@@ -1,30 +1,38 @@
 import * as THREE from "three";
-import { Suspense, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import {
-    PerspectiveCamera,
-    Environment,
-    MeshDistortMaterial,
-    ContactShadows
-} from "@react-three/drei";
+import { MeshDistortMaterial } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 
 // React-spring animates native elements, in this case <mesh/> etc,
 // but it can also handle 3rd–party objs, just wrap them in "a".
 const AnimatedMaterial = a(MeshDistortMaterial);
 
+import type { PointLight as PointLightType } from "three";
+
+type SphereProps = {
+    light: React.RefObject<PointLightType | null>;
+    position?: [number, number, number];
+    colour?: string;
+    rotation?: [number, number, number];
+    /** Uniform scale factor; also drives the spring mass. */
+    scale?: number;
+    setHovered?: Function;
+    hovered: boolean;
+};
+
 export default function Sphere({
     light,
     position,
     colour = "#1f1f1f",
     rotation = [0, 0, 0],
-    scale = [1, 1, 1]
-}) {
-    const sphere = useRef();
+    scale = 1,
+    hovered,
+    setHovered = () => {}
+}: SphereProps) {
+    const sphere = useRef<THREE.Mesh>(null);
     // const light = useRef();
-    const [mode, setMode] = useState(false);
     const [down, setDown] = useState(false);
-    const [hovered, setHovered] = useState(false);
 
     // Change cursor on hovered state
     useEffect(() => {
@@ -38,19 +46,21 @@ export default function Sphere({
     // Make the bubble float and follow the mouse
     // This is frame-based animation, useFrame subscribes the component to the render-loop
     useFrame((state) => {
-        light.current.position.x = state.mouse.x * 20;
-        light.current.position.y = state.mouse.y * 20;
+        if (light.current) {
+            light.current.position.x = state.pointer.x * 20;
+            light.current.position.y = state.pointer.y * 20;
+        }
         if (sphere.current) {
             sphere.current.position.x = THREE.MathUtils.lerp(
                 sphere.current.position.x,
-                hovered ? state.mouse.x / 2 : 0,
-                0.2
+                hovered ? state.pointer.x : state.pointer.x / 2,
+                0.5
             );
             sphere.current.position.y = THREE.MathUtils.lerp(
                 sphere.current.position.y,
                 Math.sin(state.clock.elapsedTime / 1.5) / 6 +
-                    (hovered ? state.mouse.y / 2 : 0),
-                0.2
+                    (hovered ? state.pointer.y / 3 : state.pointer.y / 5),
+                0.5
             );
         }
     });
@@ -71,18 +81,17 @@ export default function Sphere({
     //     []
     // );
 
-    const [{ wobble, coat, color, ambient, env }] = useSpring(
+    const [{ coat, color, env }] = useSpring(
         {
-            wobble: hovered ? 1.4 : 1,
             coat: hovered ? 0.2 : 0.1,
-            ambient: !hovered ? 1 : 0.5,
             env: !hovered ? 0.4 : 1,
-            color: !hovered ? colour : "##5162ff",
-            config: (n) =>
-                n === "wobble" &&
-                hovered && { mass: scale * 2, tension: 50, friction: 5 }
+            color: !hovered ? colour : "#5162ff"
+            // react-spring's config callback must always return a config object;
+            // returning `false` for non-matching keys is not allowed.
+            // config: (n: string) =>
+            //     hovered ? { mass: scale * 2, tension: 50, friction: 25 } : {}
         },
-        [mode, hovered, down]
+        [hovered]
     );
 
     return (

@@ -1,53 +1,51 @@
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* === Design tokens (port of tailwind.config.cjs extend + base.css) === */
-@theme {
-    --color-primary-50: #f0f1ff;
-    --color-primary-100: #e4e6ff;
-    --color-primary-200: #cdd1ff;
-    --color-primary-300: #a7aeff;
-    --color-primary-400: #8085ff;
+/* === Design tokens (port of tailwind.config.cjs extend + base.css) ===
+   `static` keeps every token in the output even when no utility class uses it —
+   components read these as runtime CSS variables (e.g. --card-ink via
+   var(--color-accent-800)), which the default tree-shaking would otherwise drop. */
+@theme static {
+    --color-primary-50: #eeefff;
+    --color-primary-100: #dce0ff;
+    --color-primary-200: #b9c0ff;
+    --color-primary-300: #97a1ff;
+    --color-primary-400: #7481ff;
     --color-primary-500: #5162ff;
-    --color-primary-600: #3a45db;
-    --color-primary-700: #2d35b7;
-    --color-primary-800: #252c94;
-    --color-primary-900: #1e2370;
-    --color-primary-950: #13164d;
+    --color-primary-600: #414ecc;
+    --color-primary-700: #313b99;
+    --color-primary-800: #202766;
+    --color-primary-900: #101433;
 
-    --color-secondary-50: #f7f7f7;
-    --color-secondary-100: #e3e3e3;
-    --color-secondary-200: #c8c8c8;
-    --color-secondary-300: #a4a4a4;
-    --color-secondary-400: #818181;
-    --color-secondary-500: #52525b;
-    --color-secondary-600: #434343;
-    --color-secondary-700: #383838;
-    --color-secondary-800: #313131;
-    --color-secondary-900: #1a1a1a;
-    --color-secondary-950: #0a0a0a;
+    --color-secondary-50: #f5fcfb;
+    --color-secondary-100: #ebf9f7;
+    --color-secondary-200: #d7f3ef;
+    --color-secondary-300: #c4ece6;
+    --color-secondary-400: #b0e6de;
+    --color-secondary-500: #9ce0d6;
+    --color-secondary-600: #7db3ab;
+    --color-secondary-700: #5e8680;
+    --color-secondary-800: #3e5a56;
+    --color-secondary-900: #1f2d2b;
 
-    --color-accent-50: #f0f1ff;
-    --color-accent-100: #e4e6ff;
-    --color-accent-200: #cdd1ff;
-    --color-accent-300: #a7aeff;
-    --color-accent-400: #8085ff;
-    --color-accent-500: #5162ff;
-    --color-accent-600: #3a45db;
-    --color-accent-700: #2d35b7;
-    --color-accent-800: #252c94;
-    --color-accent-900: #1e2370;
-    --color-accent-950: #13164d;
+    --color-accent-50: #fff2f6;
+    --color-accent-100: #ffe5ed;
+    --color-accent-200: #ffccdb;
+    --color-accent-300: #ffb2c9;
+    --color-accent-400: #ff99b7;
+    --color-accent-500: #ff7fa5;
+    --color-accent-600: #cc6684;
+    --color-accent-700: #994c63;
+    --color-accent-800: #663342;
+    --color-accent-900: #331921;
 
     --color-background: var(--paper);
     --color-text: #27272a;
     --color-cream: #fffef4;
-    --color-mint: #e0ffe9;
-    --color-mint-icon: #9ce0d6;
     --color-badge: #f1f5f9;
     --color-badge-text: #475569;
     --color-card-border: #475569;

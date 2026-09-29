@@ -1,24 +1,26 @@
+import * as THREE from "three";
 import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export default function Box({position}) {
+export default function Box({ position, hovered }) {
     const meshRef = useRef();
-    // Set up state for the hovered and active state
-    const [hovered, setHover] = useState(false);
-    const [active, setActive] = useState(false);
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+    useFrame((state, delta) => {
+        meshRef.current.rotation.x += delta;
+        meshRef.current.rotation.y += delta + Math.sin(delta);
+        let target = position[1];
+        if (hovered) {
+            target = -2;
+        }
+        meshRef.current.position.y = THREE.MathUtils.lerp(
+            meshRef.current.position.y,
+            target,
+            0.05
+        );
+    });
     return (
-        <mesh
-            position={position}
-            ref={meshRef}
-            scale={active ? 1.5 : 1}
-            onClick={(event) => setActive(!active)}
-            onPointerOver={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}
-        >
+        <mesh position={position} ref={meshRef}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshPhysicalMaterial color={hovered ? "hotpink" : "orange"} clearcoat={0.8} clearcoatRoughness={0.2} />
+            <meshPhysicalMaterial color={"turquoise"} />
         </mesh>
     );
 }

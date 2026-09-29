@@ -1,41 +1,83 @@
 [
     {
         "id": "1",
-        "title": "Boids",
+        "title": "Simulating flocking behaviour with <hl>Boids</hl> in three.js",
+        "topic": "Project",
+        "sub": "Boids is a simple algorithm for simulating flocking behaviour between multiple agents. In this project I looked to create a three.js based browser compatible version that is exportable as a customisable webcomponent.",
+        "body": "<p>Developed by Craig Reynolds in 1986, boids simulates the flocking behaviour of birds. The name is a shortening of \"bird-oid object\". Three simple rules; <strong>separation</strong>, <strong>alignment</strong> and <strong>cohesion</strong> \u2014 are enough to organise the whole flock.</p>",
         "link": "",
         "post": "/posts/boids",
-        "shortExcerpt": "A dynamic flocking simulation made with three.js",
+        "shortExcerpt": "A dynamic flocking simulation built with three.js",
         "type": "hero",
         "component": "boids",
+        "linkLabel": "View project",
         "badgeContent": "Touch me!"
     },
     {
         "id": "2",
-        "title": "Re:Tuned",
+        "title": "Tinder for your music. Build yourself a perfect match with <hl>Re:Tuned</hl>",
+        "topic": "Project",
+        "sub": "Swipeable music discovery uses your recent Spotify activity to build a new recommendation profile and deliver a new playlist right to your library.",
+        "body": "<p>Built as an experiment in making discovery feel physical again. Say no to to whatever music Spotify pushes your way and find music similar to what you like.</p>",
         "link": "https://retuned.jdlennoxs.com/",
         "image": "/images/retuned-wide.gif",
+        "linkLabel": "Discover",
         "shortExcerpt": "Swipeable music discovery"
     },
     {
         "id": "3",
-        "title": "gardenbrain",
+        "title": "<hl>Gardenbrain.</hl> Where I write about what interests me.",
+        "topic": "Writing",
+        "sub": "To have a gardenbrain is to think like a gardener. Create the right conditions for your knowledge to grow by linking ideas together and adapting to feedback as you learn.",
+        "body": "<p>I write on substack where I mostly focus on AI and software engineering management.</p>",
         "image": "/images/garden_brain.png",
-        "type":"bordered",
+        "type": "bordered",
+        "link": "https://thegardenbrain.substack.com",
+        "linkLabel": "Read more",
         "shortExcerpt": ""
     },
     {
         "id": "4",
-        "title": "Yobbies",
+        "title": "A <hl>graph-powered</hl> film club tracker",
+        "topic": "Project",
+        "sub": "An exploration into graph databases with Neo4j while building a fun tool for friends.",
+        "body": "<p>Using graphs was definitely not necessary to track our weekly film selections. But leveraging the tool morphed into a slightly over-the-top hub for our increasingly elaborate statistics and awards ceremonies.</p><p>Graphs allow for very quick lookup over edges rather than columnar data and the linked nature makes sourcing complex data into much simpler queries.</p>",
         "post": "/posts/yobbies",
         "image": "/images/yobbies-desktop.png",
-        "shortExcerpt": "Organising a film club"
+        "linkLabel": "Read more",
+        "shortExcerpt": "A film club tracking app built with Neo4j"
     },
     {
         "id": "5",
-        "title": "BookStack",
+        "title": "Your yearly reads <hl>in a pile</hl>",
+        "topic": "Project",
+        "sub": "I wanted a way to visualise my yearly reading as something more physical than cards on a screen, so I built Bookstack to display a roughly to scale render of the books themselves.",
+        "body": "<p>Connects to the Hardcover API to pull info about the users reading and the book data itself.</p><p>Your yearly reads stacked into a pile and gravity-tested in 3D. Drop the stack and see how the year actually balanced out.</p>",
         "link": "https://bookstack.jdlennoxs.com/?username=jdlennoxs",
+        "linkLabel": "Stack",
         "logo": "/icons/articoole-icon.png",
+        "shortExcerpt": "Your yearly reads in a pile, gravity tested in 3d"
+    },
+    {
+        "id": "6",
+        "title": "Learning <hl>inverse kinematics</hl> with interactive toys",
+        "topic": "Project",
+        "sub": "While exploring some ideas for website interactivity I got interested in learning more about IK specifically cyclic coordinate descent. This cheap IK solver is fast enough to run in most environments where an accuracy is not required.",
+        "body": "<p>I experimented further bringing in some animation style techniques such as stretch and sqaush and oscillation to make the overall interaction feel more dynamic.</p>",
+        "link": "",
         "shortExcerpt": "Your yearly reads in a pile, gravity tested in 3d",
-        "badgeContent": "On Going"
+        "component": "IkCanvas",
+        "linkLabel": "Explore"
+    },
+    {
+        "id": "7",
+        "title": "Building games as <hl>Dead Internet Society</hl>",
+        "topic": "Games",
+        "sub": "Chasing dreams of an Indie sleeper hit building games with Godot.",
+        "body": "",
+        "image": "/images/dead-internet-society.png",
+        "link": "",
+        "shortExcerpt": "",
+        "linkLabel": "Visit"
     }
 ]

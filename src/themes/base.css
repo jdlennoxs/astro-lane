@@ -22,10 +22,10 @@
     --border-soft: rgba(39, 39, 42, 0.1);
 
     /* Typography */
-    --font-family-title: "Space Grotesk", system-ui, -apple-system, sans-serif;
-    --font-family-body: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
-    --font-family-sans: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
-    --font-family-mono: "Space Mono", system-ui, -apple-system, sans-serif;
+    --font-family-title: "Lora", system-ui, -apple-system, sans-serif;
+    --font-family-body: "Geist", system-ui, -apple-system, sans-serif;
+    --font-family-sans: "Geist", system-ui, -apple-system, sans-serif;
+    --font-family-mono: "JetBrains Mono", system-ui, -apple-system, sans-serif;
     --font-size-base: 1rem;
     --font-size-sm: 0.875rem;
     --font-size-lg: 1.125rem;

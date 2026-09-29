@@ -1,0 +1,43 @@
+---
+/**
+ * FooterContent — social links + copyright. Shared by the site-wide <footer>
+ * in Layout.astro and the compact footer Card that ends the index card stack,
+ * so the two never drift apart.
+ */
+import { SOCIALS } from "@config";
+import { Icon } from "astro-icon/components";
+
+const currentYear = new Date().getFullYear();
+
+const linkClass =
+    "inline-flex px-2.5 text-sm hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-secondary-200 dark:text-secondary-200 dark:hover:bg-secondary-800 dark:hover:text-white dark:focus:ring-secondary-700 transition-colors duration-300";
+
+export interface Props {
+    class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<div class:list={["flex justify-between items-center text-primary-900", className]}>
+    <div class="flex">
+        {
+            SOCIALS.filter((social) => social.active).map((social) => (
+                <a
+                    href={social.href}
+                    class={linkClass}
+                    target="_blank"
+                    title={social.title}
+                >
+                    <Icon name={social.icon} class="w-4 h-4" />
+                </a>
+            ))
+        }
+        <a class={linkClass} aria-label="RSS Feed" href="/rss.xml">
+            <Icon name="tabler:satellite" class="h-4 w-4" />
+        </a>
+    </div>
+
+    <div class="text-sm text-right font-sans">
+        © {currentYear} jdlennoxs
+    </div>
+</div>
